@@ -1,10 +1,13 @@
 FROM debian:stretch
 
-COPY . /code
-WORKDIR /code
 RUN apt-get update && \
-    apt-get install -y pandoc && \
-    apt-get install -y texlive-latex-base && \
-    apt-get install -y texlive-fonts-recommended
+    apt-get install -y \
+    pandoc \
+    texlive-latex-base \
+    texlive-fonts-recommended \
+    mutt
+
+WORKDIR /code
+COPY . /code
 
 CMD pandoc -s -o fencer-doc.pdf src/**/*.md;
