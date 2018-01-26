@@ -17,7 +17,8 @@ build doc:
     - docker push $RELEASE_IMAGE
     - docker push "$CI_REGISTRY_IMAGE:latest"
   only:
-    - /master|develop|stable/
+    - /master|develop/
+    - tags
   environment: development
   tags:
     - docker
