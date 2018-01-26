@@ -30,7 +30,9 @@ deploy doc:
     - docker:dind
   script:
     - pandoc -s -o fencer-doc.pdf src/**/*.md
+    - until [ -f fencer-doc.pdf ]; do echo "Sleeping"; sleep 1; done
     - ./mail/send.sh
   only:
     - tags
+    - /master/
   environment: publish
