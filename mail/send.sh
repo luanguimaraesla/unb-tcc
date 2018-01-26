@@ -1,9 +1,10 @@
 #! /bin/bash
 
 old_path=`pwd`
+new_path=$FENCER_PATH/mail
 
 echo "[INFO] Enter $FENCER_PATH/mail directory"
-cd $FENCER_PATH/mail
+cd new_path
 
 echo
 echo "[INFO] Configuring mutt"
@@ -58,14 +59,32 @@ while read line; do
     echo "[SUCCESS] $line exists"
   else
     echo "[ERROR] $line doesn't exist"
-    echo
-    echo "[ERROR] Check the directory ls:"
-    echo
-    pwd
-    ls -la ../
     ALL_ATTACHMENTS=false
   fi
 done < attachments.txt
+
+if $ALL_ATTACHMENTS; then
+  echo "[INFO] All attachments exist"
+else
+  echo "[RECOVER] Trying to generate the document using pandoc"
+  cd ..
+  pandoc -s -o fencer-doc.pdf src/**/*.md
+  cd new_path
+
+  echo
+  echo "[INFO] Checking attachments again"
+
+  ALL_ATTACHMENTS=true
+  while read line; do
+    if [ -f $line ]; then
+      echo "[SUCCESS] $line exists"
+    else
+      echo "[ERROR] $line doesn't exist"
+      ALL_ATTACHMENTS=false
+    fi
+  done < attachments.txt
+fi
+
 
 if $ALL_ATTACHMENTS; then
   echo "[INFO] Sending email"
