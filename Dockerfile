@@ -1,5 +1,7 @@
 FROM debian:stretch
 
+ENV FENCER_PATH /code
+
 RUN apt-get update && \
     apt-get install -y \
     pandoc \
