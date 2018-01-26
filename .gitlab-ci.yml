@@ -17,20 +17,20 @@ build doc:
     - docker push $RELEASE_IMAGE
     - docker push "$CI_REGISTRY_IMAGE:latest"
   only:
-    - /master|develop/
+    - /develop/
     - tags
   environment: development
   tags:
     - docker
 
 deploy doc:
-  image: $RELEASE_IMAGE
+  image: "$CI_REGISTRY_IMAGE:latest"
   stage: publish
   services:
     - docker:dind
   script:
     - pandoc -s -o fencer-doc.pdf src/**/*.md
-    - until [ -f fencer-doc.pdf ]; do echo "Sleeping"; sleep 1; done
+    - ls
     - ./mail/send.sh
   only:
     - tags
