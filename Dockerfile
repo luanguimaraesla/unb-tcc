@@ -5,7 +5,10 @@ RUN apt-get update && \
     pandoc \
     texlive-latex-base \
     texlive-fonts-recommended \
-    mutt
+    mutt \
+    msmtp \
+    openssl \
+    ca-certificates
 
 WORKDIR /code
 COPY . /code

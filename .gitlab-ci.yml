@@ -29,7 +29,7 @@ deploy doc:
     - docker:dind
   script:
     - pandoc -s -o fencer-doc.pdf src/**/*.md
-    - mutt -s `cat mail/subject` luang@riseup.net < mail/content 
+    - ./mail/send.sh
   only:
     - /stable/
   environment: development
