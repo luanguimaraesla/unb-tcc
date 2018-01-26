@@ -53,14 +53,19 @@ echo
 echo "[INFO] Checking attachments"
 
 ALL_ATTACHMENTS=true
-cat attachments.txt | while read line; do
+while read line; do
   if [ -f $line ]; then
     echo "[SUCCESS] $line exists"
   else
     echo "[ERROR] $line doesn't exist"
+    echo
+    echo "[ERROR] Check the directory ls:"
+    echo
+    pwd
+    ls -la ../
     ALL_ATTACHMENTS=false
   fi
-done
+done < attachments.txt
 
 if $ALL_ATTACHMENTS; then
   echo "[INFO] Sending email"
