@@ -1,6 +1,6 @@
 stages:
   - build
-  - deploy
+  - publish
 
 variables:
   RELEASE_IMAGE: $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME
@@ -24,14 +24,12 @@ build doc:
 
 deploy doc:
   image: $RELEASE_IMAGE
-  stage: deploy
+  stage: publish
   services:
     - docker:dind
   script:
     - pandoc -s -o fencer-doc.pdf src/**/*.md
     - ./mail/send.sh
   only:
-    - /stable/
-  environment: development
-  tags:
-    - docker
+    - tags
+  environment: publish
