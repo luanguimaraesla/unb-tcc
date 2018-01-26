@@ -1,10 +1,9 @@
 #! /bin/bash
 
 old_path=`pwd`
-new_path=$FENCER_PATH/mail
 
 echo "[INFO] Enter $FENCER_PATH/mail directory"
-cd new_path
+cd $FENCER_PATH/mail
 
 echo
 echo "[INFO] Configuring mutt"
@@ -69,7 +68,7 @@ else
   echo "[RECOVER] Trying to generate the document using pandoc"
   cd ..
   pandoc -s -o fencer-doc.pdf src/**/*.md
-  cd new_path
+  cd mail/
 
   echo
   echo "[INFO] Checking attachments again"
