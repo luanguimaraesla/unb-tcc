@@ -38,7 +38,7 @@ Alguns perigos são bem conhecidos quando falamos de Aprendizado de Máquina, do
 
 Podemos descrever um caso de _overfitting_ quando produzimos um modelo que se adequa bem no conjunto de dados que usamos para o treinamento, entretanto está tão rigidamente vinculado a esse conjunto de dados que não é capaz de se generalizar de modo que se possa ralizar predições coerentes para novos dados de entrada. Opostamente, temos também casos de _underfitting_, que podem ser observados quando o modelo que construímos não se adequa bem ao conjunto de dados que utilizamos para o treinamento e consequentemente pode não ser confiável para realizar predições.
 
-![Image](images/machine_learning/overfitting_underfitting.png)
+![Overfitting e Underfitting](images/machine_learning/overfitting_underfitting.png)
 
 ### Extração de _features_
 
