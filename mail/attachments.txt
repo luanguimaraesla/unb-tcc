@@ -1,1 +1,1 @@
-../fencer-doc.pdf
+../doc.pdf

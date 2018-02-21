@@ -2,8 +2,8 @@
 
 old_path=`pwd`
 
-echo "[INFO] Enter $FENCER_PATH/mail directory"
-cd $FENCER_PATH/mail
+echo "[INFO] Enter $PANDOCKER_PATH/mail directory"
+cd $PANDOCKER_PATH/mail
 
 echo
 echo "[INFO] Configuring mutt"
@@ -67,7 +67,8 @@ if $ALL_ATTACHMENTS; then
 else
   echo "[RECOVER] Trying to generate the document using pandoc"
   cd ..
-  pandoc -s -o fencer-doc.pdf src/**/*.md
+
+  pandoc -s -o doc.pdf `sed 's/$/.md/g;s/^/src\//g' src/sections.conf | xargs`;
   cd mail/
 
   echo

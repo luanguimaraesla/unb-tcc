@@ -1,6 +1,6 @@
 FROM debian:stretch
 
-ENV FENCER_PATH /code
+ENV PANDOCKER_PATH /code
 
 RUN apt-get update && \
     apt-get install -y \
@@ -15,4 +15,4 @@ RUN apt-get update && \
 WORKDIR /code
 COPY . /code
 
-CMD pandoc -s -o fencer-doc.pdf src/**/*.md;
+CMD pandoc -s -o doc.pdf `sed 's/$/.md/g;s/^/src\//g' src/sections.conf | xargs`;
