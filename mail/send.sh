@@ -68,7 +68,7 @@ else
   echo "[RECOVER] Trying to generate the document using pandoc"
   cd ..
 
-  pandoc -s -o doc.pdf `sed 's/$/.md/g;s/^/src\//g' src/sections.conf | xargs`;
+  ./compile.sh
   cd mail/
 
   echo

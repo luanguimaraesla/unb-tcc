@@ -7,6 +7,7 @@ RUN apt-get update && \
     pandoc \
     texlive-latex-base \
     texlive-fonts-recommended \
+    texlive-latex-extra \
     mutt \
     msmtp \
     openssl \
@@ -15,4 +16,4 @@ RUN apt-get update && \
 WORKDIR /code
 COPY . /code
 
-CMD pandoc -s -o doc.pdf `sed 's/$/.md/g;s/^/src\//g' src/sections.conf | xargs`;
+CMD ./compile.sh
