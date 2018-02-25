@@ -1,6 +1,6 @@
 # Introdução
 
-O andar da carruagem democrática tem seguido desde a Grécia Antiga um caminho árduo e tortuoso que nem sempre ofereceu aos povos o protagonismo que lhes é assegurado. O desenvolvimento das TIC's (Tecnologias da Informação e Comunicação) aponta para o surgimento de uma democracia que, entre outras coisas, promete esse protagonismo em relação ao Estado e a distribuição de poder ([TODO] ICD/IBICT). Nesse contexto, observamos nos últimos anos uma ascenção de propostas e projetos cuja finalidade é aplicar métodos do universo altamente tecnológico da computação moderna para solucionar problemas de um  ambiente social cada vez mais integrado e envolvido nas discussões sobre o futuro da sociedade.
+O andar da carruagem democrática tem seguido desde a Grécia Antiga um caminho árduo e tortuoso que nem sempre ofereceu aos povos o protagonismo que lhes é assegurado. O desenvolvimento das TIC's (Tecnologias da Informação e Comunicação) aponta para o surgimento de uma democracia que, entre outras coisas, promete esse protagonismo em relação ao Estado e a distribuição de poder [@fn21] ([TODO] ICD/IBICT). Nesse contexto, observamos nos últimos anos uma ascenção de propostas e projetos cuja finalidade é aplicar métodos do universo altamente tecnológico da computação moderna para solucionar problemas de um  ambiente social cada vez mais integrado e envolvido nas discussões sobre o futuro da sociedade.
 
 Nos últimos anos, o Brasil experienciou uma série de iniciativas tecnológicas fomentando a participação social, como exemplo, podemos citar a consulta pública sobre a Lei do Marco Civil da Internet em 2009, o Participa.br lançado em 2014 e o portal _e_-Democracia da Câmara dos Deputados. Bem sucedidas ou não, essas e outras iniciativas serviram de insumo para pesquisas sobre as arquiteturas de _software_ utilizadas.
 
@@ -32,6 +32,6 @@ Foi elaborado um estudo teórico sobre os principais tópicos necessários para 
 
 Com a solução desenvolvida, será realizada uma avaliação sobre as principais decisões arquiteturais tomadas e o algoritmo de clusterização utilizado, assim como a forma que interferiram, ao final, na conformidade com o que nos propusemos a desenvolver.
 
-# Organização do trabalho
+## Organização do trabalho
 
-[TODO]
+Este trabalho é organizado em 6 capítulos. O Capítulo apresenta um estudo sobre o tema Aprendizado de Máquina para que no Capítulo 3 seja apresentado o Empurrando Juntos, suas _features_, arquitetura, e contexto na sociedade. O Capítulo 4 desenvolve a metodologia aplicada para a implementação do _backend_ da plataforma, e os Capítulos 5 e 6 são sobre os resultados obtidos e uma conclusão do trabalho respectivamente.

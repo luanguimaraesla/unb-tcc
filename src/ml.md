@@ -58,7 +58,7 @@ Generalizando, para modelos preditivos binários podemos definir a seguinte tabe
 
 Assim temos a acurácia $a$ definida como
 
-\\[a=(p_{v}+n_{v})/(p_{v}+n_{v}+p_{f}+n_{f}),\\]
+$$a=(p_{v}+n_{v})/(p_{v}+n_{v}+p_{f}+n_{f}),$$
 
 em que $p_{v}$ são as predições verdadeiras positivas, $p_{f}$ as falsas positivas, $n_{v}$ as verdadeiras negativas e $n_{f}$ as falsas negativas.
 
@@ -71,8 +71,8 @@ Voltando ao caso hipotético dos _spams_ para o qual foram encontrados os seguin
 
 O valor referente a acurácia nesse caso seria de aproximadamente 0.87, levando a crer que esse poderia ser um modelo eficiente para muitas aplicações. Entretanto, devemos recorrer a outros métodos matemáticos para saber se este realmente poderia ser uma escolha viável. A combinação entre precisão e revocação, segundo ([TODO] MLFS) seria uma boa escolha. Definimos precisão $p$ e revocação (do ingês _recall_) $r$ como
 
-\\[p=p_{v}/(p_{v}+p_{f}),\\]
-\\[r=p_{v}/(p_{v}+n_{f}).\\]
+$$p=p_{v}/(p_{v}+p_{f}),$$
+$$r=p_{v}/(p_{v}+n_{f}).$$
 
 Esses valores nos darão respectivamente a compreensão percentual sobre quantos verdadeiros positivos obtivemos no universo de predições positivas e quantos verdadeiros positivos foram preditos no universo de todos os realmente positivos. Para nosso caso hipotético, encontramos para a precisão um valor de aproximadamente 0.02, enquanto para a revocação temos 0.01. Claramente este modelo preditivo não pode ser considerado adequado.
 
@@ -119,7 +119,7 @@ O agrupamento de objetos e determinado em função de uma medida de distância. 
 
 Para que seja possível analisar um certo agrupamento de dados é necessário identificar quais informações podem ser utilizadas para representar uma abstração prática dos objetos a serem agrupados. É preciso encontrar então um conjunto de atributos que descrevem os itens para que seja possível calcular o grau de semelhança entre os elementos. Esses atributos, por sua vez, podem ser escritos em forma numérica, categórica, binária e uma variedade de outros tipos. Como exemplo, podemos representar pessoas em vetores compostos pelo valor numério de seu ano de nascimento e um valor binário, 0 ou 1, para masculino ou feminino.
 
-\\[
+$$
   \begin{pmatrix}
     pessoa_{1} \\
     pessoa_{2} \\
@@ -133,7 +133,7 @@ Para que seja possível analisar um certo agrupamento de dados é necessário id
     \vdots  & \vdots \\
     ano_{n} & sexo_{n}
   \end{pmatrix}
-\\]
+$$
 
 Vejamos também que a representação de atributos para os objetos podem existir em diferentes formatos e escalas.
 
@@ -160,5 +160,5 @@ Vejamos também que a representação de atributos para os objetos podem existir
 
 As tabelas ([TODO] referenciar as três tabelas acima) mostram os memos dados representados de formas diferentes, o formato depende basicamente da fonte de dados, de como eles forma armazenados. Para as diversas representações existe um tipo de função de distância compatível. É possível, no entanto, utilizar qualquer uma das representações.
 
-### k-means
-### outros
+### k-means_
+### Outros
