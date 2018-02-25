@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM debian:buster-slim
 
 ENV PANDOCKER_PATH /code
 
