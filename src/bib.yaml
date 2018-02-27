@@ -1,36 +1,38 @@
 ---
 references:
   - type: article-journal
-    id: fn21
+    id: icd17
     author:
-    - family: Watson
-      given: J. D.
-    - family: Crick
-      given: F. H. C.
+    - family: Parra Filho
+      given: [Henrique, C., P.]
+    - family: Poppi
+      given: [Ricardo, A.]
     issued:
       date-parts:
-      - - 1953
-        - 4
-        - 25
-    title: 'Molecular structure of nucleic acids: a structure for deoxyribose
-      nucleic acid'
-    title-short: Molecular structure of nucleic acids
-    container-title: Nature
-    volume: 171
-    issue: 4356
-    page: 737-738
-    DOI: 10.1038/171737a0
-    URL: http://www.nature.com/nature/journal/v171/n4356/abs/171737a0.html
-    language: en-GB
+      - - 2017
+        - 5
+        - 12
+    title: 'Governança digital como vetor para uma nova geração de tecnologias
+      de participação social no Brasil'
+    container-title: 'Liinc em Revista'
+    publisher: "Ibict"
+    volume: 13
+    issue: 1
+    page: 223-236
+    DOI: 10.18617/liinc.v13i1.3895
+    URL: http://revista.ibict.br/liinc/article/view/3895/3221
+    language: pt-BR
 
-  - type: article-journal
-    id: icd_ibict
+  - type: book
+    id: dsfs15
     author:
-    - familly: Parra
-      given: H.
-    - familly: Poppi
-      given: R.
+    - family: Grus
+      given: Joel
+    title: 'Data Science from Scratch'
+    publisher: "O'Reilly Media Inc."
     issued:
-      date-parts:
-      - - 
----
+      - - 2015
+        - 4
+    publisher-place: '1005 Gravenstein Highway North, Sebastopol, CA 95472'
+    edition: 2
+...

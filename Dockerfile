@@ -22,8 +22,7 @@ RUN apt-get install -y haskell-platform && \
     cabal install pandoc-citeproc && \
     cabal install pandoc-crossref
 
-
 WORKDIR /code
 COPY . /code
 
-CMD sleep infinity
+CMD ./compile.sh

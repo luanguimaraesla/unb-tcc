@@ -1,4 +1,4 @@
-# Plataforma de participação
+# Plataforma de participação {#sec:ej}
 
 ## Democracia e Participação Social
 

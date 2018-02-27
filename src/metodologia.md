@@ -1,4 +1,4 @@
-# Metodologia
+# Metodologia {#sec:metodologia}
 ## Comunidade Empurrando Juntos
 ## Metodologia de desenvolvimento
 ## Gitlab

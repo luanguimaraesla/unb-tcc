@@ -1,12 +1,12 @@
-# Aprendizado de Máquina
+# Aprendizado de Máquina {#sec:ml}
 
-O Aprendizado de Máquina é um subconjunto da Ciência de Dados em que algorítmos de computador são usados para descobrir, de forma autônoma, estruturas presentes em dados e informações através da implementação de sofisticadas técnicas estatísticas de aprendizado.
+O Aprendizado de Máquina é um subconjunto da Ciência de Dados em que algorítmos de computador são usados para descobrir, de forma autônoma, estruturas presentes em dados e informações através da implementação de sofisticadas técnicas estatísticas de aprendizado. Os métodos estudados nesse Capítulo são de extrema importância para o desenvolvimento do algoritmo de agrupamento do Empurrando Juntos.
 
-Enquanto a Ciência de Dados está intrinsecamente ligada à solução de problemas do mundo real através da coleta, limpeza, formatação e compreensão de dados; o Aprendizado de Máquina se apresenta como uma área do conhecimento que transcende a própria ciência de dados, sendo tipicamente descrita como a "ciência cujo objetivo é usar dados existentes para desenvolver modelos que podemos utilizar para predizer várias características de dados futuros" ([TODO] MLFS)
+Enquanto a Ciência de Dados está intrinsecamente ligada à solução de problemas do mundo real através da coleta, limpeza, formatação e compreensão de dados; o Aprendizado de Máquina se apresenta como uma área do conhecimento que transcende a própria Ciência de Dados, sendo tipicamente descrita como a "ciência cujo objetivo é usar dados existentes para desenvolver modelos que podemos utilizar para predizer várias características de dados futuros" [@dsfs15]
 
 Podemos assim tratar a Ciência de Dados como um grande guarda-chuvas que compreende um conjunto de disciplinas incluindo _Big Data_, Inteligência Artificial, Mineração de Dados e também o Aprendizado de Máquina, configurando uma vasta área de estudos que hoje permite o computador interagir com seres humanos, conduzir um carro, identificar pessoas na multidão e realizar, com uma eficiência extraordinária, diversas outras atividades antes ditas humanas e até mesmo sobre-humanas.
 
-Essa área do conhecimento existiu virtualmente por praticamente duas décadas <---, porém, apenas após o advendo de uma nova geração de computadores com altas taxas de processamento e armazenamento, tornou-se praticamente viável e então, impulsionada por um mundo conectado à _Internet_, que proporcionou uma capacidade inimaginável de coleta massiva de informações, passou a ser largamente introduzida nos nossos empreendimentos e em nosso dia a dia.
+A base matemática para grande parte dos algoritmos foi desenvolvida durante várias séculos passados, porém, apenas após o advendo de uma nova geração de computadores com altas taxas de processamento e armazenamento, que o Aprendizado de Máquina tornou-se praticamente viável e então, impulsionado por um mundo conectado à _Internet_, que proporcionou uma capacidade inimaginável de coleta massiva de informações, tenha sido largamente introduzido nos nossos empreendimentos e em nosso dia a dia. As redes sociais (falar das redes)
 
 ## Classificação dos problemas
 
@@ -18,7 +18,7 @@ Esses algoritmos são guiados por padrões pré-existentes e características j�
 
 Para melhor explicar o funcionamento de um algoritmo supervisionado, podemos seguir o exemplo clássico da classificação de _e-mails_. Neste temos um problema em separar as mensagens recebidas em duas categorias _spam_ e _non-spam_. Partimos do pressuposto que temos uma série de _e-mails_ que se enquadram nesses dois conjuntos, sendo cada um deles rotulado respectivamente com o identificador de sua categoria. Processamos esse conjunto de dados em determinado algoritmo que pode, dessa forma, compreender as características dos dois conjuntos, se tornando capaz de discernir a qual deles pertence um novo email fornecido e não identificado baseando-se na comparação com os resultados previamente obtidos.
 
-O grande desafio a ser vencido quando se faz uso desse tipo de algoritmo é possuir um conjunto de dados rotulados grandes o suficiente para representar todas as possíveis variações. Esse conjunto de dados deve além de tudo ser o mais relevante possível, isto é, apresentar as características dos padrões com maior fidelidade e de maneira não viciada ([TODO] MLFXB).
+O grande desafio a ser vencido quando se faz uso desse tipo de algoritmo é possuir um conjunto de dados rotulados grandes o suficiente para representar todas as possíveis variações. Esse conjunto de dados deve além de tudo ser o mais relevante possível, isto é, apresentar as características dos padrões com maior fidelidade e de maneira não viciada [@dsfs15].
 
 Regressão linear, _k-nearest neighbors_ e árvores de decisão são exemplos de algoritmos supervisionados.
 
@@ -32,11 +32,11 @@ Podemos descrever um caso de _overfitting_ quando produzimos um modelo que se ad
 
 A abordagem fundamental para garantir que nosso modelo não está ou complexo ou simples demais é utilizar diferentes dados para treinar e para testar nossos modelos, garantindo. Uma possível forma para aplicar esse conceito é dividir o conjunto de dados disponíveis em dois grupos; um deles será direcinado ao treinamento, o outro ao teste. Assim podemos aferir a performance do modelo. Uma pratica comum nessa abordagem é separar dois terços dos dados para o treinamento.
 
-Segundo ([TODO] MLFS) um grande desafio de se encontrar um modelo que melhor se adequa ao conjunto de dados selecionado é garantir qual deles é realmente o superior a partir da análise dos resultados para o conjunto de teste. Para o autor, essa aferição seria uma espécie de meta-treinamento que faria com que o próprio conjunto de teste se tornasse um treinamento secundário incapaz de dizer qual dos modelos seria o melhor para a ocasião. Logo, nos casos em que utilizamos um conjunto de dados para treinar, testar e selecionar em um grupo de possíveis modelos, devemos dividir os dados disponíveis em três conjuntos: o conjunto de treinamento para a construção dos modelos, o conjunto de validação para escolher entre os modelos e, por fim, um conjunto de teste para julgar o modelo final. É claro que isso apenas irá mitigar o problema, já que podemos extender o mesmo argumento sobre meta-treinamentos para quantas forem as etapas de teste.
+Segundo [@dsfs15] um grande desafio de se encontrar um modelo que melhor se adequa ao conjunto de dados selecionado é garantir qual deles é realmente o superior a partir da análise dos resultados para o conjunto de teste. Para o autor, essa aferição seria uma espécie de meta-treinamento que faria com que o próprio conjunto de teste se tornasse um treinamento secundário incapaz de dizer qual dos modelos seria o melhor para a ocasião. Logo, nos casos em que utilizamos um conjunto de dados para treinar, testar e selecionar em um grupo de possíveis modelos, devemos dividir os dados disponíveis em três conjuntos: o conjunto de treinamento para a construção dos modelos, o conjunto de validação para escolher entre os modelos e, por fim, um conjunto de teste para julgar o modelo final. É claro que isso apenas irá mitigar o problema, já que podemos extender o mesmo argumento sobre meta-treinamentos para quantas forem as etapas de teste.
 
 #### Validação de um modelo
 
-Quando falamos de acurácia em Aprendizado de Máquina nos referimos ao grau de exatidão, ou seja, ao grau de conformidade de um valor medido ou calculado em relação à sua definição, demonstrado por um modelo específico. Podemos então criar a falsa impressão de que essa seria uma boa forma de avaliar a corretude e aplicabilidade do nosso modelo, entretanto, tipicamente não podemos utilizar essa medida para avaliar se um modelo é adequado o suficiente ([TODO] MLFS).
+Quando falamos de acurácia em Aprendizado de Máquina nos referimos ao grau de exatidão, ou seja, ao grau de conformidade de um valor medido ou calculado em relação à sua definição, demonstrado por um modelo específico. Podemos então criar a falsa impressão de que essa seria uma boa forma de avaliar a corretude e aplicabilidade do nosso modelo, entretanto, tipicamente não podemos utilizar essa medida para avaliar se um modelo é adequado o suficiente [@dsfs15].
 
 Retomando o exemplo clássico do modelo binário para identificação de _spams_, cada email rotulado se enquadra em uma das seguintes categorias:
 
@@ -69,7 +69,7 @@ Voltando ao caso hipotético dos _spams_ para o qual foram encontrados os seguin
 | **predição _spam_** | 100 | 5.000 |
 | **predição _non-spam_** | 10.000 | 100.000 |
 
-O valor referente a acurácia nesse caso seria de aproximadamente 0.87, levando a crer que esse poderia ser um modelo eficiente para muitas aplicações. Entretanto, devemos recorrer a outros métodos matemáticos para saber se este realmente poderia ser uma escolha viável. A combinação entre precisão e revocação, segundo ([TODO] MLFS) seria uma boa escolha. Definimos precisão $p$ e revocação (do ingês _recall_) $r$ como
+O valor referente a acurácia nesse caso seria de aproximadamente 0.87, levando a crer que esse poderia ser um modelo eficiente para muitas aplicações. Entretanto, devemos recorrer a outros métodos matemáticos para saber se este realmente poderia ser uma escolha viável. A combinação entre precisão e revocação, segundo [@dsfs15] seria uma boa escolha. Definimos precisão $p$ e revocação (do ingês _recall_) $r$ como
 
 $$p=p_{v}/(p_{v}+p_{f}),$$
 $$r=p_{v}/(p_{v}+n_{f}).$$
@@ -160,5 +160,5 @@ Vejamos também que a representação de atributos para os objetos podem existir
 
 As tabelas ([TODO] referenciar as três tabelas acima) mostram os memos dados representados de formas diferentes, o formato depende basicamente da fonte de dados, de como eles forma armazenados. Para as diversas representações existe um tipo de função de distância compatível. É possível, no entanto, utilizar qualquer uma das representações.
 
-### k-means_
+### _k-means_
 ### Outros
