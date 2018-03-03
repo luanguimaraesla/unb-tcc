@@ -23,6 +23,24 @@ references:
     URL: http://revista.ibict.br/liinc/article/view/3895/3221
     language: pt-BR
 
+
+  - type: article-journal
+    id: zgh04
+    author:
+    - family: Ghahramani
+      given: Zoubin
+    issued:
+      date-parts:
+      - - 2004
+        - 9
+        - 16
+    title: "Unsupervised Learning"
+    publisher: "Gatsby Computational Neuroscience Unit, University College London"
+    publisher-place: "Reino Unido"
+    URL: http://mlg.eng.cam.ac.uk/zoubin/papers/ul.pdf
+    language: en-UK
+
+
   - type: book
     id: dsfs15
     author:
@@ -31,8 +49,35 @@ references:
     title: 'Data Science from Scratch'
     publisher: "O'Reilly Media Inc."
     issued:
+      date-parts:
       - - 2015
         - 4
     publisher-place: '1005 Gravenstein Highway North, Sebastopol, CA 95472'
     edition: 2
+
+
+  - type: book
+    id: fefa06
+    editor:
+    - family: Guyon
+      given: Isabelle
+    - family: Gunn
+      given: Steve
+    - family: Nikrevesh
+      given: Masoud
+    - family: Zadeh
+      given: [Lofti, A.]
+    title: 'Feature Extraction: Foundations and Applications'
+    title-short: 'Feature Extraction'
+    number-of-pages: 778
+    collection-number: 207
+    collection-title: 'Studies in Fuzziness and Soft Computing'
+    ISBN: 978-3540354871
+    publisher: "Springer"
+    issued:
+      date-parts:
+      - - 2006
+        - 8
+    edition: '2006'
+    language: en-US
 ...
