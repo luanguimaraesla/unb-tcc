@@ -104,7 +104,7 @@ Não há um modelo que resolva todos os problemas de aprendizado. O grande desaf
 
 A seguir, apresentamos o embasamento teórico necessário para aprofundar essa e outras discussões em relação ao agrupamento de usuários com algoritmos não supervisionados. Os tópicos discutidos servirão de base para a formulação da proposta de uma arquitetura de _software_ apropriada para o módulo matemático da plataforma Empurrando Juntos.
 
-### Extração de _features_
+### Extração de _features_ {#sec:extracao}
 
 _Feature_ é sinônimo de variável de entrada ou atributo [@fefa06]. Selecionar um bom conjunto de _features_ para representar os objetos de um domínio específivo está entre os diversos desafios que podemos encontrar ao tentar desenvolver um modelo apropriado para nosso problema. Em um exemplo clássico da aferição de um diagnóstico médico, podemos selecionar febre, nível de glicose, dores nas articuções como _features_ capazes de descrever bem, em conjunto, determinados tipos de doença.
 
@@ -124,19 +124,93 @@ A natureza da proposta do Empurrando Juntos faz com que os dados obtidos a parti
 
 ### Visualização {#sec:visualizacao}
 
-Na maioria das aplicações do mundo real, o conjunto de dados precisa passar por algum tipo de tratamento antes de ser analisado ([TODO] AMATRIAN). Por exemplo, em casos onde a medida de similaridade é sensível a diferenças de magnitudes e escalas das variáveis de entrada, como a distância euclideana, pode ser necessário uma normalização de seus valores. Em outras situações nas quais os atributos dos objetos são de diferentes tipos, como categóricos e numéricos, há a necessidade de convertê-los para a mesma escala, ou buscar uma medida de similaridade que consiga tratar ambos os tipos de entrada.
+As observações sobre o mundo real são, na maioria das vezes, complexas e de difícil abstração quando tentamos representá-las no universo computacional. A análise de um conjunto de dados pode ser impraticável sem que esse conjunto seja antes pré-processado, como foi elucidado na [@sec:extracao]. Por exemplo, em casos onde a medida de similaridade é sensível a diferenças de magnitudes e escalas das variáveis de entrada, como a distância euclideana, é necessário realizar a normalização dos valores [@tall17].
 
-Além de simples conversões de escalas e normalizações, pode ser adequado aplicar transformações mais complexas no conjunto de dados, como a redução da dimensionalidade. Para esta tarefa, existem várias técnicas, de complexidade linear e não linear, que podem gerar resultados diferentes de acordo com as características dos dados. No geral uma das técnicas mais utilizadas para esta transformação é a Análise dos Componentes Principais (PCA).
+Como veremos no Capítulo [-@sec:ej], o Empurrando Juntos foi contruído com uma forte dependência inicial da ferramenta Pol.is. A popularidade desta ferramenta se deu principalmente pela facilidade com que permite os usuários visualizarem a qual grupo de opinião pertencem. Entretanto, agrupar esses usuários e apresentar esses grupos de uma maneira amigável não é uma tarefa simples.
+
+Cada comentário realizado em uma conversa amplia o espaço dimensional do nosso conjunto de dados. Normalmente temos dezenas de comentários em cada conversa, ou seja, os algoritmos utilizados precisam lidar com o agrupamento de pessoas em dezenas de dimensões distintas e apresentar essa informação ao participante. Uma projeção desses dados em um espaço dimensional reduzido é inevitável se o objetivo é torna-los compreensíveis aos seres humanos, portanto há necessariamente uma perda significante de informação.
+
+Um dos grandes desafios no projeto da plataforma Empurrando Juntos é encontrar o melhor fluxo de processamento e selecionar algoritmos capazes de apresentar os grupos de opinião em um espaço bidimensional mantendo a maior quantidade de informação possível. A maneira como o Pol.is realiza essa tarefa está longe de ser considerada ótima. A redução de dimensionalidade é aplicada antes do agrupamento das pessoas. Esse fluxo pode gerar resultados consideravelmente distorcidos de acordo com as características dos dados originais [@tall17]. As seções a seguir descrevem algumas tecnicas utilizadas para esta transformação e fornecem o embasamento para projetar o fluxo que melhor se adequa a proposta do Empurrando Juntos.
 
 ### PCA {#sec:pca}
 
+A Análise dos Componentes Principais (PCA) é provavelmente a mais antiga e mais bem conhecida técnica de análise multivariada. Foi primeiramente introduzida por Pearson em 1901 e desenvolvida independentemente por Hotelling década de 40. Assim como várias outros métodos de análise multivariada, o PCA não foi largamente utilizado até o advento de computadores capazes de processar um número massivo de dados. Contudo, hoje é incluído praticamente em todo pacote estatístico de computação [@joll02].
+ 
 #### Definição
 
-PCA é um método estatístico que permite representar em termos de outros eixos, com dimensões reduzidas. Esses eixos servem de base para uma projeção dos originais, ou seja, perde-se informação. Porém, essa projeção pode ainda representar suficientemente a quantidade de informação necessária para a identificação de padrões e agrupamentos nos dados.
+A ideia central por trás dessa técnica é a redução da dimensionalidade de um conjunto de dados que contenha um grande número de variáveis interrelacionadas, enquanto tenta preservar, da melhor maneira possível, a informação contida nesse conjunto.
 
-Para encontrar os eixos ou componentes principais, calcula-se os autovetores e autovalores da matriz de covariância dos dados, resultando em um autovetor para cada variável existente. Os respectivos autovalores descrevem a variância relativa ao conjunto total. Pode-se então ignorar os componentes com menor contribuição para a variância para obter os dados projetados com dimensões reduzidas.
+A quantidade de informação é fortemente relacionada com a variação presente nos dados. Esta pode ser obtida através do cálculo da dispersão, que se refere a medição do espalhamento dos dados [@dsfs15]. A variância é uma medida estatística de dispersão que indica o quão longe em geral um dado $X=[x_{1}, x_{2}, ..., x_{n}]$ se encontra de um valor esperado $E[X]$,
 
-### TSNE
+$$
+  E[X]=\sum_{i=1}^n x_{i}P(x_{i}),
+$$ {#eq:esperado}
+
+em que $P(x_{i})$ representa as probabilidades obtidas para cada elemento de $X$. Assim, se $\mu = E(X)$, definimos a variância $var(X)$ como
+
+$$
+  var(X) = E((X - \mu)^2).
+$$ {#eq:variancia}
+
+Em termos práticos podemos expressar a [@eq:variancia] como a média do quadrado da distância de cada ponto até a média total dos valores $x_{i}$. Enquanto a variância mede o desvio de uma única variável em relação a média, outra medida, chamada covariância, mede o quanto duas variáveis, $X$ e $Y$, variam em conjunto das suas médias. Define-se covariância $cov(X, Y)$ como
+
+$$
+  cov(X,Y)=\sum _{i=1}^{n}\left[\left(x_{i}-\mu _{i}^{x}\right)\left(y_{i}-\mu _{i}^{y}\right)P(x_{i},y_{i})\right],
+$$ {#eq:covariancia}
+
+em que $P(x_{i},y_{i})$ é a probabilidade de ocorrer o par $(x_{i},y_{i})$. Então, se o PCA tem como objetivo transformar nosso conjunto de dados em um novo conjunto com menor dimensionalidade, contendo a maior quantidade de informação possível, procura-se o conjunto de variáveis com os maiores valores de variância e covariância possíveis.
+
+#### Implementação
+
+O funcionamento do PCA se baseia primeiramente na extração uma matriz de covariância dos dados. Então, calcula-se os autovetores e autovalores dessa matriz, obtendo um autovetor para cada uma das variáveis. Os respectivos autovalores descrevem a variância ([@eq:variancia]) relativa ao conjunto de dados. Os componentes com menor contribuição para a variância são descartados e assim tem-se o conjunto de dados projetado com dimensões reduzidas.
+
+Considere o conjunto bidimensional de dados $A$ mostrados na [@tbl:dadospca]. Como exemplo, aplicaremos o PCA para obter um novo conjunto unidimensional $A'$ que represente a maior parte da informação contida em $A$. A [@fig:exemplo_01_pca] apresenta o conjunto original sobre o plano cartesiano.
+
+|Identificador|X|Y|
+|:---:|:---:|:---:|
+|A|8|9|
+|B|3|7|
+|C|5|4|
+|D|7|7|
+|E|1|3|
+|F|2|1|
+: Conjunto bidimensional de dados $A$ {#tbl:dadospca}
+
+![Conjunto de dados no plano cartesiano](images/machine_learning/example_01_pca.png){#fig:exemplo_01_pca}
+
+A primeira etapa consiste no uso da [@eq:esperado] para extrair os valores esperados para as variáveis. Então normalizamos o conjunto $A$ em torno de um eixo centralizado sem prejudicar a variância, [@fig:exemplo_02_pca]. Essa normalização é realizada através da subtração do valor esperado em cada variável.
+
+![Média subtraída dos pontos](images/machine_learning/example_02_pca.png){#fig:exemplo_02_pca}
+
+Após a normalização, utilizamos a [@eq:covariancia], para extrair a matriz de covariância, apresentada na [@tbl:covariancia].
+
+||X|Y|
+|:---:|:---:|:---:|
+|X|7.867|6.533|
+|Y|6.533|8.967|
+: Matriz de covariância para as variáveis X e Y {#tbl:covariancia}
+
+Podemos observar que os valores da diagonal principal medem a variância ([@eq:variancia]) e da diagonal secundária, a covariância entre X e Y, ou seja, a forma como as variáveis se relacionam. Pode-se inferir que para medidas de covariância positivas, os valores variam para mais e para menos juntos; para covariâncias negativas, quando um valor cresce o outro decresce; por fim, para covariâncias nulas, não há correspondência entre os valores de X e Y.
+
+A próxima etapa consiste na extração dos autovetores e autovalores a partir da matriz de covariância. Os autovetores representam as direções em que estão contidas as maiores variações para esse conjunto de dados. Então, selecionamos os autovetores que possuem os maiores autovalores correspondentes, já que estes são a representação da própria variância. Chamamos estes vetores de componentes principais.
+
+Considere novamente o conjunto de dados $A$. O número de autovetores é igual a quantidade de dimensões dos dados originais. A [@fig:exemplo_04_pca] traça os autovetores sobre o conjunto $A$ normalizado. Observamos claramente que o sentido _vermelho_ possui os maiores autovalores associados, ou seja, é a direção que possui a maior variância acumulada, tornando-a o eixo unidimensional no qual serão projetados os dados.
+
+![Autovetores extraídos da matriz de covariância](images/machine_learning/example_04_pca.png){#fig:exemplo_04_pca}
+
+Os componentes principais são representações do conjunto de dados original projetados em um espaço dimensional reduzido. A [@fig:exemplo_04_pca] evidencia como a projeção desses dados em eixos que maximizam a variância ocasiona a perda de informações. Contudo, ainda é possível se obter um grau de confiança elevado nos dados obtidos para sua utilização em algoritmos de agrupamento [@tall17], nosso objetivo no Empurrando Juntos.
+
+### t-SNE
+
+Apesar do PCA ser uma das técnicas mais utilizadas para redução da dimensionalidade, existem outros métodos populares para visualização de dados com muitas dimensões. A técnica t-SNE também é capaz de fornecer uma representação bi ou tridimensional para cada dado. Esse método é uma variação do SNE (_Stochastic Neighbor Embedding_), o qual é muito mais propício à otimizações, e produz significantemente melhores visualizações a partir da redução da tendência do acúmulo de dados no centro das representações em dimensões menores. A vantagem do t-SNE é a forma como revela estruturas preservando as diferentes escalas no conjunto de dados [@geof08].
+
+Técnicas lineares de redução de dimensionalidade, como o PCA, buscam uma representação em poucas dimensões de dados com um grau elevado de espalhamento. Entretanto, esses métodos são pouco eficientes quando desejamos representar dados muito similares que estão muito próximos uns dos outros. Para esse tipo de problema, técnicas não-lineares, como o t-SNE, podem ser utilizadas, já que evidenciam as diferentes escalas no conjunto de dados.
+
+O t-SNE é capaz de capturar grante parte da informação contida individualmente em cada dado, o que chamamos de estruturas locais. Enquanto que, diferentemente de várias outras técnicas não-lineares, também é bastante eficiente na manutenção da estrutura global, como a presença de grupos em várias escalas [@geof08].
+
+#### Definição
+
+
 
 ## Clusterização de dados {#sec:clusterizacao}
 

@@ -8,8 +8,8 @@ lang: pt-BR
 linkReferences: true
 
 figPrefix:
-  - "Imagem"
-  - "Imagens"
+  - "Figura"
+  - "Figuras"
 
 eqnPrefix:
   - "Equação"

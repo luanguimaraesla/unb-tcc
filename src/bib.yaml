@@ -25,6 +25,40 @@ references:
 
 
   - type: article-journal
+    id: geof08
+    author:
+    - family: Hinton
+      given: Geoffrey
+    - family: van der Maaten
+      given: Laurens
+    editor:
+    - family: Bengio
+      given: Yoshua
+    issued:
+      date-parts:
+      - - 2008
+        - 11
+    title: 'Visualizing Data using t-SNE'
+    container-title: 'Journal of Machine Learning Research 9 (2008) 2579-2605'
+    URL: 'http://www.jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf'
+    language: en-US
+
+
+  - type: article-journal
+    id: tall17
+    author:
+    - family: Martins
+      given: [Tallys, G.]
+    issued:
+      date-parts:
+      - - 2017
+    title: 'Modelo de clusterização de dados para identificação de grupos de
+      opinião em uma ferramenta de participação social'
+    publisher: "Universidade de Brasília, Faculdade UnB Gama"
+    language: pt-BR
+
+
+  - type: article-journal
     id: zgh04
     author:
     - family: Ghahramani
@@ -79,5 +113,23 @@ references:
       - - 2006
         - 8
     edition: '2006'
+    language: en-US
+
+
+  - type: book
+    id: joll02
+    author:
+    - family: Jolliffe
+      given: [I., T.]
+    title: 'Principal Component Analysis'
+    ISBN: 0-387-95442-2
+    collection-title: 'Springer series in statistics'
+    publisher: "Springer"
+    publisher-place: "175 Fifth Avenue, New York, NY 10010, USA"
+    issued:
+      date-parts:
+      - - 2002
+        - 2
+    edition: 2
     language: en-US
 ...
