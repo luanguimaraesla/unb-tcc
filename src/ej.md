@@ -9,7 +9,7 @@ Isso não parece ser um grande problema para as empresas donas das grandes redes
 
 ## Empurrando Juntos
 ### Proposta
-### Arquitetura
+### Arquitetura {#sec:arquitetura}
 ### Ferramentas
 #### django
 #### scikit-learn

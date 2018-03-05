@@ -200,13 +200,13 @@ Considere novamente o conjunto de dados $A$. O número de autovetores é igual a
 
 Os componentes principais são representações do conjunto de dados original projetados em um espaço dimensional reduzido. A [@fig:exemplo_04_pca] evidencia como a projeção desses dados em eixos que maximizam a variância ocasiona a perda de informações. Contudo, ainda é possível se obter um grau de confiança elevado nos dados obtidos para sua utilização em algoritmos de agrupamento [@tall17], nosso objetivo no Empurrando Juntos.
 
-### t-SNE
+### _t_-SNE
 
-Apesar do PCA ser uma das técnicas mais utilizadas para redução da dimensionalidade, existem outros métodos populares para visualização de dados com muitas dimensões. A técnica t-SNE também é capaz de fornecer uma representação bi ou tridimensional para cada dado. Esse método é uma variação do SNE (_Stochastic Neighbor Embedding_), o qual é muito mais propício à otimizações, e produz significantemente melhores visualizações a partir da redução da tendência do acúmulo de dados no centro das representações em dimensões menores. A vantagem do t-SNE é a forma como revela estruturas preservando as diferentes escalas no conjunto de dados [@geof08].
+Apesar do PCA ser uma das técnicas mais utilizadas para redução da dimensionalidade, existem outros métodos populares para visualização de dados com muitas dimensões. A técnica _t_-SNE também é capaz de fornecer uma representação bi ou tridimensional para cada dado. Esse método é uma variação do SNE (_Stochastic Neighbor Embedding_), o qual é muito mais propício à otimizações, e produz significantemente melhores visualizações a partir da redução da tendência do acúmulo de dados no centro das representações em dimensões menores. A vantagem do _t_-SNE é a forma como revela estruturas preservando as diferentes escalas no conjunto de dados [@geof08].
 
-Técnicas lineares de redução de dimensionalidade, como o PCA, buscam uma representação em poucas dimensões de dados com um grau elevado de espalhamento. Entretanto, esses métodos são pouco eficientes quando desejamos representar dados muito similares que estão muito próximos uns dos outros. Para esse tipo de problema, técnicas não-lineares, como o t-SNE, podem ser utilizadas, já que evidenciam as diferentes escalas no conjunto de dados.
+Técnicas lineares de redução de dimensionalidade, como o PCA, buscam uma representação em poucas dimensões de dados com um grau elevado de espalhamento. Entretanto, esses métodos são pouco eficientes quando desejamos representar dados muito similares que estão muito próximos uns dos outros. Para esse tipo de problema, técnicas não-lineares, como o _t_-SNE, podem ser utilizadas, já que evidenciam as diferentes escalas no conjunto de dados.
 
-O t-SNE é capaz de capturar grante parte da informação contida individualmente em cada dado, o que chamamos de estruturas locais. Enquanto que, diferentemente de várias outras técnicas não-lineares, também é bastante eficiente na manutenção da estrutura global, como a presença de grupos em várias escalas [@geof08].
+O _t_-SNE é capaz de capturar grante parte da informação contida individualmente em cada dado, o que chamamos de estruturas locais. Enquanto que, diferentemente de várias outras técnicas não-lineares, também é bastante eficiente na manutenção da estrutura global, como a presença de grupos em várias escalas [@geof08].
 
 #### Definição
 
@@ -234,11 +234,11 @@ Para obter a matriz $Q$, utilizaremos ao invés da distribuição Gaussiana apre
 
 $$
   f(z)=\frac{1}{1+z^2},
-$$ {#eq:fcauchy}
+$$
 
 $$
  q_{ij}= \frac{f(|y_{i}-y_{j}|)}{\sum_{k\neq i} f(|y_{i}-y_{k}|)}.
-$$ {#eq:disttstudent}
+$$
 
 O algoritmo é baseados em itarações que buscam aproximar as matrizes de similaridade. Para isso é necessário minimizar a divergência de Kullbeck-Leiber $KL(P||Q)$ entre duas distribuições distintas $p_{ij}$ e $q_{ij}$:
 
@@ -249,10 +249,14 @@ $$
 Para minimizar o valor de $C$ realizamos o calculo do gradiente descendente $\frac{\delta C}{\delta y_{i}}$, que indica a direção para onde os valores mínimos locais se propagam. O gradiente pode ser computado analiticamente por
 
 $$
-  \frac{\delta C}{\delta y_{i}} = 4 \sum_{j}(p_{ij}-q_{ij})f(|x_{i}-x_{j}|)u_{ij},
+  g(z)=\frac{z}{1+z^2},
+$$
+
+$$
+  \frac{\delta C}{\delta y_{i}} = 4 \sum_{j}(p_{ij}-q_{ij})f(|y_{i}-y_{j}|)u_{ij},
 $$ 
 
-em que $f(z)$ é dado pela [@eq:fcauchy] e $u_{ij}$ é o vetor unitário que vai de $y_{j}$ até $y_{i}$. O gradiente descendente é inicializado na primeira iteração com uma amostragem de pontos mapeados aleatoriamente em uma curva gaussiana isotrópica com pequena variância centrada em torno da origem. Um _momentum_ grande é necessário para evitar mínimos locais pobres e incoerentes, e acelerar a otimização. Na prática, o gradiente atual é adicionado a uma soma dos gradientes exponencialmente descendentes anteriores para determinar as mudanças nas coordenadas dos pontos do mapa a cada nova iteração. Matematicamente, a atualização de gradiente no tempo é dada por [@geof08]
+em que $u_{ij}$ é o vetor unitário que vai de $y_{j}$ até $y_{i}$. O gradiente descendente é inicializado na primeira iteração com uma amostragem de pontos mapeados aleatoriamente em uma curva gaussiana isotrópica com pequena variância centrada em torno da origem. Um _momentum_ grande é necessário para evitar mínimos locais pobres e incoerentes, e acelerar a otimização. Na prática, o gradiente atual é adicionado a uma soma dos gradientes exponencialmente descendentes anteriores para determinar as mudanças nas coordenadas dos pontos do mapa a cada nova iteração. Matematicamente, a atualização de gradiente no tempo é dada por [@geof08]
 
 $$
  Y_{t} = Y_{t-1}+\eta \frac{\delta C}{\delta Y}+\alpha (t) (Y_{t-1} - Y_{t-2}),
@@ -260,16 +264,35 @@ $$
 
 em que $Y_{t}$ representa a o mapa bidimensional $\mathbb{R}^{2}$ na iteração $t$, $\eta$ indica a taxa de aprendizado e $\alpha(t)$ representa o _momentum_ na iteração $t$. A taxa de aprendizado $\eta$ é uma variável adaptativa que gradualmente aumenta nas direções em que o gradiente é mais estável [@geof08].
 
+### _t_-SNE x PCA 
+
+Apresentamos dois algoritmos de redução de dimensionalidade, o _t_-SNE e o PCA. O _t_-SNE possui várias características que corroboram sua escolha em detrimento do PCA se levarmos em consideração o contexto multi-dimensional de agrupamento nas conversas no Empurrando Juntos. A principal delas é a preservação das estruturas locais dos dados, que resulta em uma melhor separação e, consequentemente, em uma melhor distinção dos grupos de opinião. Contudo, há outros pontos importantes que devem ser levados em consideração na escolha de uma primeira abordagem de módulo matemático para a plataforma. 
+
+Primeiramente, o PCA pode ser calculado de forma iterativa, então, se já calculamos as componentes para um espaço com dimensionalidade $D$, necessitamos de pouco processamento para obter uma nova representação para $(D+1)$. O PCA também é capaz de oferecer um histograma sobre os valores originais, já que a projeção dos dados sobre os componentes principais indica a direção do acúmulo de variância. Outro fator de peso é que, uma vez calculada a transformação linear oferecida pelo PCA, esta pode ser aplicada a novos pontos, o que não acontece no _t_-SNE, que utiliza todo o conjunto de dados para calcular os gradientes descendentes. Isso fornece um mapa para os pontos conhecidos, mas não retorna uma função que pode ser aplicada a novos pontos, ampliando significativamente os custos de processamento.
+
+Neste contexto, optamos pelo PCA na proposta de arquitetura inicial do módulo matemátio. Essa escolha não se dá apenas porque existem as vantagens elucidadas acima, mas também porque há correspondência direta com a ferramenta de participação Pol.is, que já possui um respaldo na sociedade e atravessou anos de desenvovlimento. Como veremos no Capitulo [-@sec:ej], existiu desde a concepção do Empurrando Juntos, uma dependência arquitetural relacionada ao Pol.is, desta forma, boa parte das validações as quais a plataforma será submetida, será de cunho comparativo em relação a essa dependência.
+
+Essa decisão acompanhou a formulação de uma arquitetura que permitisse alterações consideraveis no fluxo de processamento de dados com o mínimo de esforço possível. Os padrões e ferramental utilizados estão descritos na [@sec:arquitetura]. Assim, o _t_-SNE se mantém um forte candidato para evoluções futuras de cunho comparativo e substitutivo.
+
 ## Clusterização de dados {#sec:clusterizacao}
+
+A funcionalidade primordial no seio da proposta do Empurrando Juntos é o algoritmo que agrupa os participantes de acordo com seus comportamentos. Esses grupos servem de insumo para uma série de outras funcionalidades, que incluem análises estatísticas e modelos de gamificação. Discutimos também sobre a visualização dos dados, que nesse contexto, é propriamente a visualização dos grupos de opinião. Aliados, os algoritmos de visualização e agrupamento são o coração do Empurrando Juntos, evidenciados como algumas das principais características que destacam essa de outras propostas para plataformas de participação social.
+
+Se encaramos, em termos da participação social, a utilização de algoritmos de agrupamento como algo inovador e pouco explorado, não podemos dizer o mesmo sobre sua utilização em larga escala pela Indústria da Informação. O exame minucioso daquilo de que buscamos, clicamos, gostamos e compramos são um prato cheio para que sejamos automaticamente incluídos em grupos de consumo armazenados nas bases de dados de grandes empresas, íscas indefesas para campanhas publicitárias arrebatadoras. Essa é a visão estatística do sucesso, impulsionada por uma nova geração de máquinas e algoritmos capazes de processar uma massa exorbitante de dados coletados na _Internet_.
+
+Muito embora o exemplo dos sistemas de recomendação seja o mais popular quando o tema é clusterização, termo que usaremos para nos referir ao agrupamento de dados, a aplicação desses algoritmos se dá em diversas esferas do conhecimento. A biologia, por exemplo, dedicou anos a criação da taxonomia, a classificação hierarquizada para todas as formas de vida conhecidas: reinos, filos, classes, ordens, famílias, gêneros e espécies. Não é coincidência o fato de ser uma das áreas que mais se beneficia do potencial dos algoritmos de clusterização [@ptan05]. Da climatologia à medicina, a identificação de padrões ocultos em um conjunto de dados é um recurso cada vez mais valorizado pela ciência e pelas pessoas na infindável busca pela compreensão das coisas.
+
+> _"Classes, ou grupos conceitualmente significativos de objetos que compartilham características comuns, desempenham um papel importante na forma como as pessoas analisam e descrevem o mundo. Na verdade, os seres humanos são habilidosos em dividir objetos em grupos (clusterização) e atribuir objetos específicos a esses grupos (classificação)"_ [@ptan05].
 
 ### Definição
 
-[TODO] Substituir essa primeira parte por uma ligação ao EJ
-Sistemas de Recomendação e recuperação de Informações comumente utilizam tecnicas de clusterização em atividades de Mineração de Dados para reconhecer e extrair padrões em um conjunto de dados.
+A clusterização consiste no agrupamento de objetos baseado apenas na informação contida no conjunto de dados que descreve esses objetos e seus relacionamentos. O objetivo é unir dentro de um mesmo grupo, ou _cluster_, objetos que apresentam similaridade entre si e em outros grupos objetos não estão relacionados com este grupo. Quanto maior for a similaridade entre os objetos de um grupo e a diferença entre dois grupos, melhor é a clusterização [@ptan05].
 
-Nesse tipo de análise, o objetivo é organizar objetos em grupos ou clusters, de forma que os objetos de um mesmo cluster possuam uma semelhança significativa entre si por algum tipo de critério estabelecido ([TODO] GAN). Imaginando então alguns objetos sobre a mesa, podemos querer agrupá-los por seu tamanho, cor forma, ou ainda por uma combinação de todas as três características. É possível realizar essa separação apenas observando padrões sobre as qualidades dos objetos, não sendo necessario nenhum treinamento anterior para identificar os diferentes padrões. Essa tecnica foi descrita na seção ([TODO] seção Aprendizado não Supervisionado).
+O agrupamento de objetos está relacionado com outras técnicas de classificação utilizadas para dividir objetos em grupos. Contudo, essa semelhança se limita ao fato do próprio algoritmo de clusterização derivar os rótulos de para grupo a partir do conjunto de dados. Não há previamente um modelo extraído de dados de treinamento previamente rotulados. Consequentemente, a clusterização se enquadra na categoria de classificação não supervisionada.
 
-O agrupamento de objetos e determinado em função de uma medida de distância. Desta forma, o objetivo de um algoritmo de clusterização é encontrar e classificar itens similares de maneira que a distância _intra-cluster_ (soma das distâncias dos objetos de um _cluster_ até seu centro) seja a menor possível, e a distância entre diferentes _clusters_ seja maximizada ([TODO] AMATRIAIN).
+### Tipos de clusterização
+
+### Tipos de _clusters_
 
 ### Representação dos dados
 

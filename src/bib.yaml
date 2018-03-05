@@ -132,4 +132,24 @@ references:
         - 2
     edition: 2
     language: en-US
+
+
+  - type: book
+    id: ptan05
+    author:
+    - family: Tan
+      given: Pang-Ning
+    - family: Steinbach
+      given: Michael
+    - family: Kumar
+      given: Vipin
+    title: 'Introduction to Data Mining'
+    chapter-number: 8
+    container-title: 'Cluster Analysis: Basic Concepts and Algorithms'
+    publisher: 'Pearson'
+    issued:
+      date-parts:
+      - - 2005
+    edition: 1
+    language: en-US
 ...
