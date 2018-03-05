@@ -210,7 +210,55 @@ O t-SNE é capaz de capturar grante parte da informação contida individualment
 
 #### Definição
 
+Considere que um ponto $x_{i}$ é a representação de um dado em um espaço $\mathbb{R}^{D}$, em que $D$ é a sua dimensionalidade. Um ponto mapeado $y_{i}$ é um ponto em um espaço $\mathbb{R}^{2}$ chamado de mapa. Esse mapa conterá a representação final do conjunto de dados. Essa representação é por definição uma função bijetora, ou seja, cada ponto mapeado $y_{i}$ representa um ponto original $x_{i}$.
 
+Uma vez que temos o conjunto de dados original, desejamos conservar a estrutura desses dados. Em outras palavras, se dois pontos $x_{i}$ e $x_{j}$ estão próximos no espaço $\mathbb{R}^{D}$, desejamos que suas representações no mapa $\mathbb{R}^{2}$ também permaneçam próximas. Para isso utilizamos a distância Euclideana entre dois pontos originais $|x_{i} - x_{j}|$ e entre dois pontos mapeados $|y_{i} - y_{j}|$. Primeiramente calculamos a similaridade condicional $p_{i|j}$ entre dois pontos originais, dada por
+
+$$
+  p_{i|j} = \frac{exp(-|x_{i}-x_{j}|^2/2
+  \sigma _{i}^2)}{\sum_{k\neq i}
+  exp(-|x_{i}-x_{k}|^2/2 \sigma _{i}^2)},
+$$ {#eq:simgauss}
+
+que nos mostra o quanto dois pontos $x_{i}$ e $x_{j}$ estão próximos, considerando a Distribuição Gaussiana em torno de $x_{i}$ com uma determinada variância $\sigma_{i}^2$.
+
+Podemos assim definir a similaridade $p_{ij}$ como a versão simétrica da similaridade condicional ([@eq:simgauss])
+
+$$
+  p_{ij}=\frac{p_{j|i}+p_{i|j}}{2N},
+$$ {#eq:simsim}
+
+em que N é o total de pontos contidos no nosso conjunto de dados. Uma vez que é possível obter a similaridade entre dois pontos, podemos calcular uma matriz de similaridade $P$ para todo o conjunto de dados original. Essa matriz é fixa e servirá de comparação para uma segunda matriz de similaridade $Q$ que calcularemos para o conjunto de pontos mapeados $Y = [y_{1}, y_{2}, ..., y_{n}]$.
+
+Para obter a matriz $Q$, utilizaremos ao invés da distribuição Gaussiana apresentada na [@eq:simgauss], a distribuição _t-Student_ com um grau de liberdade, também conhecida como distribuição Cauchy
+
+$$
+  f(z)=\frac{1}{1+z^2},
+$$ {#eq:fcauchy}
+
+$$
+ q_{ij}= \frac{f(|y_{i}-y_{j}|)}{\sum_{k\neq i} f(|y_{i}-y_{k}|)}.
+$$ {#eq:disttstudent}
+
+O algoritmo é baseados em itarações que buscam aproximar as matrizes de similaridade. Para isso é necessário minimizar a divergência de Kullbeck-Leiber $KL(P||Q)$ entre duas distribuições distintas $p_{ij}$ e $q_{ij}$:
+
+$$
+  C = KL(P||Q) = \sum_{i,j}p_{ij}\log\frac{p_{ij}}{q_{ij}}.
+$$
+
+Para minimizar o valor de $C$ realizamos o calculo do gradiente descendente $\frac{\delta C}{\delta y_{i}}$, que indica a direção para onde os valores mínimos locais se propagam. O gradiente pode ser computado analiticamente por
+
+$$
+  \frac{\delta C}{\delta y_{i}} = 4 \sum_{j}(p_{ij}-q_{ij})f(|x_{i}-x_{j}|)u_{ij},
+$$ 
+
+em que $f(z)$ é dado pela [@eq:fcauchy] e $u_{ij}$ é o vetor unitário que vai de $y_{j}$ até $y_{i}$. O gradiente descendente é inicializado na primeira iteração com uma amostragem de pontos mapeados aleatoriamente em uma curva gaussiana isotrópica com pequena variância centrada em torno da origem. Um _momentum_ grande é necessário para evitar mínimos locais pobres e incoerentes, e acelerar a otimização. Na prática, o gradiente atual é adicionado a uma soma dos gradientes exponencialmente descendentes anteriores para determinar as mudanças nas coordenadas dos pontos do mapa a cada nova iteração. Matematicamente, a atualização de gradiente no tempo é dada por [@geof08]
+
+$$
+ Y_{t} = Y_{t-1}+\eta \frac{\delta C}{\delta Y}+\alpha (t) (Y_{t-1} - Y_{t-2}),
+$$
+
+em que $Y_{t}$ representa a o mapa bidimensional $\mathbb{R}^{2}$ na iteração $t$, $\eta$ indica a taxa de aprendizado e $\alpha(t)$ representa o _momentum_ na iteração $t$. A taxa de aprendizado $\eta$ é uma variável adaptativa que gradualmente aumenta nas direções em que o gradiente é mais estável [@geof08].
 
 ## Clusterização de dados {#sec:clusterizacao}
 
