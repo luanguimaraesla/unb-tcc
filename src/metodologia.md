@@ -2,10 +2,9 @@
 ## Comunidade Empurrando Juntos
 ## Metodologia de desenvolvimento
 ## Gitlab
-## teste
+## _Test Driven Development_
 ## Integração Contínua
 ## Deploy Contínuo
 ### Docker
 ### Rancher
 ## Documentação
-## Literate programming

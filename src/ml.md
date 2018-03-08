@@ -88,31 +88,76 @@ Podemos inferir que
 
 ### Aprendizado não supervisionado
 
-Quando estamos lidando com um problema no qual não se obtém previamente nem rótulos para nossas entidades, nem informações adicionais do ambiente acerca delas, nos referimos a uma situação de aprendizado não supervisionado. Isso quer dizer que nossos dados não possuem padrões conhecidos que serviriam como base para nossas análises. Mesmo assim podemos desenvolver um modelo formal de aprendizado baseado na noção de que o objetivo da máquina é criar representações dos dados de entrada que podem ser utilizadas para tomada de decisões, predição de dados futuros, etc.
+Nos referimos a uma situação de aprendizado não supervisionado quando estamos lidando com um problema no qual não se obtém previamente nem rótulos para nossas entidades, nem informações adicionais do ambiente a cerca delas. Isso quer dizer que nossos dados não possuem padrões conhecidos que serviriam como base para nossas análises. Mesmo assim podemos desenvolver um modelo formal de aprendizado baseado na noção de que o objetivo da máquina é criar representações dos dados de entrada que podem ser utilizadas para tomada de decisões, predição de dados futuros, etc.
 
 A ciência por trás dessa classe de algoritmos pode ser tratada em termos da procura por um modelo probabilistico dos dados. Isso significa que, até quando não possuímos um conjunto de dados de treinamento, podemos estimar um modelo que representa a distribuição de probabilidade para um novo dado de entrada $x_{t}$, dado um conjunto de entradas $x_{1}, x_{2}, ..., x_{t-1}$. Temos assim um modelo probabilístico $P(x_{t}|x_{1}, x_{2}, ..., x_{t-1})$. Para casos mais simples onde não importa a ordem dos dados de entrada, podemos definir todos os dados independentemente e identicamente em alguma distribuição $P(x)^2$ [@zgh04].
 
-Considere um exemplo em que $x$ representa o padrão de comportamento de pessoas em uma conversa _online_. $P(x)$ é construído a partir dos dados coletados de uma pessoa da dessa conversa. A probabilidade do comportamento de outra pessoa pode então ser validada por esse modelo. Assim, se o valor obtido é muito baixo, podemos concluir que ou essas duas pessoas possuem padrões de comportamento muito diferentes ou nosso modelo não é suficientemente bom para inferir essa informação. Esse tipo de estratégia é muito utilizado para a detecção de anomalias em um conjunto de dados.
+Essas interpratações probabilísticas acerca desses algoritmos, ainda que sejam desejadas, nem sempre condizem com a realidade de suas concepções. Há uma quantidade significativa de modelos eurísticos nos quais a conexão com a Probabilidade pode nem existir, ou ainda, ser estabelecida após sua criação.
 
-Claro que esse não é o único uso pertinente para os algoritmos de aprendizado não supervisionados. A classificação de dados também é uma área muito explorada. Assumindo $P_{A}(x)$ como um modelo extraído do comportamento de um grupo $A$ de pessoas em uma conversa _online_, e o modelo $P_{B}(x)$ extraído de um grupo $B$, o algoritmo é capaz de inferir a qual grupo pertence uma nova pessoa $p$, que apresenta determinando comportamento $x_{p}$, comparando as probabilidades relativas a cada grupo, $P_{A}(x_{p})$ e $P_{B}(x_{p})$ [@zgh04].
+Considere um exemplo em que $x$ representa o padrão de comportamento de pessoas em uma conversa _online_. $P(x'|X)$ é construído a partir dos dados coletados de uma pessoa da dessa conversa e depende do conjunto $X=[x_{1}, x_{2},...,x_{n}]$. A probabilidade do comportamento de outra pessoa pode ser validada por esse modelo. Assim, se o valor obtido é muito baixo, podemos concluir que ou essas duas pessoas possuem padrões de comportamento muito diferentes ou nosso modelo não é suficientemente bom para inferir essa informação. Esse tipo de estratégia é muito utilizado para a detecção de anomalias em um conjunto de dados.
+
+Claro que esse não é o único uso pertinente para os algoritmos de aprendizado não supervisionados. No contexto do Empurrando Juntos, a classificação de dados é também uma área de grande importância e interesse. Assumindo $P(x| \theta_{A})$ como um modelo extraído do comportamento de um grupo $A$ de pessoas em uma conversa _online_, e o modelo $P(x| \theta_{B})$ extraído de um grupo $B$, o algoritmo é capaz de inferir a qual grupo pertence uma nova pessoa $p$, que apresenta determinando comportamento $x_{p}$, comparando as probabilidades relativas a cada grupo, $P(x_{p}| \theta_{A})$ e $P(x_{p}| \theta_{B})$ [@zgh04].
 
 Além desses usos, podemos citar a aplicação de algoritmos não supervisionados no desenvolvimento de sistemas de comunicação eficientes e compressão de dados, configurando uma ligação importante entre as áreas de aprendizado de máquina, estatística e teoria da informação [@zgh04].
-
-> _"Não há um modelo apropriado para todos os tipos de dados"_ [@zgh04].
 
 Não há um modelo que resolva todos os problemas de aprendizado. O grande desafio é desenvolver um que seja apropriado para um conjunto específico de dados levando em consideração propriedades desejadas. A ferramenta de participação social Pol.is, descrita na [@sec:polis], utiliza um algoritmo não supervisionado para agrupar pessoas de acordo com seus respectivos votos em determinados comentários. Os grupos formados servem como referência para que possamos inferir caracteristicas semelhantes em determinado subconjunto de usuários, entretanto o algoritmo não revela explicitamente quais caracteristicas são essas, que podem ser completamente abstratas, impossibilitando várias análises posteriores sobre esses grupos. Podemos formar o grupo das pessoas mais politicamente incoerentes, por exemplo, o que não teria valor prático algum para a maior parte das pesquisas sociais. Isso pode ser uma grande desvantagem dependendo do tipo de informação que se deseja obter desses grupos.
 
 A seguir, apresentamos o embasamento teórico necessário para aprofundar essa e outras discussões em relação ao agrupamento de usuários com algoritmos não supervisionados. Os tópicos discutidos servirão de base para a formulação da proposta de uma arquitetura de _software_ apropriada para o módulo matemático da plataforma Empurrando Juntos.
 
+### Representação dos dados
+
+Para que seja possível analisar um certo agrupamento de dados é necessário identificar quais informações podem ser utilizadas para representar uma abstração prática dos objetos a serem agrupados. É preciso encontrar então um conjunto de atributos que descrevem os itens para que seja possível calcular o grau de semelhança entre os elementos. Esses atributos, por sua vez, podem ser escritos em forma numérica, categórica, binária e uma variedade de outros tipos. Como exemplo, podemos representar pessoas em vetores compostos pelo valor numério de seu ano de nascimento e um valor binário, 0 ou 1, para masculino ou feminino.
+
+$$
+  \begin{pmatrix}
+    pessoa_{1} \\
+    pessoa_{2} \\
+    \vdots \\
+    pessoa_{n}
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    1997 & 1 \\
+    1943 & 0 \\
+    \vdots  & \vdots \\
+    ano_{n} & sexo_{n}
+  \end{pmatrix}
+$$
+
+Vejamos também que a representação de atributos para os objetos podem existir em diferentes formatos e escalas.
+
+|Objeto|Cor|
+|:---:|:---:|
+|A|Azul|
+|B|Amarelo|
+|C|Vermelho|
+:Representação nominal sobre a cor {#tbl:rep1}
+
+|Objeto|Azul|Amarelo|Vermelho|
+|---|---|---|---|
+|A|1|0|0|
+|B|0|1|0|
+|C|0|0|1|
+:Representação categórica para o atributo cor {#tbl:rep2}
+
+|Objeto|Cor(THz)|
+|---|---|
+|A|606|
+|B|508|
+|C|400|
+:Representação numérica da cor em frequência (THz) {#tbl:rep3}
+
+As [@tbl:rep1, @tbl:rep2, @tbl:rep3] mostram os mesmos dados representados de formas diferentes, o formato depende basicamente da fonte de dados, de como eles forma armazenados. Para as diversas representações existe um tipo de função de distância compatível. É possível, no entanto, utilizar qualquer uma das representações.
+
 ### Extração de _features_ {#sec:extracao}
 
-_Feature_ é sinônimo de variável de entrada ou atributo [@fefa06]. Selecionar um bom conjunto de _features_ para representar os objetos de um domínio específivo está entre os diversos desafios que podemos encontrar ao tentar desenvolver um modelo apropriado para nosso problema. Em um exemplo clássico da aferição de um diagnóstico médico, podemos selecionar febre, nível de glicose, dores nas articuções como _features_ capazes de descrever bem, em conjunto, determinados tipos de doença.
+_Feature_ é sinônimo para variável de entrada ou atributo [@fefa06]. Selecionar um bom conjunto de _features_ para representar os objetos de um domínio específivo está entre os diversos desafios que podemos encontrar ao tentar desenvolver um modelo apropriado para nosso problema. Em um exemplo clássico da aferição de um diagnóstico médico, podemos selecionar febre, nível de glicose, dores nas articuções como _features_ capazes de descrever bem, em conjunto, determinados tipos de doença.
 
-A expertise humana, que é sempre necessária para converter dados crus em um conjunto de _features_ úteis, pode ser complementada pelos métodos automáticos de construção de _feature_. Em alguns casos essa etapa está embutida no próprio processo de modelagem, em outros constitui uma etapa anterior chamada pré-processamento de dados [@fefa06]. Essa etapa é importante quando há um conjunto de dados que podem apresentar inconsistências, estarem incompletos, serem ruidosos, etc.
+A expertise humana, que é sempre necessária para converter dados crus em um conjunto de _features_ úteis, pode ser complementada pelos métodos automáticos de construção. Em alguns casos essa etapa está embutida no próprio processo de modelagem, em outros constitui uma etapa de pré-processamento de dados [@fefa06]. Essa etapa é importante quando há um conjunto de dados que podem apresentar inconsistências, estarem incompletos, serem ruidosos, etc.
 
 Desta forma, considere $X$ um dado representado em sua forma original, ou seja, não pré-processado, por um vetor de $n$ caracteristicas, $X=[x_{1}, x_{2}, ..., x_{n}]$. Assim, chamamos de $X'$ o vetor $n'$-dimensional que representa $X$ transformado após o pré-processamento, $X'=[x'_{1}, x'_{2}, ..., x'_{n'}]$. Essa transformação pode incluir, entre outras, as seguintes tarefas [@fefa06]:
 
-* **Padronização**: Adequação de escalas, unidades de medidas, tipos de variáveis, etc. entre _features_ que representam uma informações comparáveis entre si.
+* **Padronização**: Adequação de escalas, unidades de medidas, tipos de variáveis, normalização, etc. entre _features_ que representam informações comparáveis entre si.
 * **Normalização**: Busca pela obtenção do grau ótimo de organização de uma informação, reduzindo dependências, redundâncias, etc.
 * **Extração de _features_ locais**: Utilização de técnicas para incluir informações específicas do domínio entre as _features_.
 * **Redução de dimensionalidade**: Quando a dimensionalidade do dado é muito alta, algumas técnicas podem ser aplicadas para reduzir esse espaço dimensional mantendo a maior quantidade de informação possível. A [@sec:pca] descreve um desses métodos, o PCA (Análise de Componentes Principais). As coordenadas dos pontos que representam os dados em um espaço dimensional reduzido podem ser usadas como _features_ ou simplesmente para possibilitar ou facilitar a visualização desses dados.
@@ -292,52 +337,30 @@ O agrupamento de objetos está relacionado com outras técnicas de classificaç�
 
 ### Tipos de clusterização
 
+A formação de um conjunto de grupos é frequentemente tratado apenas como clusterização, entretanto algumas subcatogorias podem descrever melhor a natureza desses algoritmos:
+
+* **Aninhados e não aninhados**: Uma divisão não aninhada, ou particionada, consiste na separação de um conjunto de dados em grupos que não se sobrepõem. Uma configuração aninhada, ou hierarquica, permite a existência de subgrupos. Nessa organização cada _cluster_ é constituído pela união de seus _subclusters_ filhos, e a raiz é um _cluster_ que contém todos os objetos, como uma árvore.
+
+* **Exclusivos, sobrepostos e distorcidos**: A organização exclusiva atribui um abjeto apenas a um _cluster_, enquanto que a organização por sobreposição permite que esse objeto pertença a mais de um grupo simultaneamente. Seguindo a lógica _Fuzzy_ (distorcida), os objetos pertencem a todos os _clusters_ com determinado grau de pertencimento que vai de 0, indicando um relacionado inexistente, à 1, indicando um relacionamento total.
+
+* **Completos e parciais**: Na distribuição completa, todos os objetos são atribuídos a um _cluster_, enquanto que na distribuição parcial isso não acontece necessariamente, permitindo a existência de objetos que não pertencem a nenhum grupo.
+
 ### Tipos de _clusters_
 
-### Representação dos dados
+Os grupos formados pelos diferentes tipos de clusterização também possuem suas próprias características de agrupamento, estas característica são definidas princiapalmente pelo algoritmo utilizado e são determinantes na decisão sobre qual deles escolher de acordo com o objetivo da análise dos _clusters_. Esses grupos, ilustrados na [@fig:tipoclusters], podem pertencer às seguintes categorias:
 
-Para que seja possível analisar um certo agrupamento de dados é necessário identificar quais informações podem ser utilizadas para representar uma abstração prática dos objetos a serem agrupados. É preciso encontrar então um conjunto de atributos que descrevem os itens para que seja possível calcular o grau de semelhança entre os elementos. Esses atributos, por sua vez, podem ser escritos em forma numérica, categórica, binária e uma variedade de outros tipos. Como exemplo, podemos representar pessoas em vetores compostos pelo valor numério de seu ano de nascimento e um valor binário, 0 ou 1, para masculino ou feminino.
+* **_Clusters_ bem separados**: Cada objeto está necessariamente próximo a todos os objetos do seu _cluster_ e relativamente distante de outros objetos.
 
-$$
-  \begin{pmatrix}
-    pessoa_{1} \\
-    pessoa_{2} \\
-    \vdots \\
-    pessoa_{n}
-  \end{pmatrix}
-  =
-  \begin{pmatrix}
-    1997 & 1 \\
-    1943 & 0 \\
-    \vdots  & \vdots \\
-    ano_{n} & sexo_{n}
-  \end{pmatrix}
-$$
+* **_Clusters_ baseados em centros**: Cada objeto está necessariamente mais próximo do centro de seu _cluster_ do que do centro de outros _clusters_.
 
-Vejamos também que a representação de atributos para os objetos podem existir em diferentes formatos e escalas.
+* **_Clusters_ baseados em contiguidade**: Cada objeto está mais próximo de ao menos um outro objeto de seu _cluster_ do que de qualquer outro objeto em outros _clusters_.
 
-|Objeto|Cor|
-|:---:|:---:|
-|A|Azul|
-|B|Amarelo|
-|C|Vermelho|
-:Representação nominal sobre a cor
+* **_Clusters_ baseados em densidade**: Os grupos definem regiões de alta densidade e são separados por regiões de baixa densidade.
 
-|Objeto|Azul|Amarelo|Vermelho|
-|---|---|---|---|
-|A|1|0|0|
-|B|0|1|0|
-|C|0|0|1|
-:Representação categórica para o atributo cor
+* **_Clusters_ conceituais**: Objetos são unidos por propriedades genéricas extraídas do conjunto total de dados.
 
-|Objeto|Cor(THz)|
-|---|---|
-|A|606|
-|B|508|
-|C|400|
-:Representação numérica da cor em frequência (THz)
-
-As tabelas ([TODO] referenciar as três tabelas acima) mostram os memos dados representados de formas diferentes, o formato depende basicamente da fonte de dados, de como eles forma armazenados. Para as diversas representações existe um tipo de função de distância compatível. É possível, no entanto, utilizar qualquer uma das representações.
+![Categoria de _clusters_](images/machine_learning/clusters_categories.png){#fig:tipoclusters}
 
 ### _k-means_
+
 ### Outros
