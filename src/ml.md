@@ -175,7 +175,7 @@ Como veremos no Capítulo [-@sec:ej], o Empurrando Juntos foi contruído com uma
 
 Cada comentário realizado em uma conversa amplia o espaço dimensional do nosso conjunto de dados. Normalmente temos dezenas de comentários em cada conversa, ou seja, os algoritmos utilizados precisam lidar com o agrupamento de pessoas em dezenas de dimensões distintas e apresentar essa informação ao participante. Uma projeção desses dados em um espaço dimensional reduzido é inevitável se o objetivo é torna-los compreensíveis aos seres humanos, portanto há necessariamente uma perda significante de informação.
 
-Um dos grandes desafios no projeto da plataforma Empurrando Juntos é encontrar o melhor fluxo de processamento e selecionar algoritmos capazes de apresentar os grupos de opinião em um espaço bidimensional mantendo a maior quantidade de informação possível. A maneira como o Pol.is realiza essa tarefa está longe de ser considerada ótima. A redução de dimensionalidade é aplicada antes do agrupamento das pessoas. Esse fluxo pode gerar resultados consideravelmente distorcidos de acordo com as características dos dados originais [@tall17]. As seções a seguir descrevem algumas tecnicas utilizadas para esta transformação e fornecem o embasamento para projetar o fluxo que melhor se adequa a proposta do Empurrando Juntos.
+Um dos grandes desafios no projeto da plataforma Empurrando Juntos é encontrar o melhor fluxo de processamento e selecionar algoritmos capazes de apresentar os grupos de opinião em um espaço bidimensional mantendo a maior quantidade de informação possível. A maneira como o Pol.is realiza essa tarefa inclui um pré-processamento dos dados para a redução da dimensionalidade, e só então, o seu agrupamento. Como veremos na [@sec:pca], esse fluxo prejudica a aferição da semelhança de opinião entre os usuários, pondendo gerar resultados consideravelmente distorcidos de acordo com as características dos dados originais [@tall17]. As seções a seguir descrevem algumas tecnicas utilizadas para esta transformação e fornecem o embasamento para projetar o fluxo que melhor se adequa a proposta do Empurrando Juntos.
 
 ### PCA {#sec:pca}
 
@@ -185,25 +185,33 @@ A Análise dos Componentes Principais (PCA) é provavelmente a mais antiga e mai
 
 A ideia central por trás dessa técnica é a redução da dimensionalidade de um conjunto de dados que contenha um grande número de variáveis interrelacionadas, enquanto tenta preservar, da melhor maneira possível, a informação contida nesse conjunto.
 
-A quantidade de informação é fortemente relacionada com a variação presente nos dados. Esta pode ser obtida através do cálculo da dispersão, que se refere a medição do espalhamento dos dados [@dsfs15]. A variância é uma medida estatística de dispersão que indica o quão longe em geral um dado $X=[x_{1}, x_{2}, ..., x_{n}]$ se encontra de um valor esperado $E[X]$,
+A quantidade de informação é fortemente relacionada com a variação presente nos dados. Esta pode ser obtida através do cálculo da dispersão, que se refere a medição do espalhamento dos dados [@dsfs15]. A variância é uma medida estatística de dispersão que indica o quão longe em geral um dado $X=[x_{1}, x_{2}, ..., x_{n}]$ se encontra de um valor esperado $E(X)$,
 
 $$
-  E[X]=\sum_{i=1}^n x_{i}P(x_{i}),
+  E(X)=\sum_{i=1}^n x_{i}P(x_{i}),
 $$ {#eq:esperado}
 
-em que $P(x_{i})$ representa as probabilidades obtidas para cada elemento de $X$. Assim, se $\mu = E(X)$, definimos a variância $var(X)$ como
+em que $P(x_{i})$ representa as probabilidades obtidas para cada elemento de $X$. Assim, se $\mu = E(X)$, definimos a variância $\mathrm{VAR}(X)$ como
 
 $$
-  var(X) = E((X - \mu)^2).
+  \mathrm{VAR}(X) = E((X - \mu)^2).
 $$ {#eq:variancia}
 
-Em termos práticos podemos expressar a [@eq:variancia] como a média do quadrado da distância de cada ponto até a média total dos valores $x_{i}$. Enquanto a variância mede o desvio de uma única variável em relação a média, outra medida, chamada covariância, mede o quanto duas variáveis, $X$ e $Y$, variam em conjunto das suas médias. Define-se covariância $cov(X, Y)$ como
+Em termos práticos podemos expressar a [@eq:variancia] como a média do quadrado da distância de cada ponto até a média total dos valores $x_{i}$. Enquanto a variância mede o desvio de uma única variável em relação a média, outra medida, chamada covariância, mede o quanto duas variáveis, $X$ e $Y$, variam em conjunto das suas médias. Define-se covariância $\mathrm{COV}(X, Y)$ como
 
 $$
-  cov(X,Y)=\sum _{i=1}^{n}\left[\left(x_{i}-\mu _{i}^{x}\right)\left(y_{i}-\mu _{i}^{y}\right)P(x_{i},y_{i})\right],
+  \mathrm{COV}(X,Y)=\sum _{i=1}^{n}\left[\left(x_{i}-\mu _{i}^{x}\right)\left(y_{i}-\mu _{i}^{y}\right)P(x_{i},y_{i})\right],
 $$ {#eq:covariancia}
 
 em que $P(x_{i},y_{i})$ é a probabilidade de ocorrer o par $(x_{i},y_{i})$. Então, se o PCA tem como objetivo transformar nosso conjunto de dados em um novo conjunto com menor dimensionalidade, contendo a maior quantidade de informação possível, procura-se o conjunto de variáveis com os maiores valores de variância e covariância possíveis.
+
+Uma análise precisa da covariância não é simples pelo fato do resultado não ser normalizado em uma escala, isso quer dizer que é difícil discernir qual é a magnitude dessa representação. Para solucionando esse problema, utilizamos o coeficiente de correlação $\mathrm{COR}(X,Y)$, que é a covariância dividida pelos desvios padrão $\sigma$de cada variável,
+
+$$
+  \mathrm{COR}(X,Y)=\frac{\mathrm{COV}(X,Y)}{\sigma_{X} \sigma_{Y}}.
+$$ {#eq:correlacao}
+
+Uma perfeita correlação corresponde ao valor 1, enquanto uma anti-correlação total corresponde ao valor -1. 
 
 #### Implementação
 
@@ -227,27 +235,27 @@ A primeira etapa consiste no uso da [@eq:esperado] para extrair os valores esper
 
 ![Média subtraída dos pontos](images/machine_learning/example_02_pca.png){#fig:exemplo_02_pca}
 
-Após a normalização, utilizamos a [@eq:covariancia], para extrair a matriz de covariância, apresentada na [@tbl:covariancia].
+Após a normalização, utilizamos a [@eq:correlacao], para extrair a matriz de coeficientes de correlação, apresentada na [@tbl:correlacao].
 
 ||X|Y|
 |:---:|:---:|:---:|
-|X|7.867|6.533|
-|Y|6.533|8.967|
-: Matriz de covariância para as variáveis X e Y {#tbl:covariancia}
+|X|1.0|0.7779|
+|Y|0.7779|1.0|
+: Matriz de correlação para as variáveis X e Y {#tbl:correlacao}
 
-Podemos observar que os valores da diagonal principal medem a variância ([@eq:variancia]) e da diagonal secundária, a covariância entre X e Y, ou seja, a forma como as variáveis se relacionam. Pode-se inferir que para medidas de covariância positivas, os valores variam para mais e para menos juntos; para covariâncias negativas, quando um valor cresce o outro decresce; por fim, para covariâncias nulas, não há correspondência entre os valores de X e Y.
+Podemos observar que os valores da diagonal principal correspondem a uma correlação entre uma variável e ela mesma, que por definição deve ser perfeita. A diagonal secundária apresenta a correlação entre X e Y, ou seja, a maneira como as variáveis se relacionam. Para medidas de correlação positivas, os valores variam para mais e para menos juntos; para correlações negativas, quando um valor cresce o outro decresce; por fim, para covarrelações nulas, não há correspondência entre os valores de X e Y.
 
-A próxima etapa consiste na extração dos autovetores e autovalores a partir da matriz de covariância. Os autovetores representam as direções em que estão contidas as maiores variações para esse conjunto de dados. Então, selecionamos os autovetores que possuem os maiores autovalores correspondentes, já que estes são a representação da própria variância. Chamamos estes vetores de componentes principais.
+A próxima etapa consiste na extração dos autovetores e autovalores a partir da matriz de correlação. Os autovetores representam as direções em que estão contidas as maiores variações para esse conjunto de dados. Então, selecionamos os autovetores que possuem os maiores autovalores correspondentes, já que estes são a representação da própria variância. Chamamos estes vetores de componentes principais.
 
 Considere novamente o conjunto de dados $A$. O número de autovetores é igual a quantidade de dimensões dos dados originais. A [@fig:exemplo_04_pca] traça os autovetores sobre o conjunto $A$ normalizado. Observamos claramente que o sentido _vermelho_ possui os maiores autovalores associados, ou seja, é a direção que possui a maior variância acumulada, tornando-a o eixo unidimensional no qual serão projetados os dados.
 
-![Autovetores extraídos da matriz de covariância](images/machine_learning/example_04_pca.png){#fig:exemplo_04_pca}
+![Autovetores extraídos da matriz de correlação](images/machine_learning/example_04_pca.png){#fig:exemplo_04_pca}
 
-Os componentes principais são representações do conjunto de dados original projetados em um espaço dimensional reduzido. A [@fig:exemplo_04_pca] evidencia como a projeção desses dados em eixos que maximizam a variância ocasiona a perda de informações. Contudo, ainda é possível se obter um grau de confiança elevado nos dados obtidos para sua utilização em algoritmos de agrupamento [@tall17], nosso objetivo no Empurrando Juntos.
+Os componentes principais são representações do conjunto de dados original projetados em um espaço dimensional reduzido. A [@fig:exemplo_04_pca] evidencia como a projeção desses dados em eixos que maximizam a variância ocasiona a perda de informações. Contudo, ainda é possível se bter um grau de confiança elevado nos dados obtidos para sua utilização em algoritmos de agrupamento [@tall17], nosso objetivo no Empurrando Juntos.
 
 ### _t_-SNE
 
-Apesar do PCA ser uma das técnicas mais utilizadas para redução da dimensionalidade, existem outros métodos populares para visualização de dados com muitas dimensões. A técnica _t_-SNE também é capaz de fornecer uma representação bi ou tridimensional para cada dado. Esse método é uma variação do SNE (_Stochastic Neighbor Embedding_), o qual é muito mais propício à otimizações, e produz significantemente melhores visualizações a partir da redução da tendência do acúmulo de dados no centro das representações em dimensões menores. A vantagem do _t_-SNE é a forma como revela estruturas preservando as diferentes escalas no conjunto de dados [@geof08].
+Apesar do PCA ser uma das técnicas mais utilizadas para redução da dimensionalidade, existem outros métodos populares para visualização de dados com muitas dimensões. A técnica _t_-SNE também é capaz de fornecer uma representação bi ou tridimensional para cada dado. Esse método é uma variação do SNE (_Stochastic Neighbor Embedding_) e produz significantemente melhores visualizações a partir da redução da tendência do acúmulo de dados no centro das representações em dimensões menores. A vantagem do _t_-SNE é a forma como revela estruturas preservando os grupos locais no conjunto de dados [@geof08].
 
 Técnicas lineares de redução de dimensionalidade, como o PCA, buscam uma representação em poucas dimensões de dados com um grau elevado de espalhamento. Entretanto, esses métodos são pouco eficientes quando desejamos representar dados muito similares que estão muito próximos uns dos outros. Para esse tipo de problema, técnicas não-lineares, como o _t_-SNE, podem ser utilizadas, já que evidenciam as diferentes escalas no conjunto de dados.
 
@@ -255,9 +263,9 @@ O _t_-SNE é capaz de capturar grante parte da informação contida individualme
 
 #### Definição
 
-Considere que um ponto $x_{i}$ é a representação de um dado em um espaço $\mathbb{R}^{D}$, em que $D$ é a sua dimensionalidade. Um ponto mapeado $y_{i}$ é um ponto em um espaço $\mathbb{R}^{2}$ chamado de mapa. Esse mapa conterá a representação final do conjunto de dados. Essa representação é por definição uma função bijetora, ou seja, cada ponto mapeado $y_{i}$ representa um ponto original $x_{i}$.
+Considere que um ponto $x_{i}$ é a representação de um dado em um espaço $\mathbb{R}^{D}$. Um ponto mapeado $y_{i}$ é um ponto em um espaço reduzido, $\mathbb{R}^{2}$ por exemplo. Esse espaço conterá a representação final do conjunto de dados. Essa representação é por definição uma função bijetora, ou seja, cada ponto mapeado $y_{i}$ representa um ponto original $x_{i}$.
 
-Uma vez que temos o conjunto de dados original, desejamos conservar a estrutura desses dados. Em outras palavras, se dois pontos $x_{i}$ e $x_{j}$ estão próximos no espaço $\mathbb{R}^{D}$, desejamos que suas representações no mapa $\mathbb{R}^{2}$ também permaneçam próximas. Para isso utilizamos a distância Euclideana entre dois pontos originais $|x_{i} - x_{j}|$ e entre dois pontos mapeados $|y_{i} - y_{j}|$. Primeiramente calculamos a similaridade condicional $p_{i|j}$ entre dois pontos originais, dada por
+Uma vez que temos o conjunto de dados original, desejamos conservar a estrutura desses dados. Em outras palavras, se dois pontos $x_{i}$ e $x_{j}$ estão próximos no espaço $\mathbb{R}^{D}$, desejamos que suas representações em um espaço reduzido $\mathbb{R}^{2}$ também permaneçam próximas. Para isso utilizamos a distância Euclideana entre dois pontos originais $|x_{i} - x_{j}|$ e entre dois pontos mapeados $|y_{i} - y_{j}|$. Primeiramente calculamos a similaridade condicional $p_{i|j}$ entre dois pontos originais, dada por
 
 $$
   p_{i|j} = \frac{exp(-|x_{i}-x_{j}|^2/2
@@ -285,7 +293,7 @@ $$
  q_{ij}= \frac{f(|y_{i}-y_{j}|)}{\sum_{k\neq i} f(|y_{i}-y_{k}|)}.
 $$
 
-O algoritmo é baseados em itarações que buscam aproximar as matrizes de similaridade. Para isso é necessário minimizar a divergência de Kullbeck-Leiber $KL(P||Q)$ entre duas distribuições distintas $p_{ij}$ e $q_{ij}$:
+O algoritmo é baseados em itarações que buscam aproximar as matrizes de similaridade. Para isso é necessário minimizar a divergência de Kullback-Leibler $KL(P||Q)$ entre duas distribuições distintas $p_{ij}$ e $q_{ij}$. Essa divergência é uma medida de como duas distribuições de probabilidade divergem uma da outra. No caso simples, $KL(P||Q)=0$ indica que podemos esperar um comportamento muito próximo, se não for igual, de duas distribuições distintas, enquanto $KL(P||Q)=1$ indica que as duas distribuições se comportam de maneiras extremamente diferentes. A divergência de Kullback-Leibler é definida como
 
 $$
   C = KL(P||Q) = \sum_{i,j}p_{ij}\log\frac{p_{ij}}{q_{ij}}.
@@ -301,7 +309,7 @@ $$
   \frac{\delta C}{\delta y_{i}} = 4 \sum_{j}(p_{ij}-q_{ij})f(|y_{i}-y_{j}|)u_{ij},
 $$ 
 
-em que $u_{ij}$ é o vetor unitário que vai de $y_{j}$ até $y_{i}$. O gradiente descendente é inicializado na primeira iteração com uma amostragem de pontos mapeados aleatoriamente em uma curva gaussiana isotrópica com pequena variância centrada em torno da origem. Um _momentum_ grande é necessário para evitar mínimos locais pobres e incoerentes, e acelerar a otimização. Na prática, o gradiente atual é adicionado a uma soma dos gradientes exponencialmente descendentes anteriores para determinar as mudanças nas coordenadas dos pontos do mapa a cada nova iteração. Matematicamente, a atualização de gradiente no tempo é dada por [@geof08]
+em que $u_{ij}$ é o vetor unitário que vai de $y_{j}$ até $y_{i}$. O gradiente descendente é inicializado na primeira iteração com uma amostragem de pontos mapeados aleatoriamente em uma curva gaussiana isotrópica com pequena variância centrada em torno da origem. Um _momentum_ grande é necessário para evitar mínimos locais pobres e incoerentes, e acelerar a otimização. Na prática, o gradiente atual é adicionado a uma soma dos gradientes exponencialmente descendentes anteriores para determinar as mudanças nas coordenadas dos pontos do mapa a cada nova iteração. Analiticamente, a atualização de gradiente no tempo é dada por [@geof08]
 
 $$
  Y_{t} = Y_{t-1}+\eta \frac{\delta C}{\delta Y}+\alpha (t) (Y_{t-1} - Y_{t-2}),
