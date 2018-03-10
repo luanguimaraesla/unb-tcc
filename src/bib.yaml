@@ -152,4 +152,25 @@ references:
       - - 2005
     edition: 1
     language: en-US
+
+  - type: book
+    id: gang07
+    author:
+    - family: Gan
+      given: Guojun
+    - family: Ma
+      given: Chaoqun
+    - family: Wu
+      given: Jianhong
+    title: 'Data Clustering: Theory, Algorithms, and Applications'
+    collection-title: 'ASA-SIAM Series on Statistics and Applied Mathematics'
+    ISBN: 978-0-89871-623-8
+    issued:
+      date-parts:
+      - - 2007
+    DOI: 10.1137/1.9780898718348
+    publisher: 'SIAM'
+    edition: 1
+    language: en-US
+
 ...

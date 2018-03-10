@@ -329,11 +329,11 @@ Essa decisão acompanhou a formulação de uma arquitetura que permitisse altera
 
 ## Clusterização de dados {#sec:clusterizacao}
 
-A funcionalidade primordial no seio da proposta do Empurrando Juntos é o algoritmo que agrupa os participantes de acordo com seus comportamentos. Esses grupos servem de insumo para uma série de outras funcionalidades, que incluem análises estatísticas e modelos de gamificação. Discutimos também sobre a visualização dos dados, que nesse contexto, é propriamente a visualização dos grupos de opinião. Aliados, os algoritmos de visualização e agrupamento são o coração do Empurrando Juntos, evidenciados como algumas das principais características que destacam essa de outras propostas para plataformas de participação social.
+A funcionalidade primordial no seio da proposta do Empurrando Juntos é o algoritmo que agrupa os participantes de acordo com seus comportamentos. Esses grupos servem de insumo para uma série de outras funcionalidades, que incluem análises estatísticas e modelos de gamificação. Discutimos também sobre a visualização dos dados, que nesse contexto, é propriamente um gráfico bidimensional dos grupos de opinião. Aliados, os algoritmos de visualização e agrupamento são o coração do Empurrando Juntos, evidenciados como algumas das principais características que destacam essa de outras propostas para plataformas de participação social.
 
-Se encaramos, em termos da participação social, a utilização de algoritmos de agrupamento como algo inovador e pouco explorado, não podemos dizer o mesmo sobre sua utilização em larga escala pela Indústria da Informação. O exame minucioso daquilo de que buscamos, clicamos, gostamos e compramos são um prato cheio para que sejamos automaticamente incluídos em grupos de consumo armazenados nas bases de dados de grandes empresas, íscas indefesas para campanhas publicitárias arrebatadoras. Essa é a visão estatística do sucesso, impulsionada por uma nova geração de máquinas e algoritmos capazes de processar uma massa exorbitante de dados coletados na _Internet_.
+Se encaramos, em termos da participação social, a utilização de algoritmos de agrupamento como algo inovador e pouco explorado, não podemos dizer o mesmo sobre sua utilização em larga escala pela Indústria da Informação. O exame minucioso daquilo de que buscamos, clicamos, gostamos e compramos são um prato cheio para que sejamos automaticamente incluídos em grupos de consumo armazenados nas bases de dados de grandes empresas, alvos estratégicos para campanhas publicitárias arrebatadoras. Essa é a visão estatística do sucesso, impulsionada por uma nova geração de máquinas e algoritmos capazes de processar uma massa exorbitante de dados coletados na _Internet_.
 
-Muito embora o exemplo dos sistemas de recomendação seja o mais popular quando o tema é clusterização, termo que usaremos para nos referir ao agrupamento de dados, a aplicação desses algoritmos se dá em diversas esferas do conhecimento. A biologia, por exemplo, dedicou anos a criação da taxonomia, a classificação hierarquizada para todas as formas de vida conhecidas: reinos, filos, classes, ordens, famílias, gêneros e espécies. Não é coincidência o fato de ser uma das áreas que mais se beneficia do potencial dos algoritmos de clusterização [@ptan05]. Da climatologia à medicina, a identificação de padrões ocultos em um conjunto de dados é um recurso cada vez mais valorizado pela ciência e pelas pessoas na infindável busca pela compreensão das coisas.
+Muito embora o exemplo dos sistemas de recomendação seja o mais popular quando o tema é clusterização, termo que usaremos para nos referir ao agrupamento de dados, a aplicação desses algoritmos se dá em diversas esferas do conhecimento. A biologia, por exemplo, dedicou anos para a criação da taxonomia, a classificação hierarquizada para todas as formas conhecidas de vida: reinos, filos, classes, ordens, famílias, gêneros e espécies. Não é coincidência o fato de ser uma das áreas que mais se beneficia do potencial dos algoritmos de clusterização [@ptan05]. Da biologia ao sistema financeiro, a identificação de padrões ocultos em um conjunto de dados é um recurso cada vez mais valorizado pela ciência e pelas pessoas na infindável busca pela compreensão das coisas.
 
 > _"Classes, ou grupos conceitualmente significativos de objetos que compartilham características comuns, desempenham um papel importante na forma como as pessoas analisam e descrevem o mundo. Na verdade, os seres humanos são habilidosos em dividir objetos em grupos (clusterização) e atribuir objetos específicos a esses grupos (classificação)"_ [@ptan05].
 
@@ -370,5 +370,23 @@ Os grupos formados pelos diferentes tipos de clusterização também possuem sua
 ![Categoria de _clusters_](images/machine_learning/clusters_categories.png){#fig:tipoclusters}
 
 ### _k-means_
+
+Uma das técnicas mais conhecidas no contexto da clusterização é o _k-means_. Este é um algoritmo de agrupamento exclusivo que consiste na minimização iterativa de uma função objetiva capaz de gerar _clusters_ baseados em centros. Essa classe de algoritmos é muito eficiente na clusterização de grandes bases de dados e com alta dimensionalidade quando comparada com outros modelos, apesar de não ser adequada para encontrar _clusters_ com formatos arbitrários [@gang07].
+
+Na prática, o algoritmo exige um parâmetro inicial _k_ que representa o número de _clusters_ desejados. Em cada iteração, os dados são alocados em um conjunto cujo centroide está mais próximo. Os dados associados a um centroide formam um _cluster_. Então, o centroide de cada _cluster_ é recalculado a partir dos seus dados associados. Esse processo é repetido até que não haja alterações significativas nos dados de cada _cluster_ ou, de forma equivalente, nos centroides calculados nas iterações anteriores [@ptan05].
+
+#### Descrição
+
+O algoritmo básico pode ser visualizado na [@lst:kmeans]
+
+```{#lst:kmeans caption="Algoritmo básico do _k-means_"}
+Selecionar k pontos como centroides iniciais
+Repita:
+  Forme k clusters associando cada ponto com o centroide mais próximo
+  Calcule o centroide de cada cluster
+Até que os centroides não mudem
+```
+
+#### Discussão
 
 ### Outros
