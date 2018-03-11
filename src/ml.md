@@ -377,6 +377,20 @@ Na prática, o algoritmo exige um parâmetro inicial _k_ que representa o númer
 
 #### Descrição
 
+O algoritmo básico pode ser visualizado na [@lst:kmeans]
+
+```{#lst:kmeans caption="Algoritmo básico do k-means"}
+Selecionar k pontos como centroides iniciais
+Repita:
+  Forme k clusters associando cada ponto com o centroide mais próximo
+  Calcule o centroide de cada cluster
+Até que os centroides não mudem
+```
+
+A primeira etapa do algoritmo consiste na definição de _k_ pontos aleatórios como centroides iniciais. Os dados, então, são distribuidos também de maneira aleatória entre os _clusters_ definidos por esses centroides. Assim, inicia-se a etapa iterativa do algoritmo, que associa, a cada _cluster_, os dados que possuem a menor distância de seus centros. Os centroides são recalculados ao fim de cada iteração. Essa etapa é repetida até que se atinja um número limite de iterações, que pode ser definido pelo usuário, ou também até que se atinja mínimos locais e qualquer mudança não tenha mais significado prático nas estruturas construídas.
+
+Para atribuir um ponto ao centróide mais próximo, precisamos de uma medida de similaridade que possibilite identificar o quão próximo de cada centro está um determinado dado. Nesse contexto, há uma associação direta entre similaridade e medidas de distância. Essas podem ser extraídas por diversos métodos distintos que se comportam ou melhor ou pior dependendo das características dos dados. Por exemplo, a Distância Euclidiana é freqüentemente usada para pontos de dados no Espaço Euclidiano, enquanto aproximação por similaridade de cosenos é mais apropriada para documentos complexos [@ptan05].
+
 
 #### Discussão
 

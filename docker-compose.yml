@@ -6,4 +6,4 @@ services:
     build: .
     volumes:
       - .:/code
-    command: sleep infinity
+#    command: sleep infinity
