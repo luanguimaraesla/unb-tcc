@@ -7,13 +7,11 @@ RUN apt-get update && \
     texlive-latex-base \
     texlive-fonts-recommended \
     texlive-latex-extra \
+    texlive-font-utils \
     mutt \
     msmtp \
     openssl \
     ca-certificates
-
-# Include here the latex language packages
-RUN apt-get install -y texlive-lang-portuguese
 
 # Pandoc dependecies
 RUN apt-get install -y haskell-platform && \
@@ -21,6 +19,14 @@ RUN apt-get install -y haskell-platform && \
     cabal install pandoc --enable-tests && \
     cabal install pandoc-citeproc && \
     cabal install pandoc-crossref
+
+# Include here the latex language packages,
+# it is configured to ABNTEX2 (Brazilian)
+RUN apt-get install -y \
+    texlive-publishers \
+    texlive-lang-portuguese && \
+    apt-get clean -y
+
 
 WORKDIR /code
 COPY . /code

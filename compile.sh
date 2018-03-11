@@ -2,6 +2,8 @@
 
 PATH=$PATH:/root/.cabal/bin
 
-pandoc --filter pandoc-crossref --filter pandoc-citeproc -s \
-    -f markdown --include-in-header src/header.tex --toc -o doc.pdf \
-    `sed 's/$/.md/g;s/^/src\//g' src/sections.conf | xargs`;
+pandoc  --template templates/tcc.latex -s \
+        --filter pandoc-crossref \
+        --filter pandoc-citeproc \
+        -f markdown --toc -o doc.pdf \
+        `sed 's/$/.md/g;s/^/src\//g' src/sections.conf | xargs`;

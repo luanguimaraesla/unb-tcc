@@ -377,15 +377,6 @@ Na prática, o algoritmo exige um parâmetro inicial _k_ que representa o númer
 
 #### Descrição
 
-O algoritmo básico pode ser visualizado na [@lst:kmeans]
-
-```{#lst:kmeans caption="Algoritmo básico do _k-means_"}
-Selecionar k pontos como centroides iniciais
-Repita:
-  Forme k clusters associando cada ponto com o centroide mais próximo
-  Calcule o centroide de cada cluster
-Até que os centroides não mudem
-```
 
 #### Discussão
 
