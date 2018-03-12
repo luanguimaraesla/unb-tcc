@@ -43,6 +43,7 @@ advisor:        'Fábio Mendes'
 
 #crossref configurations
 linkReferences: true
+codeBlockCaptions: true
 
 figPrefix:
   - "Figura"

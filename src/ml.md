@@ -309,19 +309,19 @@ $$
   \frac{\delta C}{\delta y_{i}} = 4 \sum_{j}(p_{ij}-q_{ij})f(|y_{i}-y_{j}|)u_{ij},
 $$ 
 
-em que $u_{ij}$ é o vetor unitário que vai de $y_{j}$ até $y_{i}$. O gradiente descendente é inicializado na primeira iteração com uma amostragem de pontos mapeados aleatoriamente em uma curva gaussiana isotrópica com pequena variância centrada em torno da origem. Um _momentum_ grande é necessário para evitar mínimos locais pobres e incoerentes, e acelerar a otimização. Na prática, o gradiente atual é adicionado a uma soma dos gradientes exponencialmente descendentes anteriores para determinar as mudanças nas coordenadas dos pontos do mapa a cada nova iteração. Analiticamente, a atualização de gradiente no tempo é dada por [@geof08]
+em que $u_{ij}$ é o vetor unitário que vai de $y_{j}$ até $y_{i}$. O gradiente descendente é inicializado na primeira iteração com uma amostragem de pontos mapeados aleatoriamente em uma curva gaussiana isotrópica com pequena variância centrada em torno da origem. Um _momentum_ grande é necessário para evitar mínimos locais pobres e incoerentes, e acelerar a otimização. Na prática, o gradiente atual é adicionado a uma soma dos gradientes exponencialmente descendentes anteriores para determinar as mudanças nas coordenadas dos pontos do espaço reduzido a cada nova iteração. Analiticamente, a atualização de gradiente no tempo é dada por [@geof08]
 
 $$
  Y_{t} = Y_{t-1}+\eta \frac{\delta C}{\delta Y}+\alpha (t) (Y_{t-1} - Y_{t-2}),
 $$
 
-em que $Y_{t}$ representa a o mapa bidimensional $\mathbb{R}^{2}$ na iteração $t$, $\eta$ indica a taxa de aprendizado e $\alpha(t)$ representa o _momentum_ na iteração $t$. A taxa de aprendizado $\eta$ é uma variável adaptativa que gradualmente aumenta nas direções em que o gradiente é mais estável [@geof08].
+em que $Y_{t}$ representa a o espaço bidimensional $\mathbb{R}^{2}$ na iteração $t$, $\eta$ indica a taxa de aprendizado e $\alpha(t)$ representa o _momentum_ na iteração $t$. A taxa de aprendizado $\eta$ é uma variável adaptativa que gradualmente aumenta nas direções em que o gradiente é mais estável [@geof08].
 
 ### _t_-SNE x PCA 
 
 Apresentamos dois algoritmos de redução de dimensionalidade, o _t_-SNE e o PCA. O _t_-SNE possui várias características que corroboram sua escolha em detrimento do PCA se levarmos em consideração o contexto multi-dimensional de agrupamento nas conversas no Empurrando Juntos. A principal delas é a preservação das estruturas locais dos dados, que resulta em uma melhor separação e, consequentemente, em uma melhor distinção dos grupos de opinião. Contudo, há outros pontos importantes que devem ser levados em consideração na escolha de uma primeira abordagem de módulo matemático para a plataforma. 
 
-Primeiramente, o PCA pode ser calculado de forma iterativa, então, se já calculamos as componentes para um espaço com dimensionalidade $D$, necessitamos de pouco processamento para obter uma nova representação para $(D+1)$. O PCA também é capaz de oferecer um histograma sobre os valores originais, já que a projeção dos dados sobre os componentes principais indica a direção do acúmulo de variância. Outro fator de peso é que, uma vez calculada a transformação linear oferecida pelo PCA, esta pode ser aplicada a novos pontos, o que não acontece no _t_-SNE, que utiliza todo o conjunto de dados para calcular os gradientes descendentes. Isso fornece um mapa para os pontos conhecidos, mas não retorna uma função que pode ser aplicada a novos pontos, ampliando significativamente os custos de processamento.
+Primeiramente, o PCA pode ser calculado de forma iterativa, então, se já calculamos as componentes para um espaço com dimensionalidade $D$, necessitamos de pouco processamento para obter uma nova representação para $(D+1)$. O PCA também é capaz de oferecer um histograma sobre os valores originais, já que a projeção dos dados sobre os componentes principais indica a direção do acúmulo de variância. Outro fator de peso é que, uma vez calculada a transformação linear oferecida pelo PCA, esta pode ser aplicada a novos pontos, o que não acontece no _t_-SNE, que utiliza todo o conjunto de dados para calcular os gradientes descendentes. Isso fornece um função bijetiva para os pontos conhecidos, mas não retorna uma função que pode ser aplicada a novos pontos, ampliando significativamente os custos de processamento.
 
 Neste contexto, optamos pelo PCA na proposta de arquitetura inicial do módulo matemátio. Essa escolha não se dá apenas porque existem as vantagens elucidadas acima, mas também porque há correspondência direta com a ferramenta de participação Pol.is, que já possui um respaldo na sociedade e atravessou anos de desenvovlimento. Como veremos no Capitulo [-@sec:ej], existiu desde a concepção do Empurrando Juntos, uma dependência arquitetural relacionada ao Pol.is, desta forma, boa parte das validações as quais a plataforma será submetida, será de cunho comparativo em relação a essa dependência.
 
@@ -379,19 +379,95 @@ Na prática, o algoritmo exige um parâmetro inicial _k_ que representa o númer
 
 O algoritmo básico pode ser visualizado na [@lst:kmeans]
 
-```{#lst:kmeans caption="Algoritmo básico do k-means"}
+```
 Selecionar k pontos como centroides iniciais
 Repita:
   Forme k clusters associando cada ponto com o centroide mais próximo
   Calcule o centroide de cada cluster
 Até que os centroides não mudem
 ```
+: Algoritmo básico do k-means {#lst:kmeans}
+
 
 A primeira etapa do algoritmo consiste na definição de _k_ pontos aleatórios como centroides iniciais. Os dados, então, são distribuidos também de maneira aleatória entre os _clusters_ definidos por esses centroides. Assim, inicia-se a etapa iterativa do algoritmo, que associa, a cada _cluster_, os dados que possuem a menor distância de seus centros. Os centroides são recalculados ao fim de cada iteração. Essa etapa é repetida até que se atinja um número limite de iterações, que pode ser definido pelo usuário, ou também até que se atinja mínimos locais e qualquer mudança não tenha mais significado prático nas estruturas construídas.
 
-Para atribuir um ponto ao centróide mais próximo, precisamos de uma medida de similaridade que possibilite identificar o quão próximo de cada centro está um determinado dado. Nesse contexto, há uma associação direta entre similaridade e medidas de distância. Essas podem ser extraídas por diversos métodos distintos que se comportam ou melhor ou pior dependendo das características dos dados. Por exemplo, a Distância Euclidiana é freqüentemente usada para pontos de dados no Espaço Euclidiano, enquanto aproximação por similaridade de cosenos é mais apropriada para documentos complexos [@ptan05].
+Para atribuir um ponto ao centróide mais próximo, precisamos de uma medida de similaridade que possibilite identificar o quão próximo de cada centro está um determinado dado. Nesse contexto, há uma associação direta entre similaridade e medidas de distância. Essas podem ser extraídas por diversos métodos distintos que se comportam ou melhor ou pior dependendo das características dos dados. Por exemplo, a Distância Euclidiana é freqüentemente usada para dados representados por pontos no Espaço Euclidiano, enquanto aproximação por similaridade de cosenos é mais apropriada para documentos complexos [@ptan05].
 
+#### Espaço Euclideano {#sec:euclideano}
+
+Considere um conjunto de $N$ dados para o qual a medida de proximidade seja dada pela Distância Euclideana,
+
+$$
+  d(x,y)=\sqrt{\sum_{k=1}^N (x_{k}-y_{k})^2},
+$$ {#eq:euclideana}
+
+em que $x_{k}$ e $y_{k}$ são os $k$-ésimos atributos para os dados $x$ e $y$. Precisamos de uma função objetiva para medir a qualidade da clusterização. Podemos usar uma medida de dispersão, como a variância ([@eq:variancia]), na tentativa de minimizar a somatória dos desvios calculados em torno dos valores esperados ([@eq:esperado]), nesse caso, os respectivos centroides. Definimos essa somatoria como
+
+$$
+  \mathrm{SSE} = \sum_{i=1}^{k} \sum_{x \in C_{i}} d(C_{i},x)^2,
+$$
+
+em que SSE (do ingês _sum of the squared errors_) é a somatória dos quadrados das Distâncias Euclideanas $d$ ([@eq:euclideana]) de cada dado $x$ em relação ao centroide de seu _cluster_ $C_{i}$. Em outras palavras, o algoritmo é simplificado como o cálculo dos desvios quadrados até o centroide mais próximo e então é computado o valor de $\mathrm{SSE}$ para cada arranjo. Assim, dado dois arranjos distintos, escolhemos aquele que possui o menor valor para $\mathrm{SEE}$. Este diz respeito a uma melhor representação dos dados agrupados.
+
+#### Selecionando um valor de _k_
+
+No contexto do Empurrando Juntos, não há previamente uma classificação de padrões esperados que determinariam resultados direcionados para as clusterizações. É necessário então utilizar uma estratégia autocontida, ou seja, que use somente o conjunto de dados fornecido e as inferências automáticas sobre ele. Esse tipo de avaliação é chamada de validação interna. Essas análises buscam responder as perguntas sobre a densidade dos _clusters_ gerados, a coesão da informação contida em cada um deles, etc. Já falamos sobre uma delas, a soma dos erros quadrados apresentada na [@sec:euclideano].
+
+A quantidade de _clusters_ $k$ que precisamos definir durante a inicialização do _k-means_ influencia diretamente na qualidade dos resultados obtidos e, consequentemente, nas análises que serão realizadas a partir desses grupos. A avaliação interna do melhor $k$ possível pode ser feita através da comparação de índices avaliativos extraídos dos resultados obtidos para diferentes parâmetros $k$.
+
+O coeficiente de silhueta se encaixa nesse contexto, e é bastante utilizado como medida de qualidade para auxiliar na seleção do melhor número de _clusters_ $k$ em algoritmos que requerem este parâmetro, como _k-means_ [@tall17]. Essa métrica determina um índice avaliativo para cada dado $x_{i} \in X$ em que $X=[x_{1}, x_{2}, ..., x_{n}]$.
+
+Este coeficiente $s_i$ pode ser obtido através do seguinte algoritmo
+
+```
+Atribua cada dado X_i ao seu respectivo cluster C_i em um conjunto de k clusters.
+Repita para cada X_i:
+  Repita para cada dado Y_i pertencente ao cluster C_i:
+    Calcule a distância entre X_i e Y_i
+  Até percorrer todos valores Y_i em C_i
+
+  Calcule a média A_i das distâncias obtidas
+
+  Repita para cada cluster C_j diferente de C_i:
+    Repita para cada dado Y_j pertencente ao cluster C_j:
+      Calcule a distância entre X_i e Y_j
+    Até percorrer todos os valores Y_j em C_j
+    Calcule a média B_ij das distâncias obtidas
+  Até que não haja mais _clusters_ C_j
+
+  Selecione o menor valor B_ij encontrado, B_i
+  Calcule o coeficiente se silhueta, S_i = (B_i - A_i) / max(A_i, B_i).
+```
+: Cálculo do Coeficiente de Silhueta {#lst:silhueta}
+
+O valor do coeficiente de silhueta pode variar entre -1 e 1. Um resultado negativo representa uma clusterização indesejada, já que indica que a média das distâncias calculadas dentro do _cluster_ do próprio dado é maior do que a menor distância encontrada entre as médias calculadas para os dados de outros _clusters_. Nesse sentido, procura-se um valor _k_ que melhor aproxime A_i de 0 para que o coeficiente de silhueta atiginja um resultado próximo do seu máximo [@ptan05].
+
+Se $C_i$ é o _cluster_ que contém o dado $x_i$, $b_{i_{min}}$ é a menor média de distâncias encontradas para $x_i$ em relação aos dados de um _cluster_ $C_j | C_j \cap C_i = \varnothing$, e $a_i$ é a distância média de $x_i$ calculada em relação aos outros dados de $C_i$, podemos expressar matematicamente o cálculo do coeficiente silhueta $\mathrm{SIL}(x_i)$ como 
+
+$$
+  \mathrm{SIL}(x_i) = \frac{b_{i_{min}} - a_i}{\mathrm{MAX}(a_i, b_{i_{min}})}.
+$$
+
+Então, os coeficientes podem ser aplicados para extrair uma medida geral de silhueta para cada _cluster_ $C_i$, ou ainda, para todo o conjunto de _clusters_ $C=[C_1, C_2, ..., C_k]$. Para isso, uma vez que possuímos todos os coeficientes $\mathrm{SIL}(x_i)$, calculamos a média dos coeficientes correspondentes ao dados dos conjuntos desejados de acordo com
+
+$$
+  \mathrm{SIL}(C_{i}) = \frac{\sum_{x_i \in C_i} \mathrm{SIL}(x_i)}{N_{C_{i}}},
+$$
+
+$$
+  \mathrm{SIL}(C) = \frac{\sum_{i=1}^k \mathrm{SIL}(C_i)}{k},
+$$
+
+em que $N_{C_{i}}$ é o número de dados contidos no conjunto $C_i$, e $k$ é o número de _clusters_ que desejamos otimizar. Assim, descrevemos um método capaz de comparar diferentes arranjos de $k$ _clusters_ e nos fornecer uma resposta para qual seria o melhor deles de acordo com as características dos dados.
 
 #### Discussão
+
+Vimos nas Seções anteriores o embasamento teórico necessário para compreender o método de clusterização que conceberá o módulo matemático do Empurrando Juntos. Martins [-@tall17] detalhou partes importantes do Pol.is em seu trabalho e desenhou um protótipo do que viria a ser a base arquitetural para a infraestrutura de clusterização do Empurrando Juntos. Entre os diversos métodos de pré-processamento, clusterização e validação analisados, tomou a decisão de reproduzir o fluxo de processamento do Pol.is. Os motivos que englobam essa decisão podem ser descritos em torno do estudo científico de cunho comparativo entre uma ferramenta já bem estabelecida na sociedade, o Pol.is, e a concepção de uma plataforma que extende suas funcionalidades, o Empurrando Juntos.
+
+Com base no que mostramos, podemos encontrar diversos aspéctos críticos no esboço da arquitetura proposta, cujo núcleo se concentra no processamento dos dados em duas etapas sequenciais. A primeira é o pré-processamento com a aplicação do PCA para redução da dimensionalidade, e a segunda, a clusterização realizada através do método _k-means_. À princípio, destacamos o grande problema da perda de informações sensíveis na transformação linear durante a primeira etapa. Essas informações, que podem ser tratadas como distâncias entre pontos, são essenciais para uma clusterização eficiente dos dados. Dependendo do contexto, essa perda pode degenerar os _clusters_, sacrificando qualquer tentativa posterior de se inferir informações úteis sobre os grupos formados. Esse fato vai de encontro com os pilares da proposta do Empurrando Juntos, que veremos no Capítulo [-@sec:ej].
+
+Observamos que a proposta de visualização bidimensional dos dados clusterizados no Pol.is acarretou uma série de problemas conceituais sobre os grupos gerados. Na prática, uma simples inversão das etapas, primeiro a clusterização e depois a redução da dimensionalidade, faria um enorme sentido estatístico. Entretanto, a projeção dos pontos em um espaço dimensional reduzido, que possibilitasse a visualização humana, ocasionaria em uma sobreposição dos _clusters_, o que possui uma coerência com a realidade da informação, mas prejudica a distinção de grupos bem formados.
+
+[COQVCDT]
 
 ### Outros
