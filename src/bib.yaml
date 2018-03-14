@@ -25,6 +25,26 @@ references:
 
 
   - type: article-journal
+    id: roma15
+    author:
+    - family: Romão
+      given: Wagner de Melo
+    issued:
+      date-parts:
+      - - 2015
+        - 07
+        - 31
+    title: 'Reflexões Sobre as Dificuldades da Implementação da Participação Institucional no Brasil'
+    container-title: 'Ideias - Políticas Públicas no Brasil: uma agenda de pesquisa'
+    volume: 6
+    issue: 2
+    URL: 'http://www.ipea.gov.br/participacao/images/pdfs/2160-6031-1-pb.pdf'
+    publisher: 'Unicamp'
+    publisher-place: 'Campinas'
+    language: pt-BR
+
+
+  - type: article-journal
     id: geof08
     author:
     - family: Hinton
@@ -153,6 +173,7 @@ references:
     edition: 1
     language: en-US
 
+
   - type: book
     id: gang07
     author:
@@ -173,4 +194,36 @@ references:
     edition: 1
     language: en-US
 
+
+  - type: book
+    id: joao18
+    author:
+    - family: Mehl
+      given: João Paulo
+    - family: Silva
+      given: [Silvado, P.]
+    title: 'Cultura Digital, internet e apropriações políticas: Experiências, desafios e horizontes'
+    ISBN: 978-85-5473-002-4
+    DOI: 10.24328/2017/5473.004
+    issued:
+      date-parts:
+      - - 2018
+    DOI: 10.1137/1.9780898718348
+    publisher: 'Folio Digital: Letra e Imagem'
+    edition: 1
+    language: pt-BR
+
+
+  - type: book
+    id: pari12
+    author:
+    - family: Pariser
+      given: Eli
+    title: 'O Filtro Invisível: O que a internet está escondendo de você'
+    issued:
+      date-parts:
+      - - 2012
+    publisher: 'Zahar'
+    edition: 1
+    language: pt-BR
 ...
