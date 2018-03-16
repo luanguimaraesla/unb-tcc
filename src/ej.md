@@ -26,8 +26,35 @@ Esse cenário se soma às limitações destacadas sobre a promoção de mecanism
 
 > _"A esfera pública interconectada passa a estar aprisionada a uma lógica que enfraquece o tecido social e molda a formação política e de opinião às ondas de desinformação, no que já está começando a ser chamado de 'a era da pós-verdade'"_ [@icd17].
 
+A identificação das limitações das grandes plataformas de mídias sociais constitui o cerne da proposta deste trabalho: um mecanismo de impulsão e análise dos processos de deliberação coletiva, o Empurrando Juntos. Neste âmbito, há um enorme conjunto de ferramentas de código livre que nos auxiliaria na concepção e desenvolvimento da plataforma. Optamos por incorporar o Pol.is em nossa estratégia.
+
 ## Pol.is {#sec:polis}
-## Empurrando Juntos
+
+Pol.is é uma plataforma de conversação _online_ que busca representar visualmente a forma como diferentes grupos de opinião se formam em uma conversa sobre determinado assunto. É baseado em votos atribuídos a pequenos comentários de outros usuários sobre o tema proposto. O objetivo fundamental da ferramenta é ajudar organizações a se compreenderem através da visualização do que seus membros pensam.
+
+A [@fig:poliscomentario] mostra o contexto principal de participação no Pol.is. Os usuários escrevem comentários de até 140 caracteres sobre um tema específico. Nesse caso, o tema proposto é um _brainstorming_ para o aprimoramento da educação no Brasil. Um cartão é exibido com um comentário aleatório feito por algum usuário da conversa. Pode-se votar em três opções: "concordo", "discordo" e "passo/indeciso".
+
+![Comentário no Pol.is](images/ej/polis_comment.png){#fig:poliscomentario}
+
+A partir das reações dos participantes, a ferramenta processa os votos coletados dos usuários com dois dos algoritmos que explicamos na [@sec:ml]: o PCA e o _k-means_. É possível ver os grupos de usuários formados [@fig:polisgrupos], assim como opções de visualização das estatísticas básicas dos diferentes _clusters_. Podemos concluir que a ferramenta busca evidenciar os diferentes grupos de opinião a partir da análise da concordância dos votos de cada participante.
+
+O Pol.is faz parte de um grupo de plataformas que chamamos de _Crowdsourceded_. Essa arquitetura possui diferenças significativas dos fóruns de diálogo tradicionais, baseados em um modelo de discussão que chamamos de _Threaded_. Uma Discussão _Crowdsourced_ preza pela máxima utilização de todas as informações disponíveis, enquanto uma discussão _Threaded_, uma vez que nela existe hierarquização no conjunto de ideias, perde-se igualdade no tratamento do valor inerente a cada comentário, e ainda corre-se o risco de que essa sistematização oculte do processo democrático partes importantes do diálogo.
+
+Os dois modelos apresentados são aplicados a fases diferentes do processo de participação social. Dado um momento de aperfeiçoamento em determinada temática, a discussão em linha tem a capacidade de promover um aprofundamento sistemático das questões levantadas. Já para o engajamento em massa, a arquitetura _Crowdsourced_ cria uma barreira relativamente menor para que os usuários possam participar efetivamente do debate.
+
+Nesse cenário, o Pol.is não permite que os participantes respondam aos comentários. Sua arquitetura se baseia fortemente na horizontalidade da informação, isto é, rejeita esse tipo de encadeamento da conversa para formular uma matriz de usuários e comentários que matematicamente possuem o mesmo peso. Apesar das críticas da comunidade sobre possíveis superficialidades dos diálogos, os desenvolvedores justificam que essa limitação forçada é uma característica essêncial para a projeção equalitária dos comentários, já que estes não se perderão em árvores de discussões enormes.
+
+![Grupos no Pol.is](images/ej/polis_groups.png){#fig:polisgrupos}
+
+Embora haja evidências consistentes sobre distorções estatísticas geradas pela maneira como o Pol.is estrutura seu processamento de dados, como explicamos na [@sec:polisdiscussao], optamos por incorporar o Pol.is nas versões iniciais do Empurrando Juntos. A decisão de adotar e expandir esse mecanismo baseia-se no diagnóstico que precisamos urgentemente melhorar nossas ferramentas de deliberação coletiva em dois aspectos complementares:
+
+* A ferramenta de deliberação deve atingir níveis mais elevados de envolvimento em massa na deliberação coletiva gratuita.
+* A ferramenta deve promover o engajamento coletivo que supera a lógica de confronto das mídias sociais e permitir a colaboração entre diferentes agentes que buscam o bem comum.
+* A ferramenta deve possuir licença compatível com a filosofia do _Software_ Livre: liberdade para se executar, estudar, redistribuir e aperfeiçoar o código fonte.
+
+Por mais que o Pol.is entregue grande parte das características esperadas, que aprofundaremos na [@sec:empjuntos], ele possui sérias limitações sobre a forma como os usuários interagem e se mantém engajados ao longo do ciclo de vida de uma conversa. A apresentação das estatísticas e a visualização dos _clusters_ são os objetivos finais da experiência de uso da plataforma. O Empurrando Juntos tem como objetivo extender essa experiência, atuando como um agente fomentador do diálogo e da convergência de opiniões.
+
+## Empurrando Juntos {#sec:empjuntos}
 ### Proposta
 ### Arquitetura {#sec:arquitetura}
 ### Principais Ferramentas
