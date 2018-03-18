@@ -60,7 +60,7 @@ O nome Empurrando Juntos faz referência ao termo em inglês _Push Notification_
 
 O problema que a plataforma busca resolver pode ser resumido como: a escassez de um ambiente planejado para lidar com os impactos negativos causados pela manipulação e desinformação da sociedade nos espaços de deliberações políticas digitais. A maioria desses ambientes não é preparada para lidar com a complexidade da evolução da democracia, e por vezes estimula a polarização e a formação de bolhas de opinião entre seus participantes. A influência dessas ferramentas vem extrapolando os meios digitais e operando uma verdadeira transformação nos instrumentos tradicionais de deliberação, como eleições, plebiscitos, referendos, etc. Sem escaptatória, os governos, partidos políticos, organizações sociais e outros interessados tentam, sem sucesso, desenvolver suas próprias alternativas. Entre falta de investimentos e falhas conceituais, essas tecnologias não possuem algoritmos e arquiteturas preparadas para lidar com as iminentes peculiaridades de uma sociedade altamente interconectada através da _Internet_; assim, sucumbem.
 
-Neste cenário, o Empurrando Juntos se propôs a extender as funcionalidades da ferramenta emergente chamada Pol.is, que já demonstrava um grande potencial para fomentar espaços democráticos _online_. Em sua primeira concepção, a plataforma seria um aplicativo que permitiria visualizar os grupos de opinião e suas opiniões majoritárias, consumindo as informações fornecidas pela API do Pol.is. Com esse intuio, o papel do Empurrando Juntos seria criar freios e contrapesos que trouxessem diversidade para a opinião da maioria e impedissem que só um lado dominasse o fluxo principal da comunicação. Além dessa, foram destacadas outras seguintes características:
+Neste cenário, o Empurrando Juntos se propôs a extender as funcionalidades da ferramenta emergente chamada Pol.is, que já demonstrava um grande potencial para fomentar espaços democráticos _online_. Em sua primeira concepção, a plataforma seria um aplicativo que permitiria visualizar os grupos de opinião e suas opiniões majoritárias, consumindo as informações fornecidas pela API (do inglês _Application Programming Interface_) do Pol.is. Com esse intuio, o papel do Empurrando Juntos seria criar freios e contrapesos que trouxessem diversidade para a opinião da maioria e impedissem que só um lado dominasse o fluxo principal da comunicação. Além dessa, foram destacadas outras seguintes características:
 
 * Permitir plugar ferramentas livres de deliberação coletiva e participação;
 * Protocolo de identidade distribuído com privacidade;
@@ -81,9 +81,28 @@ Ainda em Madri, no evento internacional que reuniu, entre outras personalidades,
 
 Martins [-@tall17] desenvolveu um protótipo de _software_ que implementava os três primeiros itens. Os demais, assim como em seu trabalho, não serão contemplados neste. O protótipo desenvolvido forneceu as principais diretrizes para o estudo efetivo do método matemático por trás da clusterização oferecida pelo Pol.is e serviu de base para a proposição de uma arquitetura robusta e escalável que pudesse ser disponibilizada ao público em geral.
 
-Várias modificações estruturais foram realizadas...
+Várias modificações estruturais foram realizadas na concepção inicial da plataforma. A interface foi completamente repensada para outros contextos e a ideia da aplicação móvel passou a figurar em um segundo plano. O primeiro financiamento de longo prazo para o desenvolvimento do Empurrando Juntos veio da Fundação Perseu Abramo e envolveu, além do Instituto Cidade Democrática, o laboratório de _Software_ Livre Hacklab de São Paulo. Assim, iniciamos a primeira rodada de desenvolvimento da plataforma.
 
 ### Proposta
+
+As decisões arquiteturais abordadas neste trabalho contemplam o desenvolvimento do _backend_ do Empurrando Juntos. Esta estrutura é o conjunto de ferramentas e algortimos que integraram três sistemas distintos: o banco de dados da aplicação, que define todo o modelo de dados que armazenaremos; a biblioteca de clusterização, que fornece os algoritmos necessários para a criação dos grupos de opinião; e o núcleo do _backend_ que integra essas partes, define as regras de negócio e fornece uma API para o consumo das informações por outros _softwares_, como o próprio _frontend_ da plataforma.
+
+Esta Seção apresenta as decisões e reflexões que, sustentadas pelo embasamento teórico fornecido nos Capítulos anteriores, foram importantes para a composição das estratégias de desenvolvimento do _backend_ do Empurrando Juntos. Plataforma que busca suprimir a necessidade de um ambiente planejado para lidar com a complexidade da evolução da democracia através de uma rede social que utiliza algoritmos de aprendizado de máquina e técnicas de engajamento social para potencializar os níveis de participação.
+
+As características da solução devem condizer com as seguintes condições:
+
+1. Deve fornecer uma interface de criação, edição, leitura e remoção de contas de usuário.
+2. Deve fornecer uma interface de criação, edição, leitura e remoção de conversas.
+3. Deve fornecer uma interface de criação e leitura de comentários e votos.
+4. Os votos devem representar a opinião do participante sobre determinado comentário: concorda, discorda ou se abstém.
+5. Deve ser capaz de inferir grupos de opinião por conversa a partir dos votos registrados pelos participantes.
+6. Deve fornecer uma interface para obtenção de comentários aleatórios em uma conversa.
+7. O criador da conversa poderá moderar os comentários realizados.
+8. Deve fornecer uma interface para leitura de estatísticas extraídas de conversas.
+9. Deve estabelecer políticas configuráveis de restrição de comentários por conversa para evitar _spams_.
+10. Deve permitir a utilização de contas de aplicações externas para cadastro: Facebook e Twitter.
+
+As próximas Seções deste Capítulo descrevem a forma como estruturamos e implementamos esse conjunto de características, assim como o conjunto das principais tecnologias utilizadas.
 
 ### Arquitetura {#sec:arquitetura}
 ### Principais Ferramentas
