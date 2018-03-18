@@ -55,7 +55,36 @@ Embora haja evidências consistentes sobre distorções estatísticas geradas pe
 Por mais que o Pol.is entregue grande parte das características esperadas, que aprofundaremos na [@sec:empjuntos], ele possui sérias limitações sobre a forma como os usuários interagem e se mantém engajados ao longo do ciclo de vida de uma conversa. A apresentação das estatísticas e a visualização dos _clusters_ são os objetivos finais da experiência de uso da plataforma. O Empurrando Juntos tem como objetivo extender essa experiência, atuando como um agente fomentador do diálogo e da convergência de opiniões.
 
 ## Empurrando Juntos {#sec:empjuntos}
+
+O nome Empurrando Juntos faz referência ao termo em inglês _Push Notification_, que é um sistema de distribuição de conteúdo na _Internet_ em que a informação se propaga à partir de um ponto para uma rede de usuários conectados, chamados de "assinantes". A ideia de uma arquitetura capaz de utilizar mecanismos tecnológicos, que favoreçam o engajamento da população em uma plataforma de participação social é a essência do _software_ que nos propusemos à projetar e desenvolver.
+
+O problema que a plataforma busca resolver pode ser resumido como: a escassez de um ambiente planejado para lidar com os impactos negativos causados pela manipulação e desinformação da sociedade nos espaços de deliberações políticas digitais. A maioria desses ambientes não é preparada para lidar com a complexidade da evolução da democracia, e por vezes estimula a polarização e a formação de bolhas de opinião entre seus participantes. A influência dessas ferramentas vem extrapolando os meios digitais e operando uma verdadeira transformação nos instrumentos tradicionais de deliberação, como eleições, plebiscitos, referendos, etc. Sem escaptatória, os governos, partidos políticos, organizações sociais e outros interessados tentam, sem sucesso, desenvolver suas próprias alternativas. Entre falta de investimentos e falhas conceituais, essas tecnologias não possuem algoritmos e arquiteturas preparadas para lidar com as iminentes peculiaridades de uma sociedade altamente interconectada através da _Internet_; assim, sucumbem.
+
+Neste cenário, o Empurrando Juntos se propôs a extender as funcionalidades da ferramenta emergente chamada Pol.is, que já demonstrava um grande potencial para fomentar espaços democráticos _online_. Em sua primeira concepção, a plataforma seria um aplicativo que permitiria visualizar os grupos de opinião e suas opiniões majoritárias, consumindo as informações fornecidas pela API do Pol.is. Com esse intuio, o papel do Empurrando Juntos seria criar freios e contrapesos que trouxessem diversidade para a opinião da maioria e impedissem que só um lado dominasse o fluxo principal da comunicação. Além dessa, foram destacadas outras seguintes características:
+
+* Permitir plugar ferramentas livres de deliberação coletiva e participação;
+* Protocolo de identidade distribuído com privacidade;
+* _Push Notifications_ de engajamento e ação coletiva direcionada às aplicações móveis;
+* Licença aGPLv3, documentação e estratégia de acolhimento de contribuições da comunidade.
+
+Sintetizando, o Empurrando Juntos seria um aplicativo e uma plataforma _Software_ Livre que se conectaria com a aplicação _Crowdsourced_ Pol.is e utilizaria notificações para potencializar o debate informado, a diversidade de opinião e a ação coletiva.
+
+Ainda em Madri, no evento internacional que reuniu, entre outras personalidades, o CEO do Pol.is, Colin Megill e o primeiro time de desenvolvimento do Empurrando Juntos, ficou claro que a integração com o Pol.is poderia ser complexa e dispendiosa. Apesar de possuir licença compatível, essa ferramenta se mostrou um projeto de difícil implantação, manutenção e contribuição, o que configurou uma grande barreira para a continuação do projeto. Esses impedimentos culminaram na decisão de se projetar um ecossistema completo que atendesse às necessidades de nossa proposta. Naquele momento as características estabelecidas foram [@tall17]:
+
+1. **Código aberto**: O ecossistema do Empurrando Juntos deve ser aberto, com licença livre;
+2. **Tratamento dos Votos**: O Empurrando Juntos deve ser capaz de manipular votos que representam a concordância, a discordância e a abstenção de opinião de um usuário em um comentário, de maneira similar à plataforma Pol.is.
+3. **Grupos de opinião**: O Empurrando Juntos deve ser capaz de identificar grupos de opinião em uma conversa com base nos votos dos usuários, que possam ser visualizados em gráficos similares aos da plataforma Polis.
+4. **Opinião majoritária**: O Empurrando Juntos deve ser capaz de identificar comentários que representem a opinião majoritária de todos os participantes, de maneira similar à plataforma Polis.
+5. **Perfil ativista de minoria**: O Empurrando Juntos deve ser capaz de identificar usuários com perfis de ativista de minoria em uma conversa.
+6. **Perfil ponte de diálogo**: O Empurrando Juntos deve ser capaz de identificar usuários com perfis de ponte de diálogo em uma conversa.
+7. **Perfil criador de consulta**: O Empurrando Juntos deve ser capaz de fomentar o debate através da figura do participante que cria a consulta.
+
+Martins [-@tall17] desenvolveu um protótipo de _software_ que implementava os três primeiros itens. Os demais, assim como em seu trabalho, não serão contemplados neste. O protótipo desenvolvido forneceu as principais diretrizes para o estudo efetivo do método matemático por trás da clusterização oferecida pelo Pol.is e serviu de base para a proposição de uma arquitetura robusta e escalável que pudesse ser disponibilizada ao público em geral.
+
+Várias modificações estruturais foram realizadas...
+
 ### Proposta
+
 ### Arquitetura {#sec:arquitetura}
 ### Principais Ferramentas
 #### django
