@@ -104,7 +104,18 @@ As características da solução devem condizer com as seguintes condições:
 
 As próximas Seções deste Capítulo descrevem a forma como estruturamos e implementamos esse conjunto de características, assim como o conjunto das principais tecnologias utilizadas.
 
-### Arquitetura {#sec:arquitetura}
+### Dependência do Pol.is
+
+As ferramentas desenvolvidas no contexto do Empurrando Juntos foram prefixadas com o identificador "ej". A biblioteca de clusterização foi nomeada como _ej-math_. Como esclarecemos na discussão aprensentada na [@sec:polisdiscussao], decidimos inicialmente replicar o método matemático utilizado pelo Pol.is. Não só decidimos pelo método, mas também optamos, em um primeiro momento, por realizar um grande esforço na configuração do Pol.is como mecanismo de clusterização e visualização dos _clusters_. Essa decisão se deu por condições dos marcos de entrega viculados ao financiamento do projeto. Estimamos que levaria mais tempo para produzir o _ej-math_ do que para implantar o Pol.is, mesmo com todas as dificuldades aparentes.
+
+A [@sec:arquitetura] descreve uma arquitetura sem o Pol.is, entretanto ela não condiz com a linha do tempo do desenvolvimento do projeto. Na verdade, pensamos em um modelo arquitetural que permitisse a evolução gradativa e independente do _ej-math_ enquanto lançávamos versões que dependiam apenas do Pol.is. É importante esclarecer que não substituímos ou alteramos partes da estrutura dessa ferramenta, nós a mantivemos como o único mecanismo de clusterização responsável pelas informações que o _backend_ fornecia. Enquanto isso, acoplamos e desenvolvemos aos poucos as ferramentas e os algoritmos do _ej-math_ sem que esse fizesse parte do fluxo de processamento de dados principal.
+
+O objetivo dessa estratégia foi permitir a substituição completa do Pol.is pelo _ej-math_, no momento em que este último estivesse maduro o suficiente para fornecer, além dos _clusters_, as estatísticas necessárias para o suporte das demais funcionalidades planejadas para o Empurrando Juntos.
+
+### Biblioteca de clusterização _ej-math_
+
+
+### Arquitetura do ej-server {#sec:arquitetura}
 ### Principais Ferramentas
 #### django
 #### scikit-learn
