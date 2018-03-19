@@ -146,9 +146,8 @@ O _ej-math_ utiliza conceitos da programação funcional para implementar quatro
 
 As funções internas de cada módulo não foram descritas nessa lista, elas incluem normalizações, validações, cálculo do coeficiênte de silhueta, e outros.
 
-Mencionamos a função *get_clusters/2* como única interface da biblioteca _ej-math_. Essa função recebe dois argumentos, sendo que o primeiro é uma lista de votos que deve seguir uma estrutura bem definida. Nesta lista, cada voto é representado por uma _tupla Python_, que pode ser resumidamente definida como uma lista imutável. Essa _tupla_ é formada por três informações: o valor do voto, o identificador único do usuário que o efetuou, e o identificador único do comentário no qual foi realizado. Podemos observar esta estrutura no pseudocódigo [-@lst:votes].
+Mencionamos a função *get_clusters/2* como única interface da biblioteca _ej-math_. Essa função recebe dois argumentos, sendo que o primeiro é uma lista de votos que deve obedecer a uma estrutura bem definida. Nesta lista, cada voto é representado por uma _tupla Python_, que pode ser resumidamente definida como uma lista imutável. Essa _tupla_ é formada por três informações: o valor do voto, o identificador único do usuário que o efetuou, e o identificador único do comentário no qual foi realizado. Podemos observar esta estrutura no pseudocódigo [-@lst:votes].
 
-O segundo argumento é uma lista de possíveis valores de _k_ desejados na aplicação do _k-means_. Cada um desses valores será validado e então utilizado como argumento de uma nova clusterização. As diferentes distribuições serão analisadas através do coeficiênte de silhueta ([@eq:coefsilhueta]). O resultado então será a clusterização entre os diferentes _k_ valores válidos que possui o maior coeficiênte.
 
 ```python
 from ejmath import cluster
@@ -161,6 +160,8 @@ result = cluster.get_clusters(votes, k_values)
 ```
 : Formato da lista de votos no _ej-math_ {#lst:votes}
 
+O segundo argumento é uma lista de possíveis valores de _k_ desejados na aplicação do _k-means_. Cada um desses valores será validado e então utilizado como argumento de uma nova clusterização. As diferentes distribuições serão analisadas através do coeficiênte de silhueta ([@eq:coefsilhueta]). O resultado então será a clusterização entre os diferentes _k_ valores válidos que possui o maior coeficiênte.
+
 Os votos na plataforma representam três possiveis cenários, a concordância, a discordância e a abstenção. Para cada um desses cenários definimos uma grandeza escalar. As escolhas dos votos pode assumir assim três valores, $[-1, 0, 1]$.
 
 |Discordância|Abstenção|Concordância|
@@ -171,7 +172,29 @@ Apesar de ser um conjunto que representa todas possibilidades de votos, essa abo
 
 Há maneiras para se mitigar essa distorção, uma delas é clusterizar apenas usuários que possuem determinada quantidade de votos em relação ao total de comentários, em outras palavras, apenas serão submetidos ao algoritmo de clusterização aqueles usuários que votaram, por exemplo, em 70 ou 80 porcento dos comentários de uma conversa. Dessa forma, construímos uma matriz de usuários $\times$ comentários que melhor condiz com a realidade.
 
-Apesar dos limites apresentados sobre esta representação, existe uma grande vantagem em se utilizá-la. Em termos de informação, ela pode ser considerada completamente autocontida, possuindo todos insumos necessários para que se faça sua análise, o que dispensa ajustes de escala ou tratamento adicional de dados ausentes [@tall17] e facilita o fluxo de processamento de dados [@fig:fluxoejmath].
+Apesar dos limites apresentados sobre esta representação, existe uma grande vantagem em se utilizá-la. Em termos de informação, ela pode ser considerada completamente autocontida, possuindo todos insumos necessários para que se faça sua análise, o que dispensa ajustes de escala ou tratamento adicional de dados ausentes [@tall17], e facilita o fluxo de processamento de dados. Veja na [@fig:fluxoejmath].
+
+![Fluxo de processamento do ej-math](images/ej/ejmathflow.png){#fig:fluxoejmath}
+
+Neste fluxo, os dados de entrada são fornecidos no formato apresentado no pseudocódigo [@lst:votes], e então, são convertidos para uma matriz de usuários $\times$ comentários representada computacionalmente em uma estrutura de dados chamada _DataFrame_ da biblioteca Pandas. O espaço dimensional dos dados é igual ao número de comentários em uma conversa, veja o exemplo na [@tbl:exemplodados]
+
+|**Usuário**|_Comentário 1_|_Comentário 2_|_Comentário 3_|_Comentário 4_|
+|:---------:|:------------:|:------------:|:------------:|:------------:|
+|**1**      |0             |1             |0             |-1            |
+|**2**      |1             |0             |-1            |-1            |
+|**3**      |1             |1             |-1            |0             |
+|**4**      |-1            |1             |1             |1             |
+|**5**      |1             |0             |1             |1             |
+: Matriz de votação do ej-math {#tbl:exemplodados}
+
+A interpretação desses dados excede a compreensão tridimensional humana. Assim, para possibilitar a visualização da informação contida nesta matriz, devemos submetê-la a uma redução de dimensionalidade. O Pol.is, buscando uma visualização bidimensional de _clusters_ bem definidos e que não se sobrepõem, realiza esse procedimento antes de cálcular os _clusters_ através do _k-means_. Há profundas desvantagens em se optar por este fluxo, entretando, já discutimos na [@sec:polisdiscussao] e explicamos os motivos pelos quais optamos em uma primeira, e possivelmente passageira, abordagem por utilizá-lo.
+
+Aplicando o PCA para redução de dimensionalidade dos dados da [@tbl:exemplodados], obtemos uma matriz referente a um espaço bidimensional resultante da projeção desses dados hiper dimensionais. Veja na [@tbl:exemplo2dados].
+
+[TODO] colocar fig
+
+
+[IDEIA] clusterizar os comentários e mostrar no radviz ordenado pela
 
 
 
