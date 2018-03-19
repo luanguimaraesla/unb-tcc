@@ -458,7 +458,7 @@ $$
 
 $$
   \mathrm{SIL}(C) = \frac{\sum_{i=1}^k \mathrm{SIL}(C_i)}{k},
-$$
+$$ {#eq:coefsilhueta}
 
 em que $N_{C_{i}}$ é o número de dados contidos no conjunto $C_i$, e $k$ é o número de _clusters_ que desejamos otimizar. Assim, descrevemos um método capaz de comparar diferentes arranjos de $k$ _clusters_ e nos fornecer uma resposta para qual seria o melhor deles de acordo com as características dos dados.
 

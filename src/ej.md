@@ -133,20 +133,47 @@ Essas ferramentas são integradas para a construção do _ej-math_, um pacote _P
 O _ej-math_ utiliza conceitos da programação funcional para implementar quatro módulos que se comunicam entre si. Esses módulos utilizam as expostas acima e possuem os seguintes papéis e as interfaces correspondentes:
 
 * **cluster**: define a interface única do _ej-math_.
-  - *get_clusters/2*: recebe uma lista de votos com seus respectivos usários e comentários, e uma lista numérica de possíveis valores _k_ para o número de _clusters_. Retorna um dicionário com os usuários clusterizados.
+  + *get_clusters/2*: recebe uma lista de votos com seus respectivos usários e comentários, e uma lista numérica de possíveis valores _k_ para o número de _clusters_. Retorna um dicionário com os usuários clusterizados.
 
 * **data_converter**: converte a lista de votos para uma matriz do Pandas (_DataFrame_) de usuários por comentários.
-  - *convert_to_dataframe/1*: recebe uma lista de votos e retorna um Pandas _DataFrame_.
+  + *convert_to_dataframe/1*: recebe uma lista de votos e retorna um Pandas _DataFrame_.
 
 * **decomposer**: reduz a dimensionalidade do dado.
-  - *pca_decompose/2*: recebe um Pandas _DataFrame_ e o número de dimensões do espaço reduzido. Aplica o PCA fornecido pela biblioteca Scikit-Learn e retorna um novo Dataframe com os respectivos valores após a transformação linear.
+  + *pca_decompose/2*: recebe um Pandas _DataFrame_ e o número de dimensões do espaço reduzido. Aplica o PCA fornecido pela biblioteca Scikit-Learn e retorna um novo Dataframe com os respectivos valores após a transformação linear.
 
 * **kmeans**: aplica o _k-means_ para uma lista de valores _k_ e seleciona aquele com maior coeficiênte de silhueta.
-  - *make_clusters/2*: recebe uma lista de votos e uma lista de possíveis valores _k_. Executa as tranformações necessárias com o auxílio dos outros módulos. Retorna um dicionário de _k clusters_ com as respectivas posições normalizadas dos usuários.
+  + *make_clusters/2*: recebe uma lista de votos e uma lista de possíveis valores _k_. Executa as tranformações necessárias com o auxílio dos outros módulos. Retorna um dicionário de _k clusters_ com as respectivas posições normalizadas dos usuários.
 
 As funções internas de cada módulo não foram descritas nessa lista, elas incluem normalizações, validações, cálculo do coeficiênte de silhueta, e outros.
 
-Mencionamos a função *get_clusters/2* como única interface da biblioteca _ej-math_. Essa função recebe dois argumentos, sendo que o primeiro é.
+Mencionamos a função *get_clusters/2* como única interface da biblioteca _ej-math_. Essa função recebe dois argumentos, sendo que o primeiro é uma lista de votos que deve seguir uma estrutura bem definida. Nesta lista, cada voto é representado por uma _tupla Python_, que pode ser resumidamente definida como uma lista imutável. Essa _tupla_ é formada por três informações: o valor do voto, o identificador único do usuário que o efetuou, e o identificador único do comentário no qual foi realizado. Podemos observar esta estrutura no pseudocódigo [-@lst:votes].
+
+O segundo argumento é uma lista de possíveis valores de _k_ desejados na aplicação do _k-means_. Cada um desses valores será validado e então utilizado como argumento de uma nova clusterização. As diferentes distribuições serão analisadas através do coeficiênte de silhueta ([@eq:coefsilhueta]). O resultado então será a clusterização entre os diferentes _k_ valores válidos que possui o maior coeficiênte.
+
+```python
+from ejmath import cluster
+
+k_values = [3, 4, 5, 6]
+votes = [(vote_choice, user_id, comment_id), ...]
+
+result = cluster.get_clusters(votes, k_values)
+
+```
+: Formato da lista de votos no _ej-math_ {#lst:votes}
+
+Os votos na plataforma representam três possiveis cenários, a concordância, a discordância e a abstenção. Para cada um desses cenários definimos uma grandeza escalar. As escolhas dos votos pode assumir assim três valores, $[-1, 0, 1]$.
+
+|Discordância|Abstenção|Concordância|
+|:----------:|:-------:|:----------:|
+|-1          |0        |1           |
+
+Apesar de ser um conjunto que representa todas possibilidades de votos, essa abordagem possuim um grande prejuízo semântico no contexto do Empurrando Juntos. Esse fato se concretiza quando na plataforma alguns usuários ainda não votaram em determinados comentários em uma conversa. Na prática, quando tratamos as semelhanças de opinião a partir da comparação de distâncias entre pontos, devemos atribuir o valor $0$ (zero) para aqueles que ainda não votaram. Isso significa que tratamos as pessoas que se abstiveram da mesma forma como tratamos aqueles que ainda não votaram em determinado comentário, quando na verdade, esses dois cenários possuem semânticas diferentes. Essa abordagem pode distorcer a formação dos _clusters_, ou configurar um resultado em que, dado um ambiende de discussão relativamente homogêneo, formam-se dois grandes grupos: aqueles que votaram e aqueles que não votaram; ocasionando um esforço computacional grande para uma informação praticamente irrelevante.
+
+Há maneiras para se mitigar essa distorção, uma delas é clusterizar apenas usuários que possuem determinada quantidade de votos em relação ao total de comentários, em outras palavras, apenas serão submetidos ao algoritmo de clusterização aqueles usuários que votaram, por exemplo, em 70 ou 80 porcento dos comentários de uma conversa. Dessa forma, construímos uma matriz de usuários $\times$ comentários que melhor condiz com a realidade.
+
+Apesar dos limites apresentados sobre esta representação, existe uma grande vantagem em se utilizá-la. Em termos de informação, ela pode ser considerada completamente autocontida, possuindo todos insumos necessários para que se faça sua análise, o que dispensa ajustes de escala ou tratamento adicional de dados ausentes [@tall17] e facilita o fluxo de processamento de dados [@fig:fluxoejmath].
+
+
 
 ### Arquitetura do _ej-server_ {#sec:arquitetura}
 #### Django
