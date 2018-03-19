@@ -114,13 +114,43 @@ O objetivo dessa estratégia foi permitir a substituição completa do Pol.is pe
 
 ### Biblioteca de clusterização _ej-math_
 
+A biblioteca de clusterização foi desenvolvida em _Python_, uma linguagem de programação interpretada de alto nível, imperativa, multiparadigma e de tipagem dinâmica. É amplamente adotada pela comunidade ciêntifica para diversos fins. Suas características permitiram o desenvolvimento de uma infinidade de bibliotecas, inclusive várias que se aplicam e facilitam o desenvolvimento do _ej-math_. Falaremos sobre algumas delas nas próximas Seções.
 
-### Arquitetura do ej-server {#sec:arquitetura}
-### Principais Ferramentas
-#### django
-#### scikit-learn
-#### pandas
-#### celery
-* workers
-* rabbitmq
-* redis
+#### Ferramentas
+
+As principais ferramentas utilizadas no projeto são distribuídas através de pacotes _Python_, destacamos as três principais: Numpy, Scikit-Learn e Pandas.
+
+* **Numpy**: é considerado o pacote fundamental para a computação científica com o _Python_. Entre vários recursos, destacam-se funções sofisticadas de _broadcasting_, matrizes $N$-dimensionais, ferramentas para integração de outras linguagens, como C e Fortran, e um poderoso arsenal para lidar com operações de álgebra linear. NumPy é licenciado sob a licença BSD, permitindo a reutilização com poucas restrições.
+
+* **Scikit-Learn**: é uma biblioteca de aprendizado de máquina de código aberto. Suas interfaces são projetadas para interagir com o pacote NumPy. Inclui vários algoritmos de classificação, regressão e agrupamento incluindo florestas aleatórias, _gradient boosting_ e DBSCAN. Utilizaremos suas eficientes implementações do _k-means_, do PCA e da extração do coeficiênte de silhueta.
+
+* **Pandas**: O pandas é uma biblioteca _Python_ também sob a lincença BSD. Ela oferece estruturas de dados de alto desempenho e uma interface fácil utilização, assim como algumas ferramentas de análise de dados. No _ej-math_, o Pandas é o elemento básico de construção de alto nível para fazer a análise prática dos dados extraídos da conversa, mais especificamente da matriz de comentários por usuários que registra os votos individuais.
+
+Essas ferramentas são integradas para a construção do _ej-math_, um pacote _Python_ com uma interface única para cálculo de grupos de usuários através dos votos que estes realizam em uma conversa.
+
+#### Implementação
+
+O _ej-math_ utiliza conceitos da programação funcional para implementar quatro módulos que se comunicam entre si. Esses módulos utilizam as expostas acima e possuem os seguintes papéis e as interfaces correspondentes:
+
+* **cluster**: define a interface única do _ej-math_.
+  - *get_clusters/2*: recebe uma lista de votos com seus respectivos usários e comentários, e uma lista numérica de possíveis valores _k_ para o número de _clusters_. Retorna um dicionário com os usuários clusterizados.
+
+* **data_converter**: converte a lista de votos para uma matriz do Pandas (_DataFrame_) de usuários por comentários.
+  - *convert_to_dataframe/1*: recebe uma lista de votos e retorna um Pandas _DataFrame_.
+
+* **decomposer**: reduz a dimensionalidade do dado.
+  - *pca_decompose/2*: recebe um Pandas _DataFrame_ e o número de dimensões do espaço reduzido. Aplica o PCA fornecido pela biblioteca Scikit-Learn e retorna um novo Dataframe com os respectivos valores após a transformação linear.
+
+* **kmeans**: aplica o _k-means_ para uma lista de valores _k_ e seleciona aquele com maior coeficiênte de silhueta.
+  - *make_clusters/2*: recebe uma lista de votos e uma lista de possíveis valores _k_. Executa as tranformações necessárias com o auxílio dos outros módulos. Retorna um dicionário de _k clusters_ com as respectivas posições normalizadas dos usuários.
+
+As funções internas de cada módulo não foram descritas nessa lista, elas incluem normalizações, validações, cálculo do coeficiênte de silhueta, e outros.
+
+Mencionamos a função *get_clusters/2* como única interface da biblioteca _ej-math_. Essa função recebe dois argumentos, sendo que o primeiro é.
+
+### Arquitetura do _ej-server_ {#sec:arquitetura}
+#### Django
+#### Celery
+* Workers
+* RabbitMQ
+* Redis
