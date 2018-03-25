@@ -162,13 +162,13 @@ result = cluster.get_clusters(votes, k_values)
 
 O segundo argumento é uma lista de possíveis valores de _k_ desejados na aplicação do _k-means_. Cada um desses valores será validado e então utilizado como argumento de uma nova clusterização. As diferentes distribuições serão analisadas através do coeficiênte de silhueta ([@eq:coefsilhueta]). O resultado então será a clusterização entre os diferentes _k_ valores válidos que possui o maior coeficiênte.
 
-Os votos na plataforma representam três possiveis cenários, a concordância, a discordância e a abstenção. Para cada um desses cenários definimos uma grandeza escalar. As escolhas dos votos pode assumir assim três valores, $[-1, 0, 1]$.
+Os votos na plataforma representam três possiveis cenários: a concordância, a discordância e a abstenção. Para cada um desses cenários definimos uma grandeza escalar. A escolhas em um voto podem assumir, assim, três valores, $[-1, 0, 1]$.
 
 |Discordância|Abstenção|Concordância|
 |:----------:|:-------:|:----------:|
 |-1          |0        |1           |
 
-Apesar de ser um conjunto que representa todas possibilidades de votos, essa abordagem possuim um grande prejuízo semântico no contexto do Empurrando Juntos. Esse fato se concretiza quando na plataforma alguns usuários ainda não votaram em determinados comentários em uma conversa. Na prática, quando tratamos as semelhanças de opinião a partir da comparação de distâncias entre pontos, devemos atribuir o valor $0$ (zero) para aqueles que ainda não votaram. Isso significa que tratamos as pessoas que se abstiveram da mesma forma como tratamos aqueles que ainda não votaram em determinado comentário, quando na verdade, esses dois cenários possuem semânticas diferentes. Essa abordagem pode distorcer a formação dos _clusters_, ou configurar um resultado em que, dado um ambiende de discussão relativamente homogêneo, formam-se dois grandes grupos: aqueles que votaram e aqueles que não votaram; ocasionando um esforço computacional grande para uma informação praticamente irrelevante.
+Apesar de ser um conjunto que representa todas possibilidades de votos, essa abordagem possuim um grande prejuízo semântico no contexto do Empurrando Juntos. Esse fato se concretiza quando, em determinada conversa, alguns usuários ainda não visualizaram e votaram em diversos comentários. Na prática, quando tratamos as semelhanças de opinião a partir da comparação de distâncias entre pontos, devemos atribuir o valor $0$ (zero) para aqueles que ainda não votaram. Isso significa que tratamos as pessoas que se abstiveram da mesma forma como tratamos aqueles que ainda não visualizaram determinado comentário, quando na verdade, esses dois cenários possuem semânticas diferentes. Essa abordagem pode distorcer a formação dos _clusters_, ou configurar ocasiões em que, dado ambientes de discussão relativamente homogêneos, formam-se dois grandes grupos: aqueles que votaram e aqueles que não viram ainda; resultando um esforço computacional grande para uma informação praticamente irrelevante.
 
 Há maneiras para se mitigar essa distorção, uma delas é clusterizar apenas usuários que possuem determinada quantidade de votos em relação ao total de comentários, em outras palavras, apenas serão submetidos ao algoritmo de clusterização aqueles usuários que votaram, por exemplo, em 70 ou 80 porcento dos comentários de uma conversa. Dessa forma, construímos uma matriz de usuários $\times$ comentários que melhor condiz com a realidade.
 
@@ -180,23 +180,33 @@ Neste fluxo, os dados de entrada são fornecidos no formato apresentado no pseud
 
 |**Usuário**|_Comentário 1_|_Comentário 2_|_Comentário 3_|_Comentário 4_|
 |:---------:|:------------:|:------------:|:------------:|:------------:|
-|**1**      |0             |1             |0             |-1            |
-|**2**      |1             |0             |-1            |-1            |
-|**3**      |1             |1             |-1            |0             |
-|**4**      |-1            |1             |1             |1             |
-|**5**      |1             |0             |1             |1             |
+|**A**      |0             |1             |0             |-1            |
+|**B**      |1             |0             |-1            |-1            |
+|**C**      |1             |1             |-1            |0             |
+|**D**      |-1            |1             |1             |1             |
+|**E**      |1             |0             |1             |1             |
 : Matriz de votação do ej-math {#tbl:exemplodados}
 
 A interpretação desses dados excede a compreensão tridimensional humana. Assim, para possibilitar a visualização da informação contida nesta matriz, devemos submetê-la a uma redução de dimensionalidade. O Pol.is, buscando uma visualização bidimensional de _clusters_ bem definidos e que não se sobrepõem, realiza esse procedimento antes de cálcular os _clusters_ através do _k-means_. Há profundas desvantagens em se optar por este fluxo, entretando, já discutimos na [@sec:polisdiscussao] e explicamos os motivos pelos quais optamos em uma primeira, e possivelmente passageira, abordagem por utilizá-lo.
 
 Aplicando o PCA para redução de dimensionalidade dos dados da [@tbl:exemplodados], obtemos uma matriz referente a um espaço bidimensional resultante da projeção desses dados hiper dimensionais. Veja na [@tbl:exemplo2dados].
 
-[TODO] colocar fig
+|**Usuário**|_X_    |_Y_    | 
+|:---------:|:-----:|:-----:|
+|**A**      |-0.407 |-0.948 |
+|**B**      |-1.574 | 0.164 |
+|**C**      |-0.892 | 0.150 |
+|**D**      | 1.898 |-0.662 |
+|**E**      | 0.975 | 1.295 |
+: Matriz de votação após a aplicação do PCA {#tbl:exemplo2dados}
 
+Utilizaremos os valores obtidos como as posições $(x,y)$ dos pontos que representam os usuários em um Plano Cartesiano. Esses mesmos valores serão submetidos ao algoritmo _k-means_ sucessivas vezes, de acordo com o parâmetro _k-values_, apresentado na [@lst:votes]. Realizamos as diferentes clusterizações e então escolhemos a que possui o maior coeficiênte de silhuete. Veja na [@fig:exemplokmeans].
 
-[IDEIA] clusterizar os comentários e mostrar no radviz ordenado pela
+![Coeficiêntes de silhueta para diferentes valores de k](images/ej/example_03_ej_kmeans.png){#fig:exemplokmeans}
 
+No caso apresentado, extraímos os _clusters_ para três possíveis valores de $k$, $K=[2,3,4]$. A melhor configuração encontrada acontece quando $k=2$. Então, é construído uma estrutura de dados no formato dos dicionários do _Python_ com todas as informações necessárias para a exibição das informações dos grupos formados. Esse dicionário contém a lista de usuários com suas respectivas posições $(x, y)$ e o identificador numérico do _cluster_ ao qual cada um pertence.
 
+No contexto do Empurrando Juntos, essa informação é armazenada em um campo _JSON_ no banco de dados e pode ser acessada através de um _endpoint_ da API disponível para cada conversa. Imediatamente, percebemos que a execução constante desse fluxo pode ocasionar graves problemas de performance e prejudicar a escalabilidade da plataforma, dado o alto custo de processamento agregado a cada clusterização. Assim, projetamos uma arquitetura distribuída capaz de delegar tarefas à unidades de processamento individuais através de filas de mensagens. Essa é uma das principais características do _ej-server_, que será apresentado a seguir.
 
 ### Arquitetura do _ej-server_ {#sec:arquitetura}
 #### Django
