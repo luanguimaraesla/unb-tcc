@@ -216,10 +216,21 @@ Nesta conjuntura, propusemos uma arquitetura centralizada em torno de uma unidad
 
 ![Diagrama de entidades e relacionamentos do _ej-server_](images/ej/der_ej_server.png){#fig:derejserver}
 
+Juntas, essas classes fornecem os recursos necessários para garantir o fluxo básico de participação na plataforma. Esse fluxo possui 6 etapas:
 
+1. Administrador cria uma categoria de coversas;
+2. Administrador cria uma conversa dentro desta categoria;
+3. Usuários criam contas na plataforma;
+4. Usuários comentam sobre o tema da conversa;
+5. Usuários recebem comentários sequenciados de forma aleatória;
+6. Usuários votam se concordam, discordam ou se abstém para cada comentário.
 
+Note que nem no modelo apresentado na [@fig:derejserver], nem no fluxo de participação acima, citamos a clusterização ou a proposta de gamificação (que não faz parte do escopo deste trabalho, mas é uma estrutura fundamental na concepção do Empurrando Juntos). Essa omissão esclarece a proposição de um núcleo altamente qualificado, que realiza poucas tarefas de maneira eficiente e altamente extensível. A ideia é agregar pequenos módulos especilizados a este núcleo, como o _ej-math_, o disparador de notificações, o módulo de gamificação, etc, dando ao projeto uma grande versatilidade, que tem o potencial de fomentar a manutenção de sua comunidade de _Software_ Livre e possivelmente aglutinanar uma variedade ferramental compatível, amplificando cada vez mais sua característica adaptativa.
+
+As integrações a nível de módulos, a preocupação em criar uma comunidade de _Software_ Livre, a velocidade de desenvolvimento, a escalabilidade do sistema e uma API _Web_ que garantisse que as informações geradas fossem disponíveis via protocolo _http_ como insumo para diversas outras aplicações de forma segura, foram alguns fatores importantes para a seleção das ferramentas que comporiam o arsenal necessário para implementação efetiva da plataforma. Nessas circunstâncias optamos pelo _Django_, o mais largamente utilizado _framework Web_ do _Python_[^https://www.djangoproject.com/].
 
 #### Django
+
 #### Celery
 * Workers
 * RabbitMQ
