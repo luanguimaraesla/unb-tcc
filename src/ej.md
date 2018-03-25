@@ -83,7 +83,7 @@ Martins [-@tall17] desenvolveu um protótipo de _software_ que implementava os t
 
 Várias modificações estruturais foram realizadas na concepção inicial da plataforma. A interface foi completamente repensada para outros contextos e a ideia da aplicação móvel passou a figurar em um segundo plano. O primeiro financiamento de longo prazo para o desenvolvimento do Empurrando Juntos veio da Fundação Perseu Abramo e envolveu, além do Instituto Cidade Democrática, o laboratório de _Software_ Livre Hacklab de São Paulo. Assim, iniciamos a primeira rodada de desenvolvimento da plataforma.
 
-### Proposta
+### Proposta {#sec:proposta}
 
 As decisões arquiteturais abordadas neste trabalho contemplam o desenvolvimento do _backend_ do Empurrando Juntos. Esta estrutura é o conjunto de ferramentas e algortimos que integraram três sistemas distintos: o banco de dados da aplicação, que define todo o modelo de dados que armazenaremos; a biblioteca de clusterização, que fornece os algoritmos necessários para a criação dos grupos de opinião; e o núcleo do _backend_ que integra essas partes, define as regras de negócio e fornece uma API para o consumo das informações por outros _softwares_, como o próprio _frontend_ da plataforma.
 
@@ -209,6 +209,16 @@ No caso apresentado, extraímos os _clusters_ para três possíveis valores de $
 No contexto do Empurrando Juntos, essa informação é armazenada em um campo _JSON_ no banco de dados e pode ser acessada através de um _endpoint_ da API disponível para cada conversa. Imediatamente, percebemos que a execução constante desse fluxo pode ocasionar graves problemas de performance e prejudicar a escalabilidade da plataforma, dado o alto custo de processamento agregado a cada clusterização. Assim, projetamos uma arquitetura distribuída capaz de delegar tarefas à unidades de processamento individuais através de filas de mensagens. Essa é uma das principais características do _ej-server_, que será apresentado a seguir.
 
 ### Arquitetura do _ej-server_ {#sec:arquitetura}
+
+O módulo de aprendizado de máquina é uma parte importate da plataforma Empurrando Juntos, entretanto há várias outras funcionalidades e módulos que devem ser integrados para fornecer ao usuário a experiência de participação que estamos propondo. Contas de usuários, mecanismos de criação de conversas, comentários e votos, visualização de relatórios, estratégias de gamificação, emissão de notificações e diversas outras características, devem se comunicar eficientemente através de um sistema minimalista, seguro, robusto, escalável e de código aberto, que permita a formação de uma comunidade de desenvolvimento independente, capaz de adequar e evoluir diferentes módulos para novos modelos de participação.
+
+Nesta conjuntura, propusemos uma arquitetura centralizada em torno de uma unidade altamente coesa, com as poucas funcionalidades fundamentais do Empurrando Juntos. Apresentamos na [@sec:proposta] essas características essenciais. Todas elas, com exceção daquelas referentes ao _ej-math_, farão parte da solução do núcleo da plataforma, chamado _ej-server_. Com base nas discussões apresentadas, projetamos o modelo de entidades e relacionamentos apresentado na [@fig:derejserver].
+
+![Diagrama de entidades e relacionamentos do _ej-server_](images/ej/der_ej_server.png){#fig:derejserver}
+
+
+
+
 #### Django
 #### Celery
 * Workers
