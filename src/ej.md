@@ -1,4 +1,4 @@
-# Plataforma de participação {#sec:ej}
+ Plataforma de participação {#sec:ej}
 
 _Empujando Juntos_, em espanhol, foi o primeiro nome dado à plataforma de participação social baseada no modelo _crowdsource_ que permite a interação _online_ de usuários através de diálogos, comentários e votos. Pensado inicialmente pelo Institudo Cidade Democrática, uma organização não governamental brasileira, foi selecionado como uma das oito melhores propostas submetidas à primeira edição do Hackaton Inteligência Coletiva para a Democracia, em 2016, realizado nos laboratórios do ParticipaLab, em Madri, Espanha.
 
@@ -233,7 +233,45 @@ As integrações a nível de módulos, a preocupação em criar uma comunidade d
 
 #### Django
 
+Além de sua popularidade, licença BSD, documentação consistente, comunidade ativa, podemos elencar algumas das principais características que corroboram a escolha pelo _Django_:
+
+* **Mapeamento Objeto-Relacional (ORM)**: a modelagem de dados é realizada através de classes em Python. Com isso é possível gerar _migrações_, alterações e criações de tabelas no banco que podem ser versionadas. Não há necessidade de manter códigos SQL, apesar de ser possível em casos específicos.
+* **Interface Administrativa**: facilita a criação de uma interface completa para administração do sistema.
+* **URLs Versáteis**: facilita a criação de qualquer conjunto de URL's.
+* **Sistema de Cache**: possui integração com vários _frameworks_ de cache.
+* **Internacionalização**: oferece suporte para aplicações multi-linguas, permitindo a declaração de âncoras para textos que devem ser traduzidos de uma língua para outra dependendo do contexto.
+
+Também é possível modularizar a aplicação em diferentes _Apps Django_, que são, em essência, pacotes _Python_ especializados seguindo algumas convenções que permitem o _Django_ detectar suas características e agregá-las ao projeto. Esse modelo arquitetural favorece o reaproveitamento de código, facilita o desenvolvimento de testes, simplifica a comepreensão do sistema e, consequentemente, propicia um ecossistema de desenvolvimento condizente com as práticas ágeis que guiaram este projeto desde o início e serão devidamente explicadas no Capítulo [-@sec:metodologia].
+
+A comunidade _Django_ disponibiliza uma série de _Apps_ prontos para serem implantados. Devemos falar o _Django REST Framework_^[http://www.django-rest-framework.org/], um poderoso e flexível conjunto de ferramentas para a construção de _Web APIs_. 
+
+* Facilita a criação de uma _Web API_ navegável, favorecendo a usabilidade para desenvolvedores.
+* Possui políticas de autenticação, incluindo pacotes para _OAuth1a_ e _OAuth2_.
+* Possui biblioteca de serialização que suporta fontes de dados ORM e não-ORM.
+* É baseado em simples expressões regulares e extensível para comportamentos específicos.
+* Possui uma extensa e bem elaborada documentação.
+
+Esse foi o conjunto de ferramentas escolhido para desenvolvermos a estrutura básica do Empurrando Juntos. Essa estrutura atravessou duas fases distintas. A primeira foi marcada pela dependência do Pol.is, delegando a ele toda visualização dos _clusters_ e tratamentos dos dados recolhidos. Neste momento, amadurecemos o núcleo do Empurrando Juntos, criamos as principais entidades e relacionamentos mostrados na [@fig:derejserver], construímos uma _Web API REST_ para esses recursos, desenvolvemos um processo de integração de entrega contínua e conceituamos ainda mais os objetivos sociais da plataforma. Podemos ver na [@fig:ejpolis]
+
+![Primeira fase do Empurrando Juntos: dependência do Pol.is](images/ej/ejpolis.png){#fig:ejpolis}
+
+Os módulos _Client_ do Pol.is são responsáveis por construir as visualizações das consultas, dos gráficos e do painel administrativo. O _Math_ é acoplado no sistema através do banco de dados e fornece todas as estatísticas necessárias para a exibição dos _clusters_ e dos relatórios. O _Server_ agrega todas essas entidades, define as regras de negócio e fornece uma _Web API_ que pode ser utilizada para acessar recursos dentro da plataforma. Nesse cenário, optamos por duplicar algumas informações entre os bancos de dados do Empurrando Juntos e a da nossa versão de instalação do Pol.is, evitando criar um acoplamento maior. Os objetos eram mapeados entre as duas plataformas à partir de um campo chamado _xid_. Assim, uma conversa, por exemplo, poderia ser criada no Empurrando Juntos e replicada no Pol.is através de sua API, mantendo o atributo _xid_ equivalente nas duas plataformas, garantiamos sua rastreabilidade.
+
+Desde o princípio, houve dificuldade com a interação utilizando a API do Pol.is devido principalmente a instabilidades, falta de documentação e desinteresse da comunidade de desenvolvedores. Então, iniciamos paralelamente o projeto e a implementação de nossa própria infraestrutura de clusterização utilizando a biblioteca já apresentada, _ej-math_.
+
+O desempenho e a escalabilidade foram dois importantes requisitos que determinaram as escolhas arquiteturais realizadas na construção dessa infraestrutura. Estabelecemos um plano de substituição do Pol.is, que já se encontrava em servidores de produção, baseado em quatro etapas:
+
+* Implementação de seus principais recursos matemáticos de maneira completamente desacoplada, o _ej-math_.
+* Implantação desse sistema em produção mantendo o Pol.is como módulo matemático principal.
+* Estabilização e amadurecimento do _ej-math_ enquanto módulo matemático paralelo, veja na [@fig:ejtchaupolis].
+* Substituição completa do Pol.is pelo _ej-math_.
+
+![_ej-math_ como módulo matemático paralelo em fase de implementação](images/ej/ejtchaupolis.png){#fig:ejtchaupolis}
+
+Para a implantação dos recursos matemáticos fornecidos pelo _ej-math_, construímos uma arquitetura distribuída apoiada na ideia de _workers_. Em outras palavras, o _ej-server_ tornou-se capaz de delegar tarefas à serviços paralelos que são responsáveis por processar a solicitação e responder de maneira assíncrona. Para isto, utilizamos o _Celery_, ferramenta baseada da distribuição de mensagens através de filas de mensagens. A Seção a seguir expõe como se deu essa integração.
+
 #### Celery
+Celery is an asynchronous task queue/job queue based on distributed message passing. It is focused on real-time operation, but supports scheduling as well.
 * Workers
 * RabbitMQ
 * Redis
