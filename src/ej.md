@@ -1,4 +1,4 @@
- Plataforma de participação {#sec:ej}
+# Plataforma de participação {#sec:ej}
 
 _Empujando Juntos_, em espanhol, foi o primeiro nome dado à plataforma de participação social baseada no modelo _crowdsource_ que permite a interação _online_ de usuários através de diálogos, comentários e votos. Pensado inicialmente pelo Institudo Cidade Democrática, uma organização não governamental brasileira, foi selecionado como uma das oito melhores propostas submetidas à primeira edição do Hackaton Inteligência Coletiva para a Democracia, em 2016, realizado nos laboratórios do ParticipaLab, em Madri, Espanha.
 
@@ -251,7 +251,7 @@ A comunidade _Django_ disponibiliza uma série de _Apps_ prontos para serem impl
 * É baseado em simples expressões regulares e extensível para comportamentos específicos.
 * Possui uma extensa e bem elaborada documentação.
 
-Esse foi o conjunto de ferramentas escolhido para desenvolvermos a estrutura básica do Empurrando Juntos. Essa estrutura atravessou duas fases distintas. A primeira foi marcada pela dependência do Pol.is, delegando a ele toda visualização dos _clusters_ e tratamentos dos dados recolhidos. Neste momento, amadurecemos o núcleo do Empurrando Juntos, criamos as principais entidades e relacionamentos mostrados na [@fig:derejserver], construímos uma _Web API REST_ para esses recursos, desenvolvemos um processo de integração de entrega contínua e conceituamos ainda mais os objetivos sociais da plataforma. Podemos ver na [@fig:ejpolis]
+Esse foi o conjunto de ferramentas escolhido para desenvolvermos a estrutura básica do Empurrando Juntos. Essa estrutura atravessou duas fases distintas: a dependência e a retirada do Pol.is. A primeira foi marcada pela utilização extensiva desta ferramenta, delegando a ele toda visualização dos _clusters_ e tratamentos dos dados recolhidos. Neste momento, amadurecemos o núcleo do Empurrando Juntos, criamos as principais entidades e relacionamentos mostrados na [@fig:derejserver], construímos uma _Web API REST_ para esses recursos, desenvolvemos um processo de integração de entrega contínua e conceituamos ainda mais os objetivos sociais da plataforma. Podemos ver na [@fig:ejpolis]
 
 ![Primeira fase do Empurrando Juntos: dependência do Pol.is](images/ej/ejpolis.png){#fig:ejpolis}
 
@@ -287,6 +287,14 @@ Utilizamos o pacote _django-celery_ para permitir a integração dessas ferramen
 
 O _App Math_ define uma classe chamada _Job_. Ela é responsável por colocar as tarefas na fila assim que verifica que uma nova clusterização deve ser realizada para alguma conversa específica. Para cada tarefa cria-se um objeto _Job_ no banco de dados. O modelo referente a esta classe é apresentado na [@fig:job].
 
+![Diagrama de entidades e relacionamentos Conversation e Job](images/ej/jobmodel.png){#fig:job}
 
+No contexto do Empurrando Juntos, assim que um _Job_ é criado, ele possui o tipo "_CLUSTERS_" e o estado "_PENDING_". Se por algum motivo a tarefa não puder ser despachada para fila, esse _Job_ altera seu estado para "_STUCK_". Caso não haja impedimentos, a tarefa é alocada na fila do RabbitMQ e o _ej-server_ está liberado para prosseguir seu fluxo normal.
 
+Assim que um _worker_ estiver disponível, ele retira a tarefa da fila e processa de acordo como foi implementado. Essa tarefa é uma mensagem com apenas um campo, o _id_ do _Job_ que a solicitou. O _worker ej-math_ está preparado para receber esse _id_ e verificar no banco de dados qual é a conversa associada a esse _Job_. No inicio do processamento, altera o estado do _Job_ para "_STARTED_" e então, com o identificador da conversa, acessa sua lista de votos e os serializa em uma lista, como mostrado na [@lst:votes]. Por fim, executa a função *get_clusters/2* da biblioteca _ej-math_ para $K=[2, 3, 4, 5]$, por exemplo. Os valores de K podem ser alterados através das configurações do _Django_. Caso o cálculo seja efetuado com sucesso, o _worker_ altera o estado do _Job_ para "_FINISHED_" e atualiza o campo _result_ com os _clusters_ obtidos. Qualquer falha nos procedimentos do _worker_ resulta em um _Job_ com estado "_FAILED_".
 
+No âmbito da atualização dessas informações, um _endpoint_ foi definido na API para que as aplicações consumidoras possam acessar o último _Job_ bem sucedido para uma determinada conversa, finalizando assim o ciclo de clusterização.
+
+A política para criação de _Jobs_ pode ser definida pelo administrador da plataforma. Utilizando parâmetros nas configurações do _Django_ define-se o tempo mínimo para instanciação de novos _Jobs_ ou a quantidade de votos que atuariam como um gatilho para esse processo.
+
+Todo o desenvolvimento dessa arquitetura foi guiado por um planejamento baseado em metodologias ágeis e um ferramental fundado sobre os princípios da cultura _DevOps_. Discutiremos os aspectos da integração das ideias, ferramentas de gestão, pessoas e métodos na próxima Seção.
