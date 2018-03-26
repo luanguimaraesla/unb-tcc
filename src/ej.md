@@ -271,7 +271,22 @@ O desempenho e a escalabilidade foram dois importantes requisitos que determinar
 Para a implantação dos recursos matemáticos fornecidos pelo _ej-math_, construímos uma arquitetura distribuída apoiada na ideia de _workers_. Em outras palavras, o _ej-server_ tornou-se capaz de delegar tarefas à serviços paralelos que são responsáveis por processar a solicitação e responder de maneira assíncrona. Para isto, utilizamos o _Celery_, ferramenta baseada da distribuição de mensagens através de filas de mensagens. A Seção a seguir expõe como se deu essa integração.
 
 #### Celery
-Celery is an asynchronous task queue/job queue based on distributed message passing. It is focused on real-time operation, but supports scheduling as well.
-* Workers
-* RabbitMQ
-* Redis
+
+O Celery^[http://docs.celeryproject.org/en/latest/index.html] é uma ferramenta _Open Source_, licenciada sob os termos da licença BSD. É especializada no tratamento de filas de tarefas assíncronas baseadas na passagem de mensagens a operadores distribuídos chamados _workers_. Foi construída para execução de tarefas em tempo real, entretanto ofere suporte a angendamento. No contexto do Empurrando Juntos, é importe para garantir a fluidez e o desempenho da aplicação monolítica central, o projeto _Django_ _ej-server_. Esse fator ganha importância quando observamos que o processamento dos _clusters_ em determinadas ocasiões pode se tornar um procedimento custoso que demanda tempo de espera em uma abordagem síncrona, ou seja, quando o servidor bloqueia o fluxo de excução de alguma solicitação a fim de esperar a conclusão de algum cálculo, como a clusterização.
+
+A comunicação do cliente com os _workers_ é realizada através dos _brokers_. Dada a alocação de uma solicitação de trabalho em uma fila, o _broker_ responsável tem a função de despachar essas solicitações para algum _worker_ disponível. Assim, o sistema pode conter vários _brokers_ e _workers_, possiblitando uma alta disponibilidade e escalabilidade horizontal.
+
+* **_Worker_**: pode ser definido como unidade de processamento de solicitações de trabalho. Recebe tarefas através dos _brokers_, processam essas tarefas e respondem de acordo com sua implementação.
+* **RabbitMQ**^[https://www.rabbitmq.com/]: é um dos _brokers Open Source_ mais utilizados do mundo, um intermediário para troca de mensagens. Ele permite de diferentes aplicações enviem e recebam mensagens entre si, mantendo essas mensagens armazenadas seguramente enquanto não foram entregues. No contexto do Celery, atua despachando tarefas para os _workers_.
+* **Redis**^[https://redis.io/]: Se desejamos verificar os estados das nossas tarefas, o Celery precisa de alguma infraestrutura para armazenar essas informações. Para isso utilizamos o Redis, ferramenta que provê armazenamento de estrutura de dados em memória. Pode ser usado como banco de dados, cache, etc. Suporta estruturas de dados como strings, hashes, listas e outras. Licenciado sob os termos da licença BSD.
+* **Flower**^[https://flower.readthedocs.io/en/latest/]: Flower é uma ferramenta _Web_ para administração e monitoramento do ecossistema Celery. Fornece gráficos e estatísticas sobre desempenho do sistema, permite o controle remoto dos _workers_, acompanha o estado das tarefas, etc.
+
+Utilizamos o pacote _django-celery_ para permitir a integração dessas ferramentas com o _ej-server_. Podemos visualizar o sistema resultante na [@fig:sisej].
+
+![Empurrando Juntos como um sistema distribuído](images/ej/sysej.png){#fig:sisej}
+
+O _App Math_ define uma classe chamada _Job_. Ela é responsável por colocar as tarefas na fila assim que verifica que uma nova clusterização deve ser realizada para alguma conversa específica. Para cada tarefa cria-se um objeto _Job_ no banco de dados. O modelo referente a esta classe é apresentado na [@fig:job].
+
+
+
+
