@@ -88,5 +88,30 @@ A ferramenta de Integração Contínua, Gitlab CI, não serve apenas para a exec
 
 Observe na figura que é sempre papel do desenvolvedor cuidar de todos os procedimentos e problemas provenientes das suas alterações. É possível notar a quantidade de passos automatizados e como, em diversas etapas do _pipeline_, o processo é redundante. Essa característica é desejada, visto que em uma metodologia que busca otimizar a entregabilidade deve ser extremamente rigorosa em relação à possíveis falhas e erros.
 
+As imagens geradas são distribuídas através do serviço Registry do Gitlab, um repositório de imagens Docker. Desta forma, sempre que a construção de uma nova versão do _software_ for concluída com sucesso, atualizamos a última versão do Empurrando Juntos registrada, rotulando essa nova imagem como _latest_. Também mantemos todas as versões anteriores com os rótulos referentes ao nome de cada versão. Assim mantemos a compatibilidade com sistemas construídos a partir de imagens antigas.
+
 ## Rancher
+
+Rancher^[https://rancher.com/] é um _software Open Source_, distribuido sob os termos da licença Apache 2.0, que possibilita a criação de um ambiente privado para manipulação de contêineres Docker. Através dele é possível administrar todo o ecossistema de serviços de uma organização que são distribuídos através de imagens Docker. O Rancher gerencia diversos recursos, como orquestração, _loadbalance_, _volumes_, rede, grupos de usuários e permissões, etc. Todos esses recursos são facilmente manipulados através de uma interface _Web_ completa (veja na [@fig:rancher]), que pode ser acessada por qualquer um dos desenvolvedores com credenciais.
+
+![Painel administrativo do Rancher](images/metodologia/rancher.png){#fig:rancher}
+
+É possível manipular seus recursos através de uma _Web API_ acessada através de _Tokens_. Desta forma permitimos o Gitlab atualizar o Empurrando Juntos em nossa infraestrutura de homologação e produção assim que as condições são obedecidas. O processo se baseia na disponibilização das imagens Docker construídas pelo Gitlab CI, que então realiza uma solicitação de atualização para o Rancher através de sua _API_. O Rancher realiza verificações de segurança e então atualiza os contêineres Docker solicitadas, fazendo um novo _download_ da versão _latest_ cadastrada no Registry do Gitlab.
+
+O Rancher trabalha com um sistema de redirecionamento inteligente que não desliga a versão antiga de um sistema enquanto a nova não estiver completamente configurada e operante. Assim que a nova versão estiver pronta para ser usada, ele redireciona os acessos para ela, garantindo total disponibilidade dos serviços durante os procedimentos internos de atualização.
+
+Qualquer atualização de contêineres no Rancher pode ser revertida sem maiores prejuízos. Assim, se alguma alteração não testada passar por todo o processo de Integração Contínua sem disparar erros e chegar a ser disponibilizada, podemos voltar imediatamente à versão antiga.
+
 ## Documentação
+
+Os procedimentos para configuração de ambientes de produção e desenvolvimento foram escritos nos respectivos repositórios de cada componente do Empurrando Juntos. Essa documentação assume que seus usuários estarão utilizando Docker. Também foram descritos os meios para a execução dos testes, visando uma futura interação com a comunidade de desenvolvedores.
+
+A _API_ foi documentada automaticamente através de recursos disponibilizados pelo _Django Rest Framework_. É possível navegar entre os diferentes _endpoints_ e realizar testes manuais em cada um deles.
+
+Todos os métodos desenvolvidos neste trabalho foram documentados em nível de código por comentários. Esses comentários descrevem sucintamente as entradas esperadas, o procedimento realizado e a saída. Em casos específicos onde mecanismos complexos do _Django_ ou do _Python_ foram exigidos, seções explicativas foram anexadas no corpo dos métodos.
+
+## Licença de _software_
+
+Em decisão unânime entre o Instituto Cidade Democrática, o Hacklab e o LAPPIS-UnB, foi atribuída a todos os componentes do Empurrando Juntos a licença AGPLv3 (GNU Affero General Public License^[https://www.gnu.org/licenses/agpl-3.0.en.html]). É uma licença _copyleft_ gratuita para _softwares_ e outros trabalhos, que busca garantir a cooperação com a comunidade difundida através da _Internet_.
+
+Essa licença para _softwares_ livres possui o benefício de defender a liberdade de todos os usuários em relação as melhorias feitas em versões alternativas do programa, já que estas devem estar necessariamente disponíveis e atualizadas para outros desenvolvedores. Enquanto a licença GPLv3 (GNU General Public License^[https://www.gnu.org/licenses/gpl-3.0.en.html]) permite fazer uma versão modificada e incoporá-la a um _Website_ de acesso público sem disponibilizar seu código fonte, a versão Affero foi desenvolvida para evitar esse tipo de situação. Assim, garantimos o direito de acesso ao código fonte de qualqeur versão alternativa do Empurrando Juntos.
