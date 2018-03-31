@@ -70,9 +70,9 @@ Alinhado aos princípios do Gitflow, assim que um erro é acusado pelos testes, 
 
 ## Entrega Contínua e _Deploy_ Contínuo
 
-Outra prática adotada foi a Entrega Contínua das alterações realizadas no código. No momento em que as interações foram testadas e os desenvolvedores entenderam que estão prontas para as validações finais antes que sejam disponibilizadas aos usuários, é realizado o processo em implantação automatizado do novo _software_ no ambiente de homologação, que antecede o de produção. Isso permite todos envolvidos no desenvolvimento terem contato imediato com as funcionalidades criadas ou modificadas, de forma que se mantenha ao menos um nível de validação realizado de forma não automatizada, a fim de perceber possíveis alterações que ainda devem ser realizadas.
+Outra prática adotada foi a Entrega Contínua das alterações realizadas no código. No momento em que as integrações foram testadas e os desenvolvedores entenderam que estão prontas para as validações finais, antes que sejam disponibilizadas aos usuários, é realizado o processo de implantação automatizada do novo _software_ no ambiente de homologação, que antecede o de produção. Isso permite os principais envolvidos no desenvolvimento terem contato imediato com as funcionalidades criadas ou modificadas, de forma que se mantenha ao menos um nível de validações realizadas de forma não automatizada, a fim de perceber possíveis alterações que ainda devem ser feitas.
 
-
+Após todas alterações, testes e validações, a nova versão do _software_ estará pronta para ser disponibilizada aos usuários finais, no último nível do Gitflow. Então, entra em cena a prática de _Deploy Contínuo_, que pode ser descrita como a realização de um conjunto de tarefas automatizadas que substituem a versão antiga do sistema pela nova no ambiente de produção. Apesar de não serem exclusivos, esses procedimentos foram pensados especialmente para sistemas _Web_, com o intuito de promover a independência dos desenvolvedores em um ecossistema de deselvilvimento ágil. Assim, as diferentes equipes têm capacidade de aplicar suas alterações em produção de forma autônoma, tornando-se diretamentamente responsáveis por questões de qualidade e confiabilidade das funcionalidades que implantaram.
 
 ## Docker {#sec:docker}
 ## Rancher
