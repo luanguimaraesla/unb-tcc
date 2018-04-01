@@ -5,7 +5,7 @@
 
 **Tema**: "Empurrando Juntos: Aprendizado de máquina como ferramenta para evolução da democracia"
 **Estudante**: Luan Guimarães Lacerda
-**Orientador**: Fábio Macêdo Mendes
+**Orientador**: Prof. Dr. Fábio Macêdo Mendes
 
 ## Instruções
 
