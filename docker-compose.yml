@@ -1,9 +1,0 @@
-version: '3.1'
-
-services:
-  document-editor:
-    container_name: pandocker
-    build: .
-    volumes:
-      - .:/code
-#    command: sleep infinity

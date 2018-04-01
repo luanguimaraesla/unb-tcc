@@ -1,5 +1,5 @@
 ---
-bibliography: src/bib.yaml
+bibliography: bib.yaml
 link-citations: true
 numbersections: true
 

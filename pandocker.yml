@@ -1,0 +1,20 @@
+# pandocker.yml
+sections:
+  - config.md
+  - introducao.md
+  - ml.md
+  - ej.md
+  - metodologia.md
+  - resultado.md
+  - conclusao.md
+  - bibliografia.md
+
+pandoc:
+  custom_flags: "-s"
+  source_path:   "src/"
+  template_file: "templates/tcc.latex"
+  output_file:   "doc.pdf"
+  toc:           true
+  filters:
+    - pandoc-crossref
+    - pandoc-citeproc
