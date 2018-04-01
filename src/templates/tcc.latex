@@ -71,15 +71,9 @@
 %
 \documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$lang$,$endif$$if(papersize)$$papersize$,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}	% Opções da classe do documento:
 
-			% 	fontsize,lang,papersize,classoption
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}	% Latin Modern
 \usepackage{amssymb,amsmath}	% Símbolos matemáticos (Pandoc)
 \usepackage{ifxetex,ifluatex}	% Testes de processadores (Pandoc)
 \usepackage{fixltx2e} % provides \textsubscript
-\usepackage{indentfirst}	% Indenta o primeiro parágrafo
-\usepackage{color}	% Controle de cores
-\definecolor{blue}{RGB}{41,5,195}	% Altera o aspecto do azul
 % use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
@@ -112,54 +106,55 @@ $endif$
 % use microtype if available
 \IfFileExists{microtype.sty}{\usepackage{microtype}}{}
 $if(geometry)$
-\usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
+  \usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
 $endif$
 $if(natbib)$
-\usepackage{natbib}
-\bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
+  \usepackage{natbib}
+  \bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
 $endif$
 $if(biblatex)$
-\usepackage{biblatex}
+  \usepackage{biblatex}
 $if(biblio-files)$
-\bibliography{$biblio-files$}
+  \bibliography{$biblio-files$}
 $endif$
 $endif$
 $if(listings)$
-\usepackage{listings}
+  \usepackage{listings}
 $endif$
 $if(lhs)$
-\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
+  \lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
 $endif$
 $if(highlighting-macros)$
 $highlighting-macros$
 $endif$
 $if(verbatim-in-note)$
-\usepackage{fancyvrb}
+  \usepackage{fancyvrb}
 $endif$
 $if(tables)$
-\usepackage{longtable,booktabs}
+  \usepackage{longtable,booktabs}
 $endif$
 $if(graphics)$
-\usepackage{graphicx}
-% Redefine \includegraphics so that, unless explicit options are
-% given, the image width will not exceed the width of the page.
-% Images get their normal width if they fit onto the page, but
-% are scaled down if they would overflow the margins.
-\makeatletter
-\def\ScaleIfNeeded{%
-  \ifdim\Gin@nat@width>\linewidth
-    \linewidth
-  \else
-    \Gin@nat@width
-  \fi
-}
-\makeatother
-\let\Oldincludegraphics\includegraphics
-{%
- \catcode`\@=11\relax%
- \gdef\includegraphics{\@ifnextchar[{\Oldincludegraphics}{\Oldincludegraphics[width=\ScaleIfNeeded]}}%
-}%
+  \usepackage{graphicx}
+  % Redefine \includegraphics so that, unless explicit options are
+  % given, the image width will not exceed the width of the page.
+  % Images get their normal width if they fit onto the page, but
+  % are scaled down if they would overflow the margins.
+  \makeatletter
+  \def\ScaleIfNeeded{%
+    \ifdim\Gin@nat@width>\linewidth
+      \linewidth
+    \else
+      \Gin@nat@width
+    \fi
+  }
+  \makeatother
+  \let\Oldincludegraphics\includegraphics
+  {%
+   \catcode`\@=11\relax%
+   \gdef\includegraphics{\@ifnextchar[{\Oldincludegraphics}{\Oldincludegraphics[width=\ScaleIfNeeded]}}%
+  }%
 $endif$
+
 \hypersetup{breaklinks=true,
             bookmarks=true,
             pdfauthor={$author-meta$},
@@ -255,29 +250,53 @@ $endfor$
 \input{templates/tcc/fixos/folhaDeAprovacao}
 
 $for(include-before)$
-$include-before$
-
+  $include-before$
 $endfor$
-$if(toc)$
-{
-\hypersetup{linkcolor=black}
-\setcounter{tocdepth}{$toc-depth$}
-\noindent\tableofcontents	% Adicionando sumário
+
+% Adiciona os agradecimentos em portuguÊs
+$if(acknowledgment-pt)$
+  \begin{acknowledgmentcolumn-pt}
+    $acknowledgment-pt$
+  \end{acknowledgmentcolumn-pt}
+$endif$
+
+% Adiciona os agradecimentos em inglês
+$if(acknowledgment)$
+  \begin{acknowledgmentcolumn}
+    $acknowledgment$
+  \end{acknowledgmentcolumn}
+$endif$
+
+$if(toc)${
+  \hypersetup{linkcolor=black}
+
+  \newpage
+  \listoffigures
+
+  \newpage
+  \listoftables
+
+  \newpage
+  \setcounter{tocdepth}{$toc-depth$}
+  \noindent\tableofcontents	% Adicionando sumário
 }
 $endif$
+
+% Adiciona o resumo
 $if(abstract)$
-\begin{resumoumacoluna}
-$abstract$	% Adicionando o resumo
+  \newpage
+  \begin{resumoumacoluna}
+    $abstract$
 
-$if(tags)$
-\vspace{\onelineskip}
-
-\noindent
-\textbf{$if(tagstitle)$$tagstitle$$else$Palavras-chaves$endif$}: $for(tags)$$tags$$sep$. $endfor$.	% Adicionando as palavras-chaves
+    $if(tags)$
+      \vspace{\onelineskip}
+      \noindent
+      \textbf{$if(tagstitle)$$tagstitle$$else$Palavras-chaves$endif$}: $for(tags)$$tags$$sep$. $endfor$.	% Adicionando as palavras-chaves
+    $endif$
+  \end{resumoumacoluna}
 $endif$
-\end{resumoumacoluna}
-$endif$
 
+\newpage
 \textual	% Início do texto convertido do arquivo original
 $body$	% No próprio texto é necessário invocar \postextual
 
