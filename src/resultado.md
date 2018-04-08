@@ -1,1 +1,25 @@
 # Resultados {#sec:resultados}
+
+A combinação dos diferentes tópicos abordados nesse projeto produziram três principais resultados que serão analisados neste Capítulo. O primeiro diz respeito à eficácia do método matemático proposto, aplicado no contexto do projeto "Brasil que o Povo Quer" da Fundação Perseu Abramo. O segundo refere-se a administração da metodologia de desenvolvimento em uma equipe heterogênea e distribuída. Por fim, apresentaremos os números relativos ao empenho das tecnologias apresentadas em um cenário de entrega contínua de um _Software_ Livre.
+
+## Avaliação do método matemático
+
+Martins [-@tall17] apresentou um conjunto de testes computacionais e também estableceu um conjunto de cenários fictícios para aferir uma acurácia média de 87% para o mesmo modelo aplicado neste trabalho. Entretanto, já expusemos e comentamos as limitações das decisões por trás do fluxo de processamento implementado. Mesmo assim, a realização da reengenharia desta solução não teve o intuito de substituir a lógica de clusterização desenvolvida. O processo de reimplementação realizado redefiniou a arquitetura do _software_, aplicou tecnologias que facilitaram a interação entre os componentes, como o Pandas, e estipulou um conjunto de ferramentas e práticas para disponibilização do trabalho desenvolvido como um _Software Livre_.
+
+Nesse cenário, assim como mostra a [@fig:ejtchaupolis], foi possível acoplar a solução matemática no _backend_ do Empurrando Juntos em um ambiente real. Porém, dado o contexto volátil da criação de conversas pela Fundação Perseu Abramo, não houve oportunidade para testar o comportamento do _ej-math_ neste ambiente em tempo hábil para a conclusão desta obra.
+
+Como implementamos o _ej-math_ através de um processo de reengenharia do Pol.is, podemos avaliar a satisfação dos envolvidos com as primeiras versões do Empurrando Juntos, que o utilizavam como ferramenta de clusterização. Nesse sentido, três experimentos e quatro protótipos de teste mobilizaram mais de 150 mil votos, realizados por milhares de pessoas. Parte dos dados coletados foram utilizados pela Fundação Perseu Abramo para avaliar o padrão de comportamento das pessoas atingidas pelas conversas.
+
+Alguns marcos foram estabelecidos entre a coordenação do Empurrando Juntos e os assessores da Fundação Perseu Abramo. Esses marcos correspondiam a apresentação de um conjunto de funcionalidades e o planejamento das próximas versões a serem desenvolvidas. Neste âmbito, foram realizadas diversas reuniões que debatiam aspectos fundamentais do estado da solução. Essas discussões evidenciaram, entre outras questões, uma grande insegurança e imprecisão na pós análise dos _clusters_ gerados pelos algoritmos do Pol.is. Diversas tentativas de compreensão dos gráficos obtidos foram relatadas como inconclusivas ou pouco significativas. De acordo com os envolvidos, formavam-se dois grandes grupos, aqueles que votaram e aqueles que não votaram. Essa característica já havia sido prevista, como mostra a discussão apresentada na [@sec:polisdiscussao].
+
+## Avaliação do método de desenvolvimento
+
+Observamos uma evolução contínua da metodologia de desenvolvimento que iniciou o projeto. Substituímos o Taiga como principal ferramenta de gestão em detrimento do uso exclusivo do Gitlab. A comunicação passou a ser mais efetiva através das discussões no grupo geral de desenvolvedores do Telegram, e a formalização das atividades passou a ser realizada através de _issues_ criadas em cada um dos repositórios de trabalho no Gitlab.
+
+Em seis meses de trabalho foram criadas 272 _issues_ nos principais repositórios de desenvolvimento. Participaram efetivamente do processo de implementação 20 pessoas distribuídas em quatro frentes: _backend_, _frontend_, _design_ e coordenação. Juntas, essas pessoas comentaram 402 vezes nos 15 repositórios criados para diferentes componentes do _software_, incluindo as replicações do Pol.is e da solução de Martins [-@tall17] para fins de estudo.
+
+Os desenvolvedores realizaram 1221 _commits_, 30 no _ej-math_, 437 no _ej-server_ e 754 no _ej-front_ (nome dado ao _frontend_ do Empurrando Juntos). Foram lançadas 14 versões diferentes do _ej-front_, 39 do _ej-server_ e 3 do _ej-math_. Uma ferramenta auxiliar de notificações também foi desenvolvida pelo Hacklab e faz parte do conjunto de soluções desenvolvidas, o _django-courrier_.
+
+Os diferentes módulos do Pol.is tiveram que ser adaptados para o contexto do Empurrando Juntos, assim 198 _commits_ foram realizados com o intuito de preparar a ferramenta para ser portada em qualquer infraestrutura, 26 no _polisClientAdmin_, 53 no _polisServer_, 103 no _polisClientParticipation_ e 16 no _polisMath_. Apesar da licença livre, não há relatos de comunidades de _software_, fora os próprios desenvolvedores, que obtiveram sucesso em criar instâncias desta ferramenta, isto é visto como mais uma conquista do projeto. Várias funcionalidades presentes na instância oficial do Pol.is na _Web_ não estão disponíveis em seus repositórios públicos, violando os termos da licença AGPLv3 à qual estão submetidos.
+
+## Avaliação das tecnologias utilizadas
