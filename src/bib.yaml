@@ -34,7 +34,8 @@ references:
       - - 2015
         - 07
         - 31
-    title: 'Reflexões Sobre as Dificuldades da Implementação da Participação Institucional no Brasil'
+    title: 'Reflexões Sobre as Dificuldades da Implementação da
+      Participação Institucional no Brasil'
     container-title: 'Ideias - Políticas Públicas no Brasil: uma agenda de pesquisa'
     volume: 6
     issue: 2
@@ -195,14 +196,22 @@ references:
     language: en-US
 
 
-  - type: book
+  - type: article-journal
     id: joao18
     author:
+    - family: Poppi
+      given: [Ricardo, A.]
+    - family: Parra Filho
+      given: [Henrique, C., P.]
+    title: 'Um impasse e três saídas para um novo ciclo de
+      tecnologias cívicas livres de participação social'
+    editor:
     - family: Mehl
       given: João Paulo
     - family: Silva
       given: [Silvado, P.]
-    title: 'Cultura Digital, internet e apropriações políticas: Experiências, desafios e horizontes'
+    container-title: 'Cultura Digital, internet e apropriações
+      políticas: Experiências, desafios e horizontes'
     ISBN: 978-85-5473-002-4
     DOI: 10.24328/2017/5473.004
     issued:
