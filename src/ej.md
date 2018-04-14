@@ -169,7 +169,9 @@ Os votos na plataforma representam três possiveis cenários: a concordância, a
 
 Apesar de ser um conjunto que representa todas possibilidades de votos, essa abordagem possuim um grande prejuízo semântico no contexto do Empurrando Juntos. Esse fato se concretiza quando, em determinada conversa, alguns usuários ainda não visualizaram e votaram em diversos comentários. Na prática, quando tratamos as semelhanças de opinião a partir da comparação de distâncias entre pontos, devemos atribuir o valor $0$ (zero) para aqueles que ainda não votaram. Isso significa que tratamos as pessoas que se abstiveram da mesma forma como tratamos aqueles que ainda não visualizaram determinado comentário, quando na verdade, esses dois cenários possuem semânticas diferentes. Essa abordagem pode distorcer a formação dos _clusters_, ou configurar ocasiões em que, dado ambientes de discussão relativamente homogêneos, formam-se dois grandes grupos: aqueles que votaram e aqueles que não viram ainda; resultando um esforço computacional grande para uma informação praticamente irrelevante.
 
-Há maneiras para se mitigar essa distorção, uma delas é clusterizar apenas usuários que possuem determinada quantidade de votos em relação ao total de comentários, em outras palavras, apenas serão submetidos ao algoritmo de clusterização aqueles usuários que votaram, por exemplo, em 70 ou 80 porcento dos comentários de uma conversa. Dessa forma, construímos uma matriz de usuários $\times$ comentários que melhor condiz com a realidade.
+Além desse problema, a conotação escalar da opinião pode ocasionar um fator de aproximação incoerente dos participantes que não viram determinada questão com os _clusters_ contrários a opinião majoritária. Para exemplificar, imagine uma situação em que um comentário extremamente incompatível com o senso geral das pessoas é realizado, como um elogio ao período nazista. Observaremos uma tendência natural dos _clusters_ a divergirem desta opinião. Nesse cenário, todos aqueles que ainda não visualizaram este comentário, ficarão na posição intermediária ($0$) entre uma presumível discordância ($-1$) e uma improvável concordância ($1$), configurando uma aproximação involuntária de grupos minoritários em relação a esta opinião. Quanto maior for o consenso geral em relação a um comentário, maior será esse desvio.
+
+Há maneiras para se mitigar essa distorção, uma delas é clusterizar apenas usuários que possuem uma quantidade mínima de votos em relação ao total de comentários, em outras palavras, apenas serão submetidos ao algoritmo de clusterização aqueles usuários que votaram em uma parcela significante dos comentários de uma conversa. Dessa forma, construímos uma matriz de usuários $\times$ comentários que melhor condiz com a realidade.
 
 Apesar dos limites apresentados sobre esta representação, existe uma grande vantagem em se utilizá-la. Em termos de informação, ela pode ser considerada completamente autocontida, possuindo todos insumos necessários para que se faça sua análise, o que dispensa ajustes de escala ou tratamento adicional de dados ausentes [@tall17], e facilita o fluxo de processamento de dados. Veja na [@fig:fluxoejmath].
 
@@ -186,11 +188,11 @@ Neste fluxo, os dados de entrada são fornecidos no formato apresentado no pseud
 |**E**      |1             |0             |1             |1             |
 : Matriz de votação do ej-math {#tbl:exemplodados}
 
-A interpretação desses dados excede a compreensão tridimensional humana. Assim, para possibilitar a visualização da informação contida nesta matriz, devemos submetê-la a uma redução de dimensionalidade. O Pol.is, buscando uma visualização bidimensional de _clusters_ bem definidos e que não se sobrepõem, realiza esse procedimento antes de cálcular os _clusters_ através do _k-means_. Há profundas desvantagens em se optar por este fluxo, entretando, já discutimos na [@sec:polisdiscussao] e explicamos os motivos pelos quais optamos em uma primeira, e possivelmente passageira, abordagem por utilizá-lo.
+A interpretação desses dados excede a compreensão tridimensional humana. Assim, para possibilitar a visualização da informação contida nesta matriz, devemos submetê-la a um processo de redução de dimensionalidade. O Pol.is, buscando uma visualização bidimensional de _clusters_ bem definidos e que não se sobrepõem, realiza esse procedimento antes de cálcular os _clusters_ através do _k-means_. Há profundas desvantagens em se optar por este fluxo, entretando, já discutimos na [@sec:polisdiscussao] e explicamos os motivos pelos quais optamos em uma primeira, e possivelmente passageira, abordagem por utilizá-lo.
 
 Aplicando o PCA para redução de dimensionalidade dos dados da [@tbl:exemplodados], obtemos uma matriz referente a um espaço bidimensional resultante da projeção desses dados hiper dimensionais. Veja na [@tbl:exemplo2dados].
 
-|**Usuário**|_X_    |_Y_    | 
+|**Usuário**|_X_    |_Y_    |
 |:---------:|:-----:|:-----:|
 |**A**      |-0.407 |-0.948 |
 |**B**      |-1.574 | 0.164 |
@@ -205,7 +207,7 @@ Utilizaremos os valores obtidos como as posições $(x,y)$ dos pontos que repres
 
 No caso apresentado, extraímos os _clusters_ para três possíveis valores de $k$, $K=[2,3,4]$. A melhor configuração encontrada acontece quando $k=2$. Então, é construído uma estrutura de dados no formato dos dicionários do _Python_ com todas as informações necessárias para a exibição das informações dos grupos formados. Esse dicionário contém a lista de usuários com suas respectivas posições $(x, y)$ e o identificador numérico do _cluster_ ao qual cada um pertence.
 
-No contexto do Empurrando Juntos, essa informação é armazenada em um campo _JSON_ no banco de dados e pode ser acessada através de um _endpoint_ da API disponível para cada conversa. Imediatamente, percebemos que a execução constante desse fluxo pode ocasionar graves problemas de performance e prejudicar a escalabilidade da plataforma, dado o alto custo de processamento agregado a cada clusterização. Assim, projetamos uma arquitetura distribuída capaz de delegar tarefas à unidades de processamento individuais através de filas de mensagens. Essa é uma das principais características do _ej-server_, que será apresentado a seguir.
+No contexto do Empurrando Juntos, essa informação é armazenada em um campo _JSON_ no banco de dados e pode ser acessada através de um _endpoint_ da API disponível para cada conversa. Imediatamente, percebemos que a execução constante desse fluxo pode ocasionar graves problemas de performance e prejudicar a escalabilidade da plataforma, dado o alto custo de processamento agregado a cada clusterização. Assim, projetamos uma arquitetura distribuída capaz de delegar tarefas a unidades de processamento individuais através de filas de mensagens. Essa é uma das principais características do _ej-server_, que será apresentado a seguir.
 
 ### Arquitetura do _ej-server_ {#sec:arquitetura}
 
@@ -217,20 +219,15 @@ Com base nas discussões apresentadas, projetamos o modelo de entidades e relaci
 
 ![Diagrama de entidades e relacionamentos do _ej-server_](images/ej/der_ej_server.png){#fig:derejserver}
 
-Juntas, essas classes fornecem os recursos necessários para garantir o fluxo básico de participação na plataforma. Esse fluxo possui 6 etapas:
+Juntas, essas classes fornecem os recursos necessários para garantir o fluxo básico de participação na plataforma. Esse fluxo possui 6 etapas, veja na figura [@fig:participationflow].
 
-1. Administrador cria uma categoria de coversas;
-2. Administrador cria uma conversa dentro desta categoria;
-3. Usuários criam contas na plataforma;
-4. Usuários comentam sobre o tema da conversa;
-5. Usuários recebem comentários sequenciados de forma aleatória;
-6. Usuários votam se concordam, discordam ou se abstém para cada comentário.
+![Fluxo básico de participação no Empurrando Juntos](images/ej/participation_flow.png){#fig:participationflow}
 
-Note que nem no modelo apresentado na [@fig:derejserver], nem no fluxo de participação acima, citamos a clusterização ou a proposta de gamificação (que não faz parte do escopo deste trabalho, mas é uma estrutura fundamental na concepção do Empurrando Juntos). Essa omissão esclarece a proposição de um núcleo altamente qualificado, que realiza poucas tarefas de maneira eficiente e altamente extensível. A ideia é agregar pequenos módulos especilizados a este núcleo, como o _ej-math_, o disparador de notificações, o módulo de gamificação, etc., dando ao projeto uma grande versatilidade. Assim logramos o potencial de fomentar a manutenção de uma comunidade de _Software_ Livre e possivelmente aglutinar uma variedade ferramental compatível, amplificando cada vez mais essa característica adaptativa da solução.
-
-As integrações a nível de módulos, a preocupação em criar uma comunidade de _Software_ Livre, a velocidade de desenvolvimento, a escalabilidade do sistema e uma API _Web_ que garantisse que as informações geradas fossem disponíveis via protocolo _http_ como insumo para diversas outras aplicações de forma segura, foram alguns fatores importantes para a seleção das ferramentas que comporiam o arsenal necessário para implementação efetiva da plataforma. Nessas circunstâncias optamos pelo _Django_ como nossa infraestrutura principal, o mais largamente utilizado _framework Web_ do _Python_^[https://www.djangoproject.com/].
+Note que nem no modelo apresentado na [@fig:derejserver], nem no fluxo de participação básico da [@fig:participationflow], citamos a clusterização ou a proposta de gamificação (que não faz parte do escopo deste trabalho, mas é uma estrutura fundamental na concepção do Empurrando Juntos). Essa omissão esclarece a proposição de um núcleo altamente especializado, que realiza poucas tarefas de maneira eficiente e altamente extensível. A ideia fundamental é agregar pequenos módulos a este núcleo, como o _ej-math_, o disparador de notificações, o módulo de gamificação, etc. Essa preocupação busca criar um desacoplamento das estruras para potencializar a escalabilidade e manutenibilidade.
 
 #### Django
+
+As integrações de módulos, a preocupação em criar uma comunidade de _Software_ Livre, a velocidade de desenvolvimento, a escalabilidade do sistema e uma API _Web_ que garantisse que as informações geradas fossem disponíveis para diversas outras aplicações de forma segura, fundamentaram a escolha pelo _Django_ como nossa infraestrutura principal, o mais largamente utilizado _framework Web_ do _Python_^[https://www.djangoproject.com/].
 
 Além de sua popularidade, licença BSD, documentação consistente, comunidade ativa, podemos elencar algumas das principais características que corroboram a escolha pelo _Django_:
 
@@ -242,12 +239,12 @@ Além de sua popularidade, licença BSD, documentação consistente, comunidade 
 
 Também é possível modularizar a aplicação em diferentes _Apps Django_, que são, em essência, pacotes _Python_ especializados seguindo algumas convenções que permitem o _Django_ detectar suas características e agregá-las ao projeto. Esse modelo arquitetural favorece o reaproveitamento de código, facilita o desenvolvimento de testes, simplifica a comepreensão do sistema e, consequentemente, propicia um ecossistema de desenvolvimento condizente com as práticas ágeis que guiaram este projeto desde o início e serão devidamente explicadas no Capítulo [-@sec:metodologia].
 
-A comunidade _Django_ disponibiliza uma série de _Apps_ prontos para serem implantados. Devemos falar o _Django REST Framework_^[http://www.django-rest-framework.org/], um poderoso e flexível conjunto de ferramentas para a construção de _Web APIs_. 
+A comunidade _Django_ disponibiliza uma série de _Apps_ que podem ser facilmente integrados nas aplicações. Devemos falar o _Django REST Framework_^[http://www.django-rest-framework.org/], um poderoso e flexível conjunto de ferramentas para a construção de _Web APIs_.
 
 * Facilita a criação de uma _Web API_ navegável, favorecendo a usabilidade para desenvolvedores.
 * Possui políticas de autenticação, incluindo pacotes para _OAuth1a_ e _OAuth2_.
 * Possui biblioteca de serialização que suporta fontes de dados ORM e não-ORM.
-* É baseado em simples expressões regulares e extensível para comportamentos específicos.
+* As URLs são baseadas em simples expressões regulares, e extensíveis para comportamentos específicos.
 * Possui uma extensa e bem elaborada documentação.
 
 Esse foi o conjunto de ferramentas escolhido para desenvolvermos a estrutura básica do Empurrando Juntos. Essa estrutura atravessou duas fases distintas: a dependência e a retirada do Pol.is. A primeira foi marcada pela utilização extensiva desta ferramenta, delegando a ele toda visualização dos _clusters_ e tratamentos dos dados recolhidos. Neste momento, amadurecemos o núcleo do Empurrando Juntos, criamos as principais entidades e relacionamentos mostrados na [@fig:derejserver], construímos uma _Web API REST_ para esses recursos, desenvolvemos um processo de integração de entrega contínua e conceituamos ainda mais os objetivos sociais da plataforma. Podemos ver na [@fig:ejpolis]
@@ -256,7 +253,7 @@ Esse foi o conjunto de ferramentas escolhido para desenvolvermos a estrutura bá
 
 Os módulos _Client_ do Pol.is são responsáveis por construir as visualizações das consultas, dos gráficos e do painel administrativo. O _Math_ é acoplado no sistema através do banco de dados e fornece todas as estatísticas necessárias para a exibição dos _clusters_ e dos relatórios. O _Server_ agrega todas essas entidades, define as regras de negócio e fornece uma _Web API_ que pode ser utilizada para acessar recursos dentro da plataforma. Nesse cenário, optamos por duplicar algumas informações entre os bancos de dados do Empurrando Juntos e a da nossa versão de instalação do Pol.is, evitando criar um acoplamento maior. Os objetos eram mapeados entre as duas plataformas à partir de um campo chamado _xid_. Assim, uma conversa, por exemplo, poderia ser criada no Empurrando Juntos e replicada no Pol.is através de sua API, mantendo o atributo _xid_ equivalente nas duas plataformas, garantiamos sua rastreabilidade.
 
-Desde o princípio, houve dificuldade com a interação utilizando a API do Pol.is devido principalmente a instabilidades, falta de documentação e desinteresse da comunidade de desenvolvedores. Então, iniciamos paralelamente o projeto e a implementação de nossa própria infraestrutura de clusterização utilizando a biblioteca já apresentada, _ej-math_.
+Desde o princípio, houve dificuldade na interação com a API do Pol.is devido principalmente a instabilidades e falta de documentação. Depois de diversas tentativas de interagir com a restrita comunidade de desenvolvedores, observamos um recorrente desinteresse por sanar nossas dúvidas. Esses fatos motivaram o inicio do projeto de nossa própria infraestrutura de clusterização, o _ej-math_.
 
 O desempenho e a escalabilidade foram dois importantes requisitos que determinaram as escolhas arquiteturais realizadas na construção dessa infraestrutura. Estabelecemos um plano de substituição do Pol.is, que já se encontrava em servidores de produção, baseado em quatro etapas:
 
@@ -267,16 +264,16 @@ O desempenho e a escalabilidade foram dois importantes requisitos que determinar
 
 ![_ej-math_ como módulo matemático paralelo em fase de implementação](images/ej/ejtchaupolis.png){#fig:ejtchaupolis}
 
-Para a implantação dos recursos matemáticos fornecidos pelo _ej-math_, construímos uma arquitetura distribuída apoiada na ideia de _workers_. Em outras palavras, o _ej-server_ tornou-se capaz de delegar tarefas à serviços paralelos que são responsáveis por processar a solicitação e responder de maneira assíncrona. Para isto, utilizamos o _Celery_, ferramenta baseada da distribuição de mensagens através de filas de mensagens. A Seção a seguir expõe como se deu essa integração.
+Para a implantação dos recursos matemáticos fornecidos pelo _ej-math_, construímos uma arquitetura distribuída apoiada na ideia de _workers_. Em outras palavras, o _ej-server_ tornou-se capaz de delegar tarefas à serviços paralelos que são responsáveis por processar a solicitação e responder de maneira assíncrona. Para isto, utilizamos o _Celery_, ferramenta baseada da distribuição de informações através de filas de mensagens. A Seção a seguir expõe como se deu essa integração.
 
 #### Celery
 
-O Celery^[http://docs.celeryproject.org/en/latest/index.html] é uma ferramenta _Open Source_, licenciada sob os termos da licença BSD. É especializada no tratamento de filas de tarefas assíncronas baseadas na passagem de mensagens a operadores distribuídos chamados _workers_. Foi construída para execução de tarefas em tempo real, entretanto ofere suporte a angendamento. No contexto do Empurrando Juntos, é importe para garantir a fluidez e o desempenho da aplicação monolítica central, o projeto _Django_ _ej-server_. Esse fator ganha importância quando observamos que o processamento dos _clusters_ em determinadas ocasiões pode se tornar um procedimento custoso que demanda tempo de espera em uma abordagem síncrona, ou seja, quando o servidor bloqueia o fluxo de excução de alguma solicitação a fim de esperar a conclusão de algum cálculo, como a clusterização.
+O Celery^[http://docs.celeryproject.org/en/latest/index.html] é uma ferramenta _Open Source_, licenciada sob os termos da licença BSD. É especializada no tratamento de filas de tarefas assíncronas baseadas na passagem de mensagens a operadores distribuídos chamados _workers_. Foi construída para execução de tarefas em tempo real, entretanto ofere suporte a agendamento. No contexto do Empurrando Juntos, é importe para garantir a fluidez e o desempenho da aplicação monolítica central, o projeto _Django_ _ej-server_. Esse fator ganha importância quando observamos que o processamento dos _clusters_ em determinadas ocasiões pode se tornar um procedimento custoso que demanda tempo de espera em uma abordagem síncrona, ou seja, quando o servidor bloqueia o fluxo de excução de alguma solicitação a fim de esperar a conclusão de algum cálculo, como a clusterização.
 
 A comunicação do cliente com os _workers_ é realizada através dos _brokers_. Dada a alocação de uma solicitação de trabalho em uma fila, o _broker_ responsável tem a função de despachar essas solicitações para algum _worker_ disponível. Assim, o sistema pode conter vários _brokers_ e _workers_, possiblitando uma alta disponibilidade e escalabilidade horizontal.
 
 * **_Worker_**: pode ser definido como unidade de processamento de solicitações de trabalho. Recebe tarefas através dos _brokers_, processam essas tarefas e respondem de acordo com sua implementação.
-* **RabbitMQ**^[https://www.rabbitmq.com/]: é um dos _brokers Open Source_ mais utilizados do mundo, um intermediário para troca de mensagens. Ele permite de diferentes aplicações enviem e recebam mensagens entre si, mantendo essas mensagens armazenadas seguramente enquanto não foram entregues. No contexto do Celery, atua despachando tarefas para os _workers_.
+* **RabbitMQ**^[https://www.rabbitmq.com/]: é um dos _brokers Open Source_ mais utilizados do mundo, um intermediário para troca de mensagens. Ele permite que diferentes aplicações enviem e recebam mensagens entre si, mantendo essas mensagens armazenadas seguramente enquanto não foram entregues. No contexto do Celery, atua despachando tarefas para os _workers_.
 * **Redis**^[https://redis.io/]: Se desejamos verificar os estados das nossas tarefas, o Celery precisa de alguma infraestrutura para armazenar essas informações. Para isso utilizamos o Redis, ferramenta que provê armazenamento de estrutura de dados em memória. Pode ser usado como banco de dados, cache, etc. Suporta estruturas de dados como strings, hashes, listas e outras. Licenciado sob os termos da licença BSD.
 * **Flower**^[https://flower.readthedocs.io/en/latest/]: Flower é uma ferramenta _Web_ para administração e monitoramento do ecossistema Celery. Fornece gráficos e estatísticas sobre desempenho do sistema, permite o controle remoto dos _workers_, acompanha o estado das tarefas, etc.
 
