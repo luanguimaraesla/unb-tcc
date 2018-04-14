@@ -9,12 +9,12 @@
 
 ## Instruções
 
-Para compilar o documento, é necessário a instalação da ferramenta [Pandocker](https://github.com/luanguimaraesla/).
+Para compilar o documento, é necessário a instalação da ferramenta [Pandocker](https://github.com/luanguimaraesla/pandocker).
 
 Apenas clone esse repositório e execute:
 
 ```
-sudo docker run --rm -v `pwd`:/code luanguimaraesla/pandocker:0.2.0 "-f pandocker.yml
+sudo docker run --rm -v `pwd`:/code luanguimaraesla/pandocker:0.2.0 "-f pandocker.yml"
 ```
 
 ## Empurrando Juntos
