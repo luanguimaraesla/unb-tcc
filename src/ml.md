@@ -2,7 +2,7 @@
 
 O Aprendizado de Máquina é um subconjunto da Ciência de Dados em que algorítmos de computador são usados para descobrir, de forma autônoma, estruturas presentes em dados e informações através da implementação de sofisticadas técnicas estatísticas de aprendizado. Os métodos estudados nesse Capítulo são de extrema importância para o desenvolvimento do algoritmo de agrupamento do Empurrando Juntos.
 
-Enquanto a Ciência de Dados está intrinsecamente ligada à solução de problemas do mundo real através da coleta, limpeza, formatação e compreensão de dados; o Aprendizado de Máquina se apresenta como uma área do conhecimento que transcende a própria Ciência de Dados, sendo tipicamente descrita como a "ciência cujo objetivo é usar dados existentes para desenvolver modelos que podemos utilizar para predizer várias características de dados futuros" [@dsfs15].
+Enquanto a Ciência de Dados está intrinsecamente ligada a solução de problemas do mundo real através da coleta, limpeza, formatação e compreensão de dados; o Aprendizado de Máquina se apresenta como uma área do conhecimento que transcende a própria Ciência de Dados, sendo tipicamente descrita como a "ciência cujo objetivo é usar dados existentes para desenvolver modelos que podemos utilizar para predizer várias características de dados futuros" [@dsfs15].
 
 Podemos assim tratar a Ciência de Dados como um grande guarda-chuvas que compreende um conjunto de disciplinas incluindo _Big Data_, Inteligência Artificial, Mineração de Dados e também o Aprendizado de Máquina, configurando uma vasta área de estudos que hoje permite o computador interagir com seres humanos, conduzir um carro, identificar pessoas na multidão e inferir a existência de grupos sociais à partir do comportamento dos indivíduos. Isso é feito com uma eficiência extraordinária, permitindo as máquinas realizarem diversas outras atividades antes ditas humanas e até mesmo sobre-humanas.
 
@@ -331,9 +331,9 @@ Essa decisão acompanhou a formulação de uma arquitetura que permitisse altera
 
 A funcionalidade primordial no seio da proposta do Empurrando Juntos é o algoritmo que agrupa os participantes de acordo com seus comportamentos. Esses grupos servem de insumo para uma série de outras funcionalidades, que incluem análises estatísticas e modelos de gamificação. Discutimos também sobre a visualização dos dados, que nesse contexto, é propriamente um gráfico bidimensional dos grupos de opinião. Aliados, os algoritmos de visualização e agrupamento são o coração do Empurrando Juntos, evidenciados como algumas das principais características que destacam essa de outras propostas para plataformas de participação social.
 
-Se encaramos, em termos da participação social, a utilização de algoritmos de agrupamento como algo inovador e pouco explorado, não podemos dizer o mesmo sobre sua utilização em larga escala pela Indústria da Informação. O exame minucioso daquilo de que buscamos, clicamos, gostamos e compramos são um prato cheio para que sejamos automaticamente incluídos em grupos de consumo armazenados nas bases de dados de grandes empresas, alvos estratégicos para campanhas publicitárias arrebatadoras. Essa é a visão estatística do sucesso, impulsionada por uma nova geração de máquinas e algoritmos capazes de processar uma massa exorbitante de dados coletados na _Internet_.
+Se encaramos, em termos do aprimoramento da democracia digital, a utilização de algoritmos de agrupamento como algo ainda timidamente explorado, não podemos dizer o mesmo sobre sua utilização em larga escala pela Indústria da Informação. O exame minucioso daquilo de que buscamos, clicamos, gostamos e compramos são referências relevantes para que sejamos automaticamente incluídos em grupos de consumo armazenados nas bases de dados de grandes empresas, alvos estratégicos para campanhas publicitárias arrebatadoras. Essa é a visão estatística do sucesso, impulsionada por uma nova geração de máquinas e algoritmos capazes de processar uma massa exorbitante de dados coletados na _Internet_.
 
-Muito embora o exemplo dos sistemas de recomendação seja o mais popular quando o tema é clusterização, termo que usaremos para nos referir ao agrupamento de dados, a aplicação desses algoritmos se dá em diversas esferas do conhecimento. A biologia, por exemplo, dedicou anos para a criação da taxonomia, a classificação hierarquizada para todas as formas conhecidas de vida: reinos, filos, classes, ordens, famílias, gêneros e espécies. Não é coincidência o fato de ser uma das áreas que mais se beneficia do potencial dos algoritmos de clusterização [@ptan05]. Da biologia ao sistema financeiro, a identificação de padrões ocultos em um conjunto de dados é um recurso cada vez mais valorizado pela ciência e pelas pessoas na infindável busca pela compreensão das coisas.
+Muito embora o exemplo dos sistemas de recomendação seja um dos mais conhecidos quando o tema é clusterização, termo que usaremos para nos referir ao agrupamento de dados, a aplicação dessa classe de algoritmos se dá em diversas esferas do conhecimento. A biologia, por exemplo, dedicou anos para a criação da taxonomia, a classificação hierarquizada para todas as formas conhecidas de vida: reinos, filos, classes, ordens, famílias, gêneros e espécies. Não é coincidência o fato de ser uma das áreas que mais se beneficia do potencial dos algoritmos de clusterização [@ptan05]. Da biologia ao sistema financeiro, a identificação de padrões ocultos em um conjunto de dados é um recurso cada vez mais valorizado pela ciência e pelas pessoas na infindável busca pela compreensão das coisas.
 
 > _"Classes, ou grupos conceitualmente significativos de objetos que compartilham características comuns, desempenham um papel importante na forma como as pessoas analisam e descrevem o mundo. Na verdade, os seres humanos são habilidosos em dividir objetos em grupos (clusterização) e atribuir objetos específicos a esses grupos (classificação)"_ [@ptan05].
 
@@ -341,23 +341,25 @@ Muito embora o exemplo dos sistemas de recomendação seja o mais popular quando
 
 A clusterização consiste no agrupamento de objetos baseado apenas na informação contida no conjunto de dados que descreve esses objetos e seus relacionamentos. O objetivo é unir dentro de um mesmo grupo, ou _cluster_, objetos que apresentam similaridade entre si e em outros grupos objetos não estão relacionados com este grupo. Quanto maior for a similaridade entre os objetos de um grupo e a diferença entre dois grupos, melhor é a clusterização [@ptan05].
 
-O agrupamento de objetos está relacionado com outras técnicas de classificação utilizadas para dividir objetos em grupos. Contudo, essa semelhança se limita ao fato do próprio algoritmo de clusterização derivar os rótulos de para grupo a partir do conjunto de dados. Não há previamente um modelo extraído de dados de treinamento previamente rotulados. Consequentemente, a clusterização se enquadra na categoria de classificação não supervisionada.
+O agrupamento de objetos está relacionado com outras técnicas de classificação utilizadas para dividir objetos em grupos. Contudo, essa semelhança se limita ao fato do próprio algoritmo de clusterização derivar os rótulos de para grupo a partir do conjunto de dados. Não há um modelo extraído de dados de treinamento previamente rotulados. Consequentemente, a clusterização se enquadra na categoria de classificação não supervisionada.
 
 ### Tipos de clusterização
 
 A formação de um conjunto de grupos é frequentemente tratado apenas como clusterização, entretanto algumas subcatogorias podem descrever melhor a natureza desses algoritmos:
 
-* **Aninhados e não aninhados**: Uma divisão não aninhada, ou particionada, consiste na separação de um conjunto de dados em grupos que não se sobrepõem. Uma configuração aninhada, ou hierarquica, permite a existência de subgrupos. Nessa organização cada _cluster_ é constituído pela união de seus _subclusters_ filhos, e a raiz é um _cluster_ que contém todos os objetos, como uma árvore.
+* **Aninhados _vs_ não aninhados**: Uma divisão não aninhada, ou particionada, consiste na separação de um conjunto de dados em grupos que não se sobrepõem. Uma configuração aninhada, ou hierarquica, permite a existência de subgrupos. Nessa organização cada _cluster_ é constituído pela união de seus _subclusters_ filhos, e a raiz é um _cluster_ que contém todos os objetos, como uma árvore.
 
-* **Exclusivos, sobrepostos e distorcidos**: A organização exclusiva atribui um abjeto apenas a um _cluster_, enquanto que a organização por sobreposição permite que esse objeto pertença a mais de um grupo simultaneamente. Seguindo a lógica _Fuzzy_ (distorcida), os objetos pertencem a todos os _clusters_ com determinado grau de pertencimento que vai de 0, indicando um relacionado inexistente, à 1, indicando um relacionamento total.
+* **Exclusivos _vs_ sobrepostos**: A organização exclusiva atribui um objeto apenas a um _cluster_, enquanto que a organização por sobreposição permite que esse objeto pertença a mais de um grupo simultaneamente.
 
-* **Completos e parciais**: Na distribuição completa, todos os objetos são atribuídos a um _cluster_, enquanto que na distribuição parcial isso não acontece necessariamente, permitindo a existência de objetos que não pertencem a nenhum grupo.
+* **Completos _vs_ parciais**: Na distribuição completa, todos os objetos são atribuídos a um _cluster_, enquanto que na distribuição parcial isso não acontece necessariamente, permitindo a existência de objetos que não pertencem a nenhum grupo.
+
+* **Probabilísticos _vs_ determinísticos**:  Seguindo a lógica probabilística, os objetos pertencem a todos os _clusters_ com determinado grau de pertencimento que vai de 0, indicando um relacionado inexistente, à 1, indicando um relacionamento total. Enquanto em uma distribuição determinísica, cada objeto pertence com certeza a somente um _cluster_.
 
 ### Tipos de _clusters_
 
-Os grupos formados pelos diferentes tipos de clusterização também possuem suas próprias características de agrupamento, estas característica são definidas princiapalmente pelo algoritmo utilizado e são determinantes na decisão sobre qual deles escolher de acordo com o objetivo da análise dos _clusters_. Esses grupos, ilustrados na [@fig:tipoclusters], podem pertencer às seguintes categorias:
+Os grupos formados pelos diferentes tipos de clusterização também possuem suas próprias características de agrupamento, estas característica são definidas princiapalmente pelo algoritmo utilizado e são determinantes na decisão sobre qual deles escolher de acordo com o objetivo da análise dos _clusters_. Esses grupos podem aparecer em diversas configurações, como mostra a [@fig:tipoclusters].
 
-* **_Clusters_ bem separados**: Cada objeto está necessariamente próximo a todos os objetos do seu _cluster_ e relativamente distante de outros objetos.
+* **_Clusters_ bem separados**: Cada objeto está necessariamente próximo a todos os objetos do seu _cluster_ e relativamente distante de outros objetos. Essa é normalmente a configuração mais simples de realizar tarefas de clusterização.
 
 * **_Clusters_ baseados em centros**: Cada objeto está necessariamente mais próximo do centro de seu _cluster_ do que do centro de outros _clusters_.
 
@@ -373,7 +375,7 @@ Os grupos formados pelos diferentes tipos de clusterização também possuem sua
 
 Uma das técnicas mais conhecidas no contexto da clusterização é o _k-means_. Este é um algoritmo de agrupamento exclusivo que consiste na minimização iterativa de uma função objetiva capaz de gerar _clusters_ baseados em centros. Essa classe de algoritmos é muito eficiente na clusterização de grandes bases de dados e com alta dimensionalidade quando comparada com outros modelos, apesar de não ser adequada para encontrar _clusters_ com formatos arbitrários [@gang07].
 
-Na prática, o algoritmo exige um parâmetro inicial _k_ que representa o número de _clusters_ desejados. Em cada iteração, os dados são alocados em um conjunto cujo centroide está mais próximo. Os dados associados a um centroide formam um _cluster_. Então, o centroide de cada _cluster_ é recalculado a partir dos seus dados associados. Esse processo é repetido até que não haja alterações significativas nos dados de cada _cluster_ ou, de forma equivalente, nos centroides calculados nas iterações anteriores [@ptan05].
+Na prática, o algoritmo exige um parâmetro inicial _k_ que representa o número de _clusters_ desejados. Em cada iteração, os dados são alocados no conjunto do centroide mais próximo. Então, o centroide de cada _cluster_ é recalculado a partir dos seus dados associados. Esse processo é repetido até que não haja alterações nos pontos de cada _cluster_ ou, de forma equivalente, nos centroides calculados nas iterações anteriores [@ptan05].
 
 #### Descrição
 
@@ -389,9 +391,9 @@ Até que os centroides não mudem
 : Algoritmo básico do k-means {#lst:kmeans}
 
 
-A primeira etapa do algoritmo consiste na definição de _k_ pontos aleatórios como centroides iniciais. Os dados, então, são distribuidos também de maneira aleatória entre os _clusters_ definidos por esses centroides. Assim, inicia-se a etapa iterativa do algoritmo, que associa, a cada _cluster_, os dados que possuem a menor distância de seus centros. Os centroides são recalculados ao fim de cada iteração. Essa etapa é repetida até que se atinja um número limite de iterações, que pode ser definido pelo usuário, ou também até que se atinja mínimos locais e qualquer mudança não tenha mais significado prático nas estruturas construídas.
+A primeira etapa do algoritmo consiste na definição de _k_ pontos aleatórios como centroides iniciais. Os dados, então, são distribuidos também de maneira aleatória entre os _clusters_ definidos por esses centroides. Assim, inicia-se a etapa iterativa do algoritmo, que associa, a cada _cluster_, os dados que possuem a menor distância de seus centros. Os centroides são recalculados ao fim de cada iteração. Essa etapa é repetida até que se atinja rótulos estáveis e qualquer mudança não tenha mais significado prático nas estruturas construídas, ou também, até que se atinja um número limite de iterações, que pode ser definido pelo usuário.
 
-A complexidade do algoritmo, $O(knf)$, pode ser expressa para cada iteração como o produto do número de _clusters_ $k$, da quantidade de pontos $n$ presentes no conjunto de dados, e do número de _features_ $f$. Sua solução converge para ótimos locais e possui natureza NP-difícil. Na prática, isso inviabiliza a execução de todos os arranjos possíveis para que, só então, se escolha a melhor distribuição. Assim, é extremamente importante uma escolha adequada dos parâmetros iniciais, como a quantidade máxima de iterações que serão realizadas e os $k$ centróides selecionados.
+A complexidade do algoritmo, $O(knf)$, pode ser expressa para cada iteração como o produto do número de _clusters_ $k$, da quantidade de pontos $n$ presentes no conjunto de dados, e do número de _features_ $f$. Sua solução converge para ótimos locais e possui natureza NP-difícil. Na prática, isso inviabiliza a execução de todos os arranjos possíveis para que, só então, se escolha a melhor distribuição. Assim, é extremamente importante uma escolha adequada dos parâmetros iniciais, como a quantidade máxima de iterações que serão realizadas e os $k$ centróides selecionados. Normalmente, são feitas várias inicializações do algoritmo e se escolhe a melhor delas.
 
 Para atribuir um ponto ao centróide mais próximo, precisamos de uma medida de similaridade que possibilite identificar o quão próximo de cada centro está um determinado dado. Nesse contexto, há uma associação direta entre similaridade e medidas de distância. Essas podem ser extraídas por diversos métodos distintos que se comportam ou melhor ou pior dependendo das características dos dados. Por exemplo, a Distância Euclidiana é freqüentemente usada para dados representados por pontos no Espaço Euclidiano, enquanto aproximação por similaridade de cosenos é mais apropriada para documentos complexos [@ptan05].
 
@@ -419,55 +421,32 @@ A quantidade de _clusters_ $k$ que precisamos definir durante a inicialização 
 
 O coeficiente de silhueta se encaixa nesse contexto, e é bastante utilizado como medida de qualidade para auxiliar na seleção do melhor número de _clusters_ $k$ em algoritmos que requerem este parâmetro, como _k-means_ [@tall17]. Essa métrica determina um índice avaliativo para cada dado $x_{i} \in X$ em que $X=[x_{1}, x_{2}, ..., x_{n}]$.
 
-Este coeficiente $s_i$ pode ser obtido através do seguinte algoritmo
-
-```
-Atribua cada dado X_i ao seu respectivo cluster C_i em um conjunto de k clusters.
-Repita para cada X_i:
-  Repita para cada dado Y_i pertencente ao cluster C_i:
-    Calcule a distância entre X_i e Y_i
-  Até percorrer todos valores Y_i em C_i
-
-  Calcule a média A_i das distâncias obtidas
-
-  Repita para cada cluster C_j diferente de C_i:
-    Repita para cada dado Y_j pertencente ao cluster C_j:
-      Calcule a distância entre X_i e Y_j
-    Até percorrer todos os valores Y_j em C_j
-    Calcule a média B_ij das distâncias obtidas
-  Até que não haja mais _clusters_ C_j
-
-  Selecione o menor valor B_ij encontrado, B_i
-  Calcule o coeficiente se silhueta, S_i = (B_i - A_i) / max(A_i, B_i).
-```
-: Cálculo do Coeficiente de Silhueta {#lst:silhueta}
-
-O valor do coeficiente de silhueta pode variar entre -1 e 1. Um resultado negativo representa uma clusterização indesejada, já que indica que a média das distâncias calculadas dentro do _cluster_ do próprio dado é maior do que a menor distância encontrada entre as médias calculadas para os dados de outros _clusters_. Nesse sentido, procura-se um valor _k_ que melhor aproxime A_i de 0 para que o coeficiente de silhueta atiginja um resultado próximo do seu máximo [@ptan05].
-
-Se $C_i$ é o _cluster_ que contém o dado $x_i$, $b_{i_{min}}$ é a menor média de distâncias encontradas para $x_i$ em relação aos dados de um _cluster_ $C_j | C_j \cap C_i = \varnothing$, e $a_i$ é a distância média de $x_i$ calculada em relação aos outros dados de $C_i$, podemos expressar matematicamente o cálculo do coeficiente silhueta $\mathrm{SIL}(x_i)$ como 
+Se $C_k'$ é o _cluster_ que contém o dado $x_i$, $b_{i_{min}}$ é a menor média de distâncias encontradas para $x_i$ em relação aos dados de um _cluster_ $C_k | C_k \neq C_k'$, e $a_i$ é a distância média de $x_i$ calculada em relação aos outros dados de $C_k'$, podemos expressar matematicamente o cálculo do coeficiente silhueta $\mathrm{SIL}(x_i)$ como 
 
 $$
   \mathrm{SIL}(x_i) = \frac{b_{i_{min}} - a_i}{\mathrm{MAX}(a_i, b_{i_{min}})}.
 $$
 
-Então, os coeficientes podem ser aplicados para extrair uma medida geral de silhueta para cada _cluster_ $C_i$, ou ainda, para todo o conjunto de _clusters_ $C=[C_1, C_2, ..., C_k]$. Para isso, uma vez que possuímos todos os coeficientes $\mathrm{SIL}(x_i)$, calculamos a média dos coeficientes correspondentes ao dados dos conjuntos desejados de acordo com
+Então, os coeficientes podem ser aplicados para extrair uma medida geral de silhueta para cada _cluster_ $C_k$, ou ainda, para todo o conjunto de _clusters_ $C=[C_1, C_2, ..., C_k]$. Para isso, uma vez que possuímos todos os coeficientes $\mathrm{SIL}(x)$, calculamos a média dos coeficientes correspondentes ao dados dos conjuntos desejados de acordo com
 
 $$
-  \mathrm{SIL}(C_{i}) = \frac{\sum_{x_i \in C_i} \mathrm{SIL}(x_i)}{N_{C_{i}}},
+  \mathrm{SIL}(C_{k}) = \frac{\sum_{x \in C_k} \mathrm{SIL}(x)}{N_{C_{k}}},
 $$
 
 $$
-  \mathrm{SIL}(C) = \frac{\sum_{i=1}^k \mathrm{SIL}(C_i)}{k},
+  \mathrm{SIL}(C) = \frac{\sum_{k'=1}^k \mathrm{SIL}(C_k')}{k},
 $$ {#eq:coefsilhueta}
 
-em que $N_{C_{i}}$ é o número de dados contidos no conjunto $C_i$, e $k$ é o número de _clusters_ que desejamos otimizar. Assim, descrevemos um método capaz de comparar diferentes arranjos de $k$ _clusters_ e nos fornecer uma resposta para qual seria o melhor deles de acordo com as características dos dados.
+em que $N_{C_{k'}}$ é o número de dados contidos no conjunto $C_k'$, e $k$ é o número de _clusters_ que desejamos otimizar. Assim, descrevemos um método capaz de comparar diferentes arranjos de $k$ _clusters_ e nos fornecer uma resposta para qual seria o melhor deles de acordo com as características dos dados.
+
+O valor do coeficiente de silhueta pode variar entre -1 e 1. Um resultado negativo representa uma clusterização indesejada, já que indica que a média das distâncias calculadas dentro do _cluster_ do próprio dado é maior do que a menor distância encontrada entre as médias calculadas para os dados de outros _clusters_. Nesse sentido, procura-se um _k_ que melhor aproxime os valores $a$ de 0 para que o coeficiente de silhueta atinja um resultado próximo do seu máximo [@ptan05].
 
 #### Discussão {#sec:polisdiscussao}
 
 Vimos nas Seções anteriores o embasamento teórico necessário para compreender o método de clusterização que conceberá o módulo matemático do Empurrando Juntos. Martins [-@tall17] detalhou partes importantes do Pol.is em seu trabalho, e desenhou um protótipo do que viria a ser a base arquitetural para a infraestrutura de clusterização do Empurrando Juntos. Entre os diversos métodos de pré-processamento, clusterização e validação analisados, tomou a decisão de reproduzir o fluxo de processamento do Pol.is. Os motivos que englobam essa decisão podem ser descritos em torno do estudo científico de cunho comparativo entre uma ferramenta já bem estabelecida na sociedade, o Pol.is, e a concepção de uma plataforma que extende suas funcionalidades, o Empurrando Juntos.
 
-Com base no que mostramos, podemos encontrar diversos aspéctos críticos no esboço da arquitetura proposta pelo Pol.is, cujo núcleo se concentra no processamento dos dados em duas etapas sequenciais. A primeira é o pré-processamento com a aplicação do PCA para redução da dimensionalidade dos dados em uma conversa, e a segunda, a sua clusterização realizada através do método _k-means_. À princípio, destacamos o grande problema da perda de informações sensíveis nas transformações lineares durante a primeira etapa. Essas informações, que nesse caso podem ser tratadas como distâncias entre pontos, são essenciais para uma clusterização eficiente dos dados. Dependendo do contexto, essa perda pode degenerar os _clusters_, sacrificando qualquer tentativa posterior de se inferir informações úteis sobre os grupos formados. Esse fato vai de encontro com os pilares da proposta do Empurrando Juntos, que veremos no Capítulo [-@sec:ej].
+Com base no que mostramos, podemos encontrar diversos aspectos críticos no esboço da arquitetura proposta pelo Pol.is, cujo núcleo se concentra no processamento dos dados em duas etapas sequenciais. A primeira é o pré-processamento com a aplicação do PCA para redução da dimensionalidade dos dados em uma conversa, e a segunda, a sua clusterização realizada através do método _k-means_. Em princípio, destacamos o grande problema da perda de informações sensíveis nas transformações lineares durante a primeira etapa. Essas informações, que nesse caso podem ser tratadas como distâncias entre pontos, são essenciais para uma clusterização eficiente dos dados. Dependendo do contexto, essa perda pode degenerar os _clusters_, sacrificando qualquer tentativa posterior de se inferir informações úteis sobre os grupos formados. Esse fato vai de encontro com os pilares da proposta do Empurrando Juntos, que veremos no Capítulo [-@sec:ej].
 
-A estima do Pol.is por uma visualização bidimensional dos dados clusterizados acarretou uma série de problemas conceituais sobre os grupos gerados. Na prática, uma simples inversão das etapas: primeiro a clusterização e depois a redução da dimensionalidade, faria um enorme sentido estatístico. Entretanto, a projeção dos pontos em um espaço dimensional reduzido, que possibilitasse a visualização humana, ocasionaria uma sobreposição dos _clusters_, o que possui uma coerência com a realidade da informação, mas prejudica a distinção de grupos bem formados.
+Na pática, a priorização do Pol.is por uma visualização bidimensional dos dados clusterizados acarretou uma série de problemas conceituais sobre os grupos gerados. Na prática, uma simples inversão das etapas: primeiro a clusterização e depois a redução da dimensionalidade, resolveria grande parte desses problemas. Entretanto, a projeção dos pontos em um espaço dimensional reduzido, que possibilitasse a visualização humana, poderia ocasionar uma sobreposição dos _clusters_, o que possui uma coerência com a realidade da informação, mas prejudica a distinção de grupos bem formados.
 
 Este e outros fatos alteraram consideravelmente o planejamento inicial de construção da plataforma, na qual o Empurrando Juntos meramente extenderia as funcionalidades do Pol.is. Essas alterações, como explicaremos no Capítulo [-@sec:ej], reduziram o Pol.is a uma dependência arquitetural momentânea, que influenciou diversos aspectos das primeiras versões do Empurrando Juntos, incluindo a utilização do mesmo fluxo de processamento de dados. Entretanto, conscientes das fragilidades dos métodos e fluxos aplicados no Pol.is, projetamos uma arquitetura de _software_ para o módulo matemático do Empurrando Juntos que fosse completamente desacoplada do conjunto da solução. Essa arquitetura possibilita tanto pequenas alterações pontuais nos algoritmos, quanto sua completa substituição, demandando poucos esforços técnicos. Destrincharemos, na [@sec:arquitetura], a concepção desse modelo arquitetural que possibilita a evolução gradativa dos métodos de clusterização aplicados.
