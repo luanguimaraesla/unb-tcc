@@ -421,7 +421,7 @@ A quantidade de _clusters_ $k$ que precisamos definir durante a inicialização 
 
 O coeficiente de silhueta se encaixa nesse contexto, e é bastante utilizado como medida de qualidade para auxiliar na seleção do melhor número de _clusters_ $k$ em algoritmos que requerem este parâmetro, como _k-means_ [@tall17]. Essa métrica determina um índice avaliativo para cada dado $x_{i} \in X$ em que $X=[x_{1}, x_{2}, ..., x_{n}]$.
 
-Se $C_k'$ é o _cluster_ que contém o dado $x_i$, $b_{i_{min}}$ é a menor média de distâncias encontradas para $x_i$ em relação aos dados de um _cluster_ $C_k | C_k \neq C_k'$, e $a_i$ é a distância média de $x_i$ calculada em relação aos outros dados de $C_k'$, podemos expressar matematicamente o cálculo do coeficiente silhueta $\mathrm{SIL}(x_i)$ como 
+Se $C_{k'}$ é o _cluster_ que contém o dado $x_i$, $b_{i_{min}}$ é a menor média de distâncias encontradas para $x_i$ em relação aos dados de um _cluster_ $C_k | C_k \neq C_{k'}$, e $a_i$ é a distância média de $x_i$ calculada em relação aos outros dados de $C_{k'}$, podemos expressar matematicamente o cálculo do coeficiente silhueta $\mathrm{SIL}(x_i)$ como 
 
 $$
   \mathrm{SIL}(x_i) = \frac{b_{i_{min}} - a_i}{\mathrm{MAX}(a_i, b_{i_{min}})}.
@@ -434,10 +434,10 @@ $$
 $$
 
 $$
-  \mathrm{SIL}(C) = \frac{\sum_{k'=1}^k \mathrm{SIL}(C_k')}{k},
+  \mathrm{SIL}(C) = \frac{\sum_{k'=1}^k \mathrm{SIL}(C_{k'})}{k},
 $$ {#eq:coefsilhueta}
 
-em que $N_{C_{k'}}$ é o número de dados contidos no conjunto $C_k'$, e $k$ é o número de _clusters_ que desejamos otimizar. Assim, descrevemos um método capaz de comparar diferentes arranjos de $k$ _clusters_ e nos fornecer uma resposta para qual seria o melhor deles de acordo com as características dos dados.
+em que $N_{C_{k'}}$ é o número de dados contidos no conjunto $C_{k'}$, e $k$ é o número de _clusters_ que desejamos otimizar. Assim, descrevemos um método capaz de comparar diferentes arranjos de $k$ _clusters_ e nos fornecer uma resposta para qual seria o melhor deles de acordo com as características dos dados.
 
 O valor do coeficiente de silhueta pode variar entre -1 e 1. Um resultado negativo representa uma clusterização indesejada, já que indica que a média das distâncias calculadas dentro do _cluster_ do próprio dado é maior do que a menor distância encontrada entre as médias calculadas para os dados de outros _clusters_. Nesse sentido, procura-se um _k_ que melhor aproxime os valores $a$ de 0 para que o coeficiente de silhueta atinja um resultado próximo do seu máximo [@ptan05].
 
