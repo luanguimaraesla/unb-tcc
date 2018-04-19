@@ -106,48 +106,43 @@ A seguir, apresentamos o embasamento teórico necessário para aprofundar essa e
 
 ### Representação dos dados
 
-Para que seja possível analisar um certo agrupamento de dados é necessário identificar quais informações podem ser utilizadas para representar uma abstração prática dos objetos a serem agrupados. É preciso encontrar então um conjunto de atributos que descrevem os itens para que seja possível calcular o grau de semelhança entre os elementos. Esses atributos, por sua vez, podem ser escritos em forma numérica, categórica, binária e uma variedade de outros tipos. Como exemplo, podemos representar pessoas em vetores compostos pelo valor numério de seu ano de nascimento e um valor binário, 0 ou 1, para masculino ou feminino.
+Um dos primeiros passos para se analisar uma massa de dados é encontrar um conjunto de características que descrevam seus objetos. Através desses atributos é possível calcular o grau de semelhança entre os elementos. Quanto mais descritivos e informativos forem, mais precisos serão os resultados dos cálculos.
+
+Essas características podem ser escritas de diversas maneiras, em forma numérica, categórica, binária, etc. Como exemplo, podemos representar carros em vetores compostos pelo valor numério de seu ano de fabricação e um valor binário, 1 ou 0, para carros importados ou não.
 
 $$
   \begin{pmatrix}
-    pessoa_{1} \\
-    pessoa_{2} \\
+    carro_{1} \\
+    carro_{2} \\
     \vdots \\
-    pessoa_{n}
+    carro_{n}
   \end{pmatrix}
   =
   \begin{pmatrix}
-    1997 & 1 \\
-    1943 & 0 \\
+    1998 & 1 \\
+    1969 & 0 \\
     \vdots  & \vdots \\
-    ano_{n} & sexo_{n}
+    ano_{n} & importado_{n}
   \end{pmatrix}
 $$
 
 Vejamos também que a representação de atributos para os objetos podem existir em diferentes formatos e escalas.
 
-|Objeto|Cor|
+|Objeto|Nota Musical|
 |:---:|:---:|
-|A|Azul|
-|B|Amarelo|
-|C|Vermelho|
-:Representação nominal sobre a cor {#tbl:rep1}
+|1|Dó|
+|2|Mi|
+|3|Sol|
+:Representação nominal sobre notas musicais {#tbl:rep1}
 
-|Objeto|Azul|Amarelo|Vermelho|
-|---|---|---|---|
-|A|1|0|0|
-|B|0|1|0|
-|C|0|0|1|
+|Objeto|Dó |Ré |Mi |Fá |Sol|Lá |Si |
+|------|---|---|---|---|---|---|---|
+|1     |1  |0  |0  |0  |0  |0  |0  |
+|2     |0  |0  |1  |0  |0  |0  |0  |
+|3     |0  |0  |0  |0  |1  |0  |0  |
 :Representação categórica para o atributo cor {#tbl:rep2}
 
-|Objeto|Cor(THz)|
-|---|---|
-|A|606|
-|B|508|
-|C|400|
-:Representação numérica da cor em frequência (THz) {#tbl:rep3}
-
-As [@tbl:rep1, @tbl:rep2, @tbl:rep3] mostram os mesmos dados representados de formas diferentes, o formato depende basicamente da fonte de dados, de como eles forma armazenados. Para as diversas representações existe um tipo de função de distância compatível. É possível, no entanto, utilizar qualquer uma das representações.
+As [@tbl:rep1; @tbl:rep2] apresentam os dados em representações diferentes. O formato escolhido pode depender de vários fatores, a fonte de dados, dos recursos de armazenamento, dos algoritmos que serão utilizados, etc. Para cada representação podemos elaborar um tipo de função de distância compatível. Desta forma, é possível utilizar qualquer uma das representações.
 
 ### Extração de _features_ {#sec:extracao}
 
