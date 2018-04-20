@@ -253,18 +253,12 @@ $for(include-before)$
   $include-before$
 $endfor$
 
-% Adiciona os agradecimentos em portuguÊs
-$if(acknowledgment-pt)$
-  \begin{acknowledgmentcolumn-pt}
-    $acknowledgment-pt$
-  \end{acknowledgmentcolumn-pt}
-$endif$
+% Adiciona os agradecimentos
+$if(thanks)$
+  \newpage
+  \chapter*{Agradecimentos}
 
-% Adiciona os agradecimentos em inglês
-$if(acknowledgment)$
-  \begin{acknowledgmentcolumn}
-    $acknowledgment$
-  \end{acknowledgmentcolumn}
+  $thanks$
 $endif$
 
 $if(toc)${
