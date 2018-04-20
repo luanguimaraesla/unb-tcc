@@ -192,6 +192,15 @@ $if(lang)$
   \usepackage[$mainlang$]{babel}	% Adiciona a última língua de $lang$
 \fi
 
+\usepackage{afterpage}
+
+\newcommand\blankpage{%
+    \null
+    \thispagestyle{empty}%
+    \addtocounter{page}{-1}%
+    \newpage
+}
+
 $endif$
 $for(header-includes)$
 $header-includes$
@@ -259,21 +268,7 @@ $if(thanks)$
   \chapter*{Agradecimentos}
 
   $thanks$
-$endif$
-
-$if(toc)${
-  \hypersetup{linkcolor=black}
-
-  \newpage
-  \listoffigures
-
-  \newpage
-  \listoftables
-
-  \newpage
-  \setcounter{tocdepth}{$toc-depth$}
-  \noindent\tableofcontents	% Adicionando sumário
-}
+  \afterpage{\blankpage}
 $endif$
 
 % Adiciona o resumo
@@ -288,6 +283,25 @@ $if(abstract)$
       \textbf{$if(tagstitle)$$tagstitle$$else$Palavras-chaves$endif$}: $for(tags)$$tags$$sep$. $endfor$.	% Adicionando as palavras-chaves
     $endif$
   \end{resumoumacoluna}
+  \afterpage{\blankpage}
+$endif$
+
+$if(toc)${
+  \hypersetup{linkcolor=black}
+
+  \newpage
+  \listoffigures
+  \afterpage{\blankpage}
+
+  \newpage
+  \listoftables
+  \afterpage{\blankpage}
+
+  \newpage
+  \setcounter{tocdepth}{$toc-depth$}
+  \noindent\tableofcontents	% Adicionando sumário
+  \afterpage{\blankpage}
+}
 $endif$
 
 \newpage

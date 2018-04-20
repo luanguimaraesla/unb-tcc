@@ -1,6 +1,8 @@
 # pandocker.yml
 sections:
   - config.md
+  - agradecimentos.md
+  - resumo.md
   - introducao.md
   - ml.md
   - ej.md
