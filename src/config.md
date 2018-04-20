@@ -20,26 +20,24 @@ classoption:
   - twoside
 
 toc-depth: 2
-graphics: true
 
 #TCC information
 coverlocation:  'templates/tcc/figuras/capa.eps'
-title:			'Empurrando Juntos: Machine Learning'
+title:			'Empurrando Juntos: plataforma de participação social para identificação de grupos de opinião atravez de modelos de clusterização'
 date:			'2018'
 author:			'Luan Guimarães Lacerda'
 place:			'Brasília, DF'
 institution:	'Universidade de Brasília -- UnB'
 section:        'Faculdade UnB Gama -- FGA'
 course:         'Engenharia de Software'
-preamble:		'ver documentação do abntex2 (\preambulo{})'
 tag1:           'democracia'
 tag2:           'clusterização'
 cover:			'true'
 cdu:            '02:141:005.6'
 approvaldate:   '25 de Março de 2018'
-guestmember1:   'Carla Rocha'
-guestmember2:   'Paulo Meireles'
-advisor:        'Fábio Macedo Mendes'
+guestmember1:   'Profa. Dra. Carla Silva Rocha Aguiar'
+guestmember2:   'Prof. [TODO] Thiago Paulo'
+advisor:        'Prof. Dr. Fábio Macedo Mendes'
 
 #crossref configurations
 linkReferences: true
