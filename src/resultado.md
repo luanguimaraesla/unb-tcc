@@ -1,3 +1,4 @@
+\newpage
 # Resultados {#sec:resultados}
 
 A combinação dos diferentes tópicos abordados nesse projeto produziram três principais resultados que serão analisados neste Capítulo. O primeiro diz respeito à eficácia do método matemático proposto, aplicado no contexto do projeto "Brasil que o Povo Quer" da Fundação Perseu Abramo. O segundo refere-se a administração da metodologia de desenvolvimento em uma equipe heterogênea e distribuída. Por fim, apresentaremos os números relativos ao empenho das tecnologias apresentadas em um cenário de entrega contínua de um _Software_ Livre.

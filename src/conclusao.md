@@ -1,3 +1,4 @@
+\newpage
 # Conclusão {#sec:conclusao}
 
 O desenvolvimento do Empurrando Juntos oferece à sociedade um novo recurso de participação social digital. Uma ferramenta que não só busca beneficiar o processo participativo, mas também auxiliar na compreensão do comportamento dos indivíduos. Além disso, sua própria concepção considera diversos aspectos da complexidade inerente à aplicação da tecnologia de comunicação no processo democrático. Nesta conjuntura, esse trabalho se apresenta como mais um elemento técnico nos debates sobre alguns temas atualmente sensíveis, como o fenômeno das bolhas de opinião, privacidade dos usuários, etc.

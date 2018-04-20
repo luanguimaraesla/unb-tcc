@@ -5,20 +5,22 @@ numbersections: true
 
 
 #TCC configurations
-lang: pt-BR
+lang:
+  - en-US
+  - pt-BR
+
 documentclass: abntex2 
+papersize: a4paper
+fontsize: 12pt
+linkcolor: blue
+
 classoption:
   - article
-  - 12pt
   - openright
   - twoside
-  - a4paper
-  - english
-  - french
-  - spanish
-  - brazil
 
 toc-depth: 2
+graphics: true
 
 #TCC information
 coverlocation:  'templates/tcc/figuras/capa.eps'

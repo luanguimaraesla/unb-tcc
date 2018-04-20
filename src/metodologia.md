@@ -1,3 +1,4 @@
+\newpage
 # Metodologia {#sec:metodologia}
 
 Neste Capítulo explicaremos como organizamos todo o ecossistema de colaboradores, as ferramentas que nos auxiliaram e os fundamentos práticos de metodologias de desenvolvimento ágeis que nortearam todo o processo de criação do Empurrando Juntos.

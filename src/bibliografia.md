@@ -1,1 +1,2 @@
+\newpage
 # Referências {#sec:referencias}
