@@ -88,7 +88,8 @@ O Empurrando Juntos é um sistema distribuído, como vimos na [@fig:sisej]. Cada
 
 A ferramenta de Integração Contínua, Gitlab CI, não serve apenas para a execução de testes. Nela, podemos configurar, através de _scripts_, ações que serão realizadas de forma sequencial ou paralela de acordo com condições preestabelecidas. Chamamos esse conjunto de ações condicionais de _pipeline_. Vejamos na [@fig:pipeline] uma representação visual da integração entre Gitflow, Gitlab, _pytest_ e Docker.
 
-![_pipeline_ de alteração do código do Empurrando Juntos](images/metodologia/ejflow.png){#fig:pipeline}
+![_pipeline_ de alteração do código do Empurrando Juntos](images/metodologia/ejflow.png){#fig:pipeline width=350px height=400px}
+
 
 Observe na figura que é sempre papel do desenvolvedor cuidar de todos os procedimentos e problemas provenientes das suas alterações. É possível notar a quantidade de passos automatizados e como, em diversas etapas do _pipeline_, o processo é redundante. Essa característica é desejada, visto que em uma metodologia que busca otimizar a entregabilidade deve ser extremamente rigorosa em relação à possíveis falhas e erros.
 
@@ -98,7 +99,8 @@ As imagens geradas são distribuídas através do serviço Registry do Gitlab, u
 
 Rancher^[https://rancher.com/] é um _software Open Source_, distribuido sob os termos da licença Apache 2.0, que possibilita a criação de um ambiente privado para manipulação de contêineres Docker. Através dele é possível administrar todo o ecossistema de serviços de uma organização que são distribuídos através de imagens Docker. O Rancher gerencia diversos recursos, como orquestração, _loadbalance_, _volumes_, rede, grupos de usuários e permissões, etc. Todos esses recursos são facilmente manipulados através de uma interface _Web_ completa (veja na [@fig:rancher]), que pode ser acessada por qualquer um dos desenvolvedores com credenciais.
 
-![Painel administrativo do Rancher](images/metodologia/rancher.png){#fig:rancher}
+![Painel administrativo do Rancher](images/metodologia/rancher.png){#fig:rancher width=400px height=250px}
+
 
 É possível manipular seus recursos através de uma _Web API_ acessada através de _Tokens_. Desta forma permitimos o Gitlab atualizar o Empurrando Juntos em nossa infraestrutura de homologação e produção assim que as condições são obedecidas. O processo se baseia na disponibilização das imagens Docker construídas pelo Gitlab CI, que então realiza uma solicitação de atualização para o Rancher através de sua _API_. O Rancher realiza verificações de segurança e então atualiza os contêineres Docker solicitadas, fazendo um novo _download_ da versão _latest_ cadastrada no Registry do Gitlab.
 
