@@ -1,21 +1,21 @@
 \newpage
 # Aprendizado de Máquina {#sec:ml}
 
-O Aprendizado de Máquina é um subconjunto da Ciência de Dados em que algorítmos de computador são usados para descobrir, de forma autônoma, estruturas presentes em dados e informações através da implementação de sofisticadas técnicas estatísticas de aprendizado. Os métodos estudados nesse Capítulo são de extrema importância para o desenvolvimento do algoritmo de agrupamento do Empurrando Juntos.
+O Aprendizado de Máquina é um subconjunto da Ciência de Dados em que algoritmos de computador são usados para descobrir, de forma autônoma, estruturas presentes em dados e informações através da implementação de sofisticadas técnicas estatísticas de aprendizado. Os métodos estudados nesse Capítulo são de extrema importância para o desenvolvimento do algoritmo de agrupamento do Empurrando Juntos.
 
 Enquanto a Ciência de Dados está intrinsecamente ligada a solução de problemas do mundo real através da coleta, limpeza, formatação e compreensão de dados; o Aprendizado de Máquina se apresenta como uma área do conhecimento que transcende a própria Ciência de Dados, sendo tipicamente descrita como a "ciência cujo objetivo é usar dados existentes para desenvolver modelos que podemos utilizar para predizer várias características de dados futuros" [@dsfs15].
 
-Podemos assim tratar a Ciência de Dados como um grande guarda-chuvas que compreende um conjunto de disciplinas incluindo _Big Data_, Inteligência Artificial, Mineração de Dados e também o Aprendizado de Máquina, configurando uma vasta área de estudos que hoje permite o computador interagir com seres humanos, conduzir um carro, identificar pessoas na multidão e inferir a existência de grupos sociais à partir do comportamento dos indivíduos. Isso é feito com uma eficiência extraordinária, permitindo as máquinas realizarem diversas outras atividades antes ditas humanas e até mesmo sobre-humanas.
+Podemos assim tratar a Ciência de Dados como um grande guarda-chuva que compreende um conjunto de disciplinas incluindo _Big Data_, Inteligência Artificial, Mineração de Dados e também o Aprendizado de Máquina, configurando uma vasta área de estudos que hoje permite o computador interagir com seres humanos, conduzir um carro, identificar pessoas na multidão e inferir a existência de grupos sociais à partir do comportamento dos indivíduos. Isso é feito com uma eficiência extraordinária, permitindo as máquinas realizarem diversas outras atividades antes ditas humanas e até mesmo sobre-humanas.
 
 A base matemática para grande parte dos algoritmos vem sendo desenvolvida há muitos anos, passando por períodos em que as possibilidades computacionais ainda eram completamente primitivas. Contudo, após o advendo de uma nova geração de computadores com altas taxas de processamento e armazenamento, o Aprendizado de Máquina tornou-se praticamente viável e então, impulsionado por um mundo conectado à _Internet_, que proporcionou uma capacidade inimaginável de coleta massiva de informações, passou a ser largamente introduzido nos nossos empreendimentos e em nosso dia a dia.
 
 ## Classificação dos problemas
 
-Quando falamos de Aprendizado de Máquina estamos englobando centenas de algorítmos que utilizamos para treinar e aprimorar nossos modelos. Entre os algoritmos podemos destacar classificadores bayesianos, análise associativa e redes neurais. Esses algoritmos podem ser divididos em três diferentes categorias básicas: supervisinados, não supervisionados e por reforço.
+Quando falamos de Aprendizado de Máquina estamos englobando centenas de algoritmos que utilizamos para treinar e aprimorar nossos modelos. Entre os algoritmos podemos destacar classificadores bayesianos, análise associativa e redes neurais. Esses algoritmos podem ser divididos em três diferentes categorias básicas: supervisionados, não supervisionados e por reforço.
 
-Considere uma máquina que receba uma sequência de entradas $x_{1}, x_{2}, x_{3}, ..., x_{t}$, onde $x_{t}$ é a entrada fornecida no tempo $t$. Essas estradas são dados que podem ser, por exemplo, uma representação do mundo real como _pixels_ de uma imagem, pontos discretos em uma onda mecânica ou votos em uma conversa _online_. A maneira como iremos receber esses dados e projetar nossos algoritmos para lidar com eles define o tipo de aprendizado que melhor se adapta ao nosso problema.
+Considere uma máquina que receba uma sequência de entradas $x_{1}, x_{2}, x_{3}, ..., x_{t}$, onde $x_{t}$ é a entrada fornecida no tempo $t$. Essas entradas são dados que podem ser, por exemplo, uma representação do mundo real como _pixels_ de uma imagem, pontos discretos em uma onda mecânica ou votos em uma conversa _online_. A maneira como iremos receber esses dados e projetar nossos algoritmos para lidar com eles, define o tipo de aprendizado que melhor se adapta ao nosso problema.
 
-O aprendizado supervisionado recebe uma sequência de entradas $y_{1}, y_{2}, ..., y_{n}$, suas respectivas saídas $z_{y_{1}}, z_{y_{2}}, ..., z_{y_{n}}$ e tem como objetivo produzir uma saída correta para um novo valor $y$ fornecido. O aprendizado por reforço interage com o ambiente produzindo ações $a_{1}, a_{2}, ..., a_{n}$, que retornam algum tipo de resultados escalares $r_{y_{1}}, r_{y_{2}}, ..., r_{y_{n}}$, que recompensam ou não cada ação realizada. Esse resultado é utilizado para aprimorar o algoritmo de forma que recompensas por ações futuras sejam maximizadas. Já o aprendizado não supervisionado recebe uma sequência de entrada $x_{1}, x_{2}, ..., x_{3}$, porém não recebe nenhuma informação adicional sobre esses dados. Então o algoritmo é capaz de identificar padrões nesses dados e utilizar essa informação para agrupá-los ou predizer valores para dados futuros [@zgh04].
+O aprendizado supervisionado recebe uma sequência de entradas $y_{1}, y_{2}, ..., y_{n}$, suas respectivas saídas $z_{y_{1}}, z_{y_{2}}, ..., z_{y_{n}}$ e tem como objetivo produzir uma saída correta para um novo valor $y$ fornecido. O aprendizado por reforço interage com o ambiente produzindo ações $a_{1}, a_{2}, ..., a_{n}$, que retornam algum tipo de resultados escalares $r_{a_{1}}, r_{a_{2}}, ..., r_{a_{n}}$, que recompensam ou não cada ação realizada. Esse resultado é utilizado para aprimorar o algoritmo de forma que recompensas por ações futuras sejam maximizadas. Já o aprendizado não supervisionado recebe uma sequência de entrada $x_{1}, x_{2}, ..., x_{3}$, porém não recebe nenhuma informação adicional sobre esses dados. Então o algoritmo é capaz de identificar padrões nesses dados e utilizar essa informação para agrupá-los ou predizer valores para dados futuros [@zgh04].
 
 Levando em consideração a natureza do problema estabelecido para o desenvolvimento de uma plataforma de participação social baseada no agrupamento de usuários por meio da análise de seus votos, essa seção apresenta um estudo aprofundado nas categorias de algoritmos supervisionados e não supervisionados.
 
@@ -33,13 +33,13 @@ Regressão linear, _k-nearest neighbors_ e árvores de decisão são exemplos de
 
 Alguns perigos são bem conhecidos quando falamos de Aprendizado de Máquina, dois deles, _overfitting_ e _underfitting_, estão intrinsecamente relacionados a quantidade de informação que nós decidimos analisar em um conjunto de dados, assim como o método escolhido para realizar essa análise.
 
-Podemos descrever um caso de _overfitting_ quando produzimos um modelo que se adequa bem ao conjunto de dados que usamos para o treinamento, entretanto está tão rigidamente vinculado a esse conjunto de dados que não é capaz de se generalizar de modo que esteja ápto a realizar predições coerentes para novos dados de entrada. Opostamente, temos os casos de _underfitting_, que podem ser observados quando o modelo que construímos não se adequa bem ao conjunto de dados de treinamento e consequentemente não é confiável para realizar predições.
+Podemos descrever um caso de _overfitting_ quando produzimos um modelo que se adequa bem ao conjunto de dados que usamos para o treinamento, entretanto está tão rigidamente vinculado a esse conjunto de dados que não é capaz de se generalizar de modo que esteja apto a realizar predições coerentes para novos dados de entrada. Opostamente, temos os casos de _underfitting_, que podem ser observados quando o modelo que construímos não se adequa bem ao conjunto de dados de treinamento e consequentemente não é confiável para realizar predições.
 
-![Overfitting e Underfitting](images/machine_learning/overfitting_underfitting.png)
+![Overfitting e Underfitting](images/machine_learning/overfitting_underfitting.png){width=400px height=310px}
 
-A abordagem fundamental para garantir que nosso modelo não está ou complexo ou simples demais é utilizar diferentes dados para treinar e para testar nossos modelos, garantindo. Uma possível forma para aplicar esse conceito é dividir o conjunto de dados disponíveis em dois grupos; um deles será direcinado ao treinamento, o outro ao teste. Assim podemos aferir a performance do modelo. Uma pratica comum nessa abordagem é separar dois terços dos dados para o treinamento.
+A abordagem fundamental para garantir que nosso modelo não está ou complexo ou simples demais é utilizar diferentes dados para treinar e para testar nossos modelos. Uma possível forma para aplicar esse conceito é dividir o conjunto de dados disponíveis em dois grupos, um deles será direcionado ao treinamento, o outro ao teste. Assim podemos aferir a performance do modelo. Uma prática comum nessa abordagem é separar dois terços dos dados para o treinamento.
 
-Um grande desafio de se encontrar um modelo que melhor se adequa ao conjunto de dados selecionado é garantir qual deles é realmente o superior a partir da análise dos resultados para o conjunto de teste. Para o autor, essa aferição seria uma espécie de meta-treinamento que faria com que o próprio conjunto de teste se tornasse um treinamento secundário incapaz de dizer qual dos modelos seria o melhor para a ocasião [@dsfs15] . Logo, nos casos em que utilizamos um conjunto de dados para treinar, testar e selecionar em um grupo de possíveis modelos, devemos dividir os dados disponíveis em três conjuntos: o conjunto de treinamento para a construção dos modelos, o conjunto de validação para escolher entre os modelos e, por fim, um conjunto de teste para julgar o modelo final. É claro que isso apenas irá mitigar o problema, já que podemos extender o mesmo argumento sobre meta-treinamentos para quantas forem as etapas de teste.
+Um grande desafio de se encontrar um modelo que melhor se adequa ao conjunto de dados selecionado é garantir qual deles é realmente o superior a partir da análise dos resultados para o conjunto de teste. Essa aferição seria uma espécie de meta-treinamento que faria com que o próprio conjunto de teste se tornasse um treinamento secundário incapaz de dizer qual dos modelos seria o melhor para a ocasião [@dsfs15] . Logo, nos casos em que utilizamos um conjunto de dados para treinar, testar e selecionar em um grupo de possíveis modelos, devemos dividir os dados disponíveis em três conjuntos: o conjunto de treinamento para a construção dos modelos, o conjunto de validação para escolher entre os modelos e, por fim, um conjunto de teste para julgar o modelo final. É claro que isso apenas irá mitigar o problema, já que podemos extender o mesmo argumento sobre meta-treinamentos para quantas forem as etapas de teste.
 
 #### Validação de um modelo
 
@@ -51,8 +51,8 @@ Retomando o exemplo clássico do modelo binário para identificação de _spams_
 |---|---|
 |Verdadeiro Positivo| _e-mail_ é um _spam_ e foi classificado como _spam_|
 |Falso Positivo| _e-mail_ não é um _spam_ e foi classificado como _spam_|
-|Verdadeiro Negativo| _email_ não é um _spam_ e não foi classificado como _spam_|
-|Falso Negativo| _email_ é um _spam_ e foi classificado como _spam_ |
+|Verdadeiro Negativo| _e-mail_ não é um _spam_ e não foi classificado como _spam_|
+|Falso Negativo| _e-mail_ é um _spam_ e não foi classificado como _spam_ |
 : Exemplo de categorias em um modelo preditivo binário
 
 Generalizando, para modelos preditivos binários podemos definir a seguinte tabela:
@@ -91,17 +91,17 @@ Podemos inferir que
 
 Nos referimos a uma situação de aprendizado não supervisionado quando estamos lidando com um problema no qual não se obtém previamente nem rótulos para nossas entidades, nem informações adicionais do ambiente a cerca delas. Isso quer dizer que nossos dados não possuem padrões conhecidos que serviriam como base para nossas análises. Mesmo assim podemos desenvolver um modelo formal de aprendizado baseado na noção de que o objetivo da máquina é criar representações dos dados de entrada que podem ser utilizadas para tomada de decisões, predição de dados futuros, etc.
 
-A ciência por trás dessa classe de algoritmos pode ser tratada em termos da procura por um modelo probabilistico dos dados. Isso significa que, até quando não possuímos um conjunto de dados de treinamento, podemos estimar um modelo que representa a distribuição de probabilidade para um novo dado de entrada $x_{t}$, dado um conjunto de entradas $x_{1}, x_{2}, ..., x_{t-1}$. Temos assim um modelo probabilístico $P(x_{t}|x_{1}, x_{2}, ..., x_{t-1})$. Para casos mais simples onde não importa a ordem dos dados de entrada, podemos definir todos os dados independentemente e identicamente em alguma distribuição $P(x)^2$ [@zgh04].
+A ciência por trás dessa classe de algoritmos pode ser tratada em termos da procura por um modelo probabilístico dos dados. Isso significa que, até quando não possuímos um conjunto de dados de treinamento, podemos estimar um modelo que representa a distribuição de probabilidade para um novo dado de entrada $x_{t}$, dado um conjunto de entradas $x_{1}, x_{2}, ..., x_{t-1}$. Temos assim um modelo probabilístico $P(x_{t}|x_{1}, x_{2}, ..., x_{t-1})$. Para casos mais simples onde não importa a ordem dos dados de entrada, podemos definir todos os dados independentemente e identicamente em alguma distribuição $P(x)^2$ [@zgh04].
 
-Essas interpratações probabilísticas acerca desses algoritmos, ainda que sejam desejadas, nem sempre condizem com a realidade de suas concepções. Há uma quantidade significativa de modelos eurísticos nos quais a conexão com a Probabilidade pode nem existir, ou ainda, ser estabelecida após sua criação.
+Essas interpretações probabilísticas acerca desses algoritmos, ainda que sejam desejadas, nem sempre condizem com a realidade de suas concepções. Há uma quantidade significativa de modelos eurísticos nos quais a conexão com a Probabilidade pode nem existir, ou ainda, ser estabelecida após sua criação.
 
-Considere um exemplo em que $x$ representa o padrão de comportamento de pessoas em uma conversa _online_. $P(x'|X)$ é construído a partir dos dados coletados de uma pessoa da dessa conversa e depende do conjunto $X=[x_{1}, x_{2},...,x_{n}]$. A probabilidade do comportamento de outra pessoa pode ser validada por esse modelo. Assim, se o valor obtido é muito baixo, podemos concluir que ou essas duas pessoas possuem padrões de comportamento muito diferentes ou nosso modelo não é suficientemente bom para inferir essa informação. Esse tipo de estratégia é muito utilizado para a detecção de anomalias em um conjunto de dados.
+Considere um exemplo em que $x$ representa o padrão de comportamento de pessoas em uma conversa _online_. $P(x'|X)$ é construído a partir dos dados coletados de uma pessoa dessa conversa e depende do conjunto $X=[x_{1}, x_{2},...,x_{n}]$. A probabilidade do comportamento de outra pessoa pode ser validada por esse modelo. Assim, se o valor obtido é muito baixo, podemos concluir que ou essas duas pessoas possuem padrões de comportamento muito diferentes, ou nosso modelo não é suficientemente bom para inferir essa informação. Esse tipo de estratégia é muito utilizado para a detecção de anomalias em um conjunto de dados.
 
 Claro que esse não é o único uso pertinente para os algoritmos de aprendizado não supervisionados. No contexto do Empurrando Juntos, a classificação de dados é também uma área de grande importância e interesse. Assumindo $P(x| \theta_{A})$ como um modelo extraído do comportamento de um grupo $A$ de pessoas em uma conversa _online_, e o modelo $P(x| \theta_{B})$ extraído de um grupo $B$, o algoritmo é capaz de inferir a qual grupo pertence uma nova pessoa $p$, que apresenta determinando comportamento $x_{p}$, comparando as probabilidades relativas a cada grupo, $P(x_{p}| \theta_{A})$ e $P(x_{p}| \theta_{B})$ [@zgh04].
 
 Além desses usos, podemos citar a aplicação de algoritmos não supervisionados no desenvolvimento de sistemas de comunicação eficientes e compressão de dados, configurando uma ligação importante entre as áreas de aprendizado de máquina, estatística e teoria da informação [@zgh04].
 
-Não há um modelo que resolva todos os problemas de aprendizado. O grande desafio é desenvolver um que seja apropriado para um conjunto específico de dados levando em consideração propriedades desejadas. A ferramenta de participação social Pol.is, descrita na [@sec:polis], utiliza um algoritmo não supervisionado para agrupar pessoas de acordo com seus respectivos votos em determinados comentários. Os grupos formados servem como referência para que possamos inferir caracteristicas semelhantes em determinado subconjunto de usuários, entretanto o algoritmo não revela explicitamente quais caracteristicas são essas, que podem ser completamente abstratas, impossibilitando várias análises posteriores sobre esses grupos. Podemos formar o grupo das pessoas mais politicamente incoerentes, por exemplo, o que não teria valor prático algum para a maior parte das pesquisas sociais. Isso pode ser uma grande desvantagem dependendo do tipo de informação que se deseja obter desses grupos.
+Não há um modelo que resolva todos os problemas de aprendizado. O grande desafio é desenvolver um que seja apropriado para um conjunto específico de dados levando em consideração propriedades desejadas. A ferramenta de participação social Pol.is, descrita na [@sec:polis], utiliza um algoritmo não supervisionado para agrupar pessoas de acordo com seus respectivos votos em determinados comentários. Os grupos formados servem como referência para que possamos inferir características semelhantes em determinado subconjunto de usuários, entretanto o algoritmo não revela explicitamente quais características são essas, que podem ser completamente abstratas, impossibilitando várias análises posteriores sobre esses grupos. Podemos formar o grupo das pessoas mais politicamente incoerentes, por exemplo, o que não teria valor prático algum para a maior parte das pesquisas sociais. Isso pode ser uma grande desvantagem dependendo do tipo de informação que se deseja obter desses grupos.
 
 A seguir, apresentamos o embasamento teórico necessário para aprofundar essa e outras discussões em relação ao agrupamento de usuários com algoritmos não supervisionados. Os tópicos discutidos servirão de base para a formulação da proposta de uma arquitetura de _software_ apropriada para o módulo matemático da plataforma Empurrando Juntos.
 
@@ -141,17 +141,17 @@ Vejamos também que a representação de atributos para os objetos podem existir
 |1     |1  |0  |0  |0  |0  |0  |0  |
 |2     |0  |0  |1  |0  |0  |0  |0  |
 |3     |0  |0  |0  |0  |1  |0  |0  |
-:Representação categórica para o atributo cor {#tbl:rep2}
+:Representação categórica para o atributo nota musical {#tbl:rep2}
 
 As [@tbl:rep1; @tbl:rep2] apresentam os dados em representações diferentes. O formato escolhido pode depender de vários fatores, a fonte de dados, dos recursos de armazenamento, dos algoritmos que serão utilizados, etc. Para cada representação podemos elaborar um tipo de função de distância compatível. Desta forma, é possível utilizar qualquer uma das representações.
 
 ### Extração de _features_ {#sec:extracao}
 
-_Feature_ é sinônimo para variável de entrada ou atributo [@fefa06]. Selecionar um bom conjunto de _features_ para representar os objetos de um domínio específivo está entre os diversos desafios que podemos encontrar ao tentar desenvolver um modelo apropriado para nosso problema. Em um exemplo clássico da aferição de um diagnóstico médico, podemos selecionar febre, nível de glicose, dores nas articuções como _features_ capazes de descrever bem, em conjunto, determinados tipos de doença.
+_Feature_ é sinônimo para variável de entrada ou atributo [@fefa06]. Selecionar um bom conjunto de _features_ para representar os objetos de um domínio específico está entre os diversos desafios que podemos encontrar ao tentar desenvolver um modelo apropriado para nosso problema. Em um exemplo clássico da aferição de um diagnóstico médico, podemos selecionar febre, nível de glicose, dores nas articulações como _features_ capazes de descrever bem, em conjunto, determinados tipos de doença.
 
 A expertise humana, que é sempre necessária para converter dados crus em um conjunto de _features_ úteis, pode ser complementada pelos métodos automáticos de construção. Em alguns casos essa etapa está embutida no próprio processo de modelagem, em outros constitui uma etapa de pré-processamento de dados [@fefa06]. Essa etapa é importante quando há um conjunto de dados que podem apresentar inconsistências, estarem incompletos, serem ruidosos, etc.
 
-Desta forma, considere $X$ um dado representado em sua forma original, ou seja, não pré-processado, por um vetor de $n$ caracteristicas, $X=[x_{1}, x_{2}, ..., x_{n}]$. Assim, chamamos de $X'$ o vetor $n'$-dimensional que representa $X$ transformado após o pré-processamento, $X'=[x'_{1}, x'_{2}, ..., x'_{n'}]$. Essa transformação pode incluir, entre outras, as seguintes tarefas [@fefa06]:
+Desta forma, considere $X$ um dado representado em sua forma original, ou seja, não pré-processado, por um vetor de $n$ características, $X=[x_{1}, x_{2}, ..., x_{n}]$. Assim, chamamos de $X'$ o vetor $n'$-dimensional que representa $X$ transformado após o pré-processamento, $X'=[x'_{1}, x'_{2}, ..., x'_{n'}]$. Essa transformação pode incluir, entre outras, as seguintes tarefas [@fefa06]:
 
 * **Padronização**: Adequação de escalas, unidades de medidas, tipos de variáveis, normalização, etc. entre _features_ que representam informações comparáveis entre si.
 * **Normalização**: Busca pela obtenção do grau ótimo de organização de uma informação, reduzindo dependências, redundâncias, etc.
@@ -169,13 +169,13 @@ As observações sobre o mundo real são, na maioria das vezes, complexas e de d
 
 Como veremos no Capítulo [-@sec:ej], o Empurrando Juntos foi contruído com uma forte dependência inicial da ferramenta Pol.is. A popularidade desta ferramenta se deu principalmente pela facilidade com que permite os usuários visualizarem a qual grupo de opinião pertencem. Entretanto, agrupar esses usuários e apresentar esses grupos de uma maneira amigável não é uma tarefa simples.
 
-Cada comentário realizado em uma conversa amplia o espaço dimensional do nosso conjunto de dados. Normalmente temos dezenas de comentários em cada conversa, ou seja, os algoritmos utilizados precisam lidar com o agrupamento de pessoas em dezenas de dimensões distintas e apresentar essa informação ao participante. Uma projeção desses dados em um espaço dimensional reduzido é inevitável se o objetivo é torna-los compreensíveis aos seres humanos, portanto há necessariamente uma perda significante de informação.
+Cada comentário realizado em uma conversa amplia o espaço dimensional do nosso conjunto de dados. Normalmente temos dezenas de comentários em cada conversa, ou seja, os algoritmos utilizados precisam lidar com o agrupamento de pessoas em dezenas de dimensões distintas e apresentar essa informação ao participante. Uma projeção desses dados em um espaço dimensional reduzido é inevitável se o objetivo é torná-los compreensíveis aos seres humanos, portanto há necessariamente uma perda significante de informação.
 
-Um dos grandes desafios no projeto da plataforma Empurrando Juntos é encontrar o melhor fluxo de processamento e selecionar algoritmos capazes de apresentar os grupos de opinião em um espaço bidimensional mantendo a maior quantidade de informação possível. A maneira como o Pol.is realiza essa tarefa inclui um pré-processamento dos dados para a redução da dimensionalidade, e só então, o seu agrupamento. Como veremos na [@sec:pca], esse fluxo prejudica a aferição da semelhança de opinião entre os usuários, pondendo gerar resultados consideravelmente distorcidos de acordo com as características dos dados originais [@tall17]. As seções a seguir descrevem algumas tecnicas utilizadas para esta transformação e fornecem o embasamento para projetar o fluxo que melhor se adequa a proposta do Empurrando Juntos.
+Um dos grandes desafios no projeto da plataforma Empurrando Juntos é encontrar o melhor fluxo de processamento e selecionar algoritmos capazes de apresentar os grupos de opinião em um espaço bidimensional mantendo a maior quantidade de informação possível. A maneira como o Pol.is realiza essa tarefa inclui um pré-processamento dos dados para a redução da dimensionalidade, e só então, o seu agrupamento. Como veremos na [@sec:pca], esse fluxo prejudica a aferição da semelhança de opinião entre os usuários, pondendo gerar resultados consideravelmente distorcidos de acordo com as características dos dados originais [@tall17]. As seções a seguir descrevem algumas técnicas utilizadas para esta transformação e fornecem o embasamento para projetar o fluxo que melhor se adequa a proposta do Empurrando Juntos.
 
 ### PCA {#sec:pca}
 
-A Análise dos Componentes Principais (PCA) é provavelmente a mais antiga e mais bem conhecida técnica de análise multivariada. Foi primeiramente introduzida por Pearson em 1901 e desenvolvida independentemente por Hotelling década de 40. Assim como várias outros métodos de análise multivariada, o PCA não foi largamente utilizado até o advento de computadores capazes de processar um número massivo de dados. Contudo, hoje é incluído praticamente em todo pacote estatístico de computação [@joll02].
+A Análise dos Componentes Principais (PCA) é provavelmente a mais antiga e mais bem conhecida técnica de análise multivariada. Foi primeiramente introduzida por Pearson em 1901 e desenvolvida independentemente por Hotelling na década de 40. Assim como vários outros métodos de análise multivariada, o PCA não foi largamente utilizado até o advento de computadores capazes de processar um número massivo de dados. Contudo, hoje é incluído praticamente em todo pacote estatístico de computação [@joll02].
  
 #### Definição
 
@@ -201,7 +201,7 @@ $$ {#eq:covariancia}
 
 em que $P(x_{i},y_{i})$ é a probabilidade de ocorrer o par $(x_{i},y_{i})$. Então, se o PCA tem como objetivo transformar nosso conjunto de dados em um novo conjunto com menor dimensionalidade, contendo a maior quantidade de informação possível, procura-se o conjunto de variáveis com os maiores valores de variância e covariância possíveis.
 
-Uma análise precisa da covariância não é simples pelo fato do resultado não ser normalizado em uma escala, isso quer dizer que é difícil discernir qual é a magnitude dessa representação. Para solucionando esse problema, utilizamos o coeficiente de correlação $\mathrm{COR}(X,Y)$, que é a covariância dividida pelos desvios padrão $\sigma$de cada variável,
+Uma análise precisa da covariância não é simples pelo fato do resultado não ser normalizado em uma escala, isso quer dizer que é difícil discernir qual é a magnitude dessa representação. Para solucionar esse problema, utilizamos o coeficiente de correlação $\mathrm{COR}(X,Y)$, que é a covariância dividida pelos desvios padrão $\sigma$ de cada variável,
 
 $$
   \mathrm{COR}(X,Y)=\frac{\mathrm{COV}(X,Y)}{\sigma_{X} \sigma_{Y}}.
@@ -211,7 +211,7 @@ Uma perfeita correlação corresponde ao valor 1, enquanto uma anti-correlação
 
 #### Implementação
 
-O funcionamento do PCA se baseia primeiramente na extração uma matriz de covariância dos dados. Então, calcula-se os autovetores e autovalores dessa matriz, obtendo um autovetor para cada uma das variáveis. Os respectivos autovalores descrevem a variância ([@eq:variancia]) relativa ao conjunto de dados. Os componentes com menor contribuição para a variância são descartados e assim tem-se o conjunto de dados projetado com dimensões reduzidas.
+O funcionamento do PCA se baseia primeiramente na extração de uma matriz de covariância dos dados. Então, calcula-se os autovetores e autovalores dessa matriz, obtendo um autovetor para cada uma das variáveis. Os respectivos autovalores descrevem a variância ([@eq:variancia]) relativa ao conjunto de dados. Os componentes com menor contribuição para a variância são descartados e assim tem-se o conjunto de dados projetado com dimensões reduzidas.
 
 Considere o conjunto bidimensional de dados $A$ mostrados na [@tbl:dadospca]. Como exemplo, aplicaremos o PCA para obter um novo conjunto unidimensional $A'$ que represente a maior parte da informação contida em $A$. A [@fig:exemplo_01_pca] apresenta o conjunto original sobre o plano cartesiano.
 
@@ -225,11 +225,11 @@ Considere o conjunto bidimensional de dados $A$ mostrados na [@tbl:dadospca]. Co
 |F|2|1|
 : Conjunto bidimensional de dados $A$ {#tbl:dadospca}
 
-![Conjunto de dados no plano cartesiano](images/machine_learning/example_01_pca.png){#fig:exemplo_01_pca}
+![Conjunto de dados no plano cartesiano](images/machine_learning/example_01_pca.png){#fig:exemplo_01_pca width=300px height=220px}
 
 A primeira etapa consiste no uso da [@eq:esperado] para extrair os valores esperados para as variáveis. Então normalizamos o conjunto $A$ em torno de um eixo centralizado sem prejudicar a variância, [@fig:exemplo_02_pca]. Essa normalização é realizada através da subtração do valor esperado em cada variável.
 
-![Média subtraída dos pontos](images/machine_learning/example_02_pca.png){#fig:exemplo_02_pca}
+![Média subtraída dos pontos](images/machine_learning/example_02_pca.png){#fig:exemplo_02_pca width=300px height=220px}
 
 Após a normalização, utilizamos a [@eq:correlacao], para extrair a matriz de coeficientes de correlação, apresentada na [@tbl:correlacao].
 
@@ -239,15 +239,15 @@ Após a normalização, utilizamos a [@eq:correlacao], para extrair a matriz de 
 |Y|0.7779|1.0|
 : Matriz de correlação para as variáveis X e Y {#tbl:correlacao}
 
-Podemos observar que os valores da diagonal principal correspondem a uma correlação entre uma variável e ela mesma, que por definição deve ser perfeita. A diagonal secundária apresenta a correlação entre X e Y, ou seja, a maneira como as variáveis se relacionam. Para medidas de correlação positivas, os valores variam para mais e para menos juntos; para correlações negativas, quando um valor cresce o outro decresce; por fim, para covarrelações nulas, não há correspondência entre os valores de X e Y.
+Podemos observar que os valores da diagonal principal correspondem a uma correlação entre uma variável e ela mesma, que por definição deve ser perfeita. A diagonal secundária apresenta a correlação entre X e Y, ou seja, a maneira como as variáveis se relacionam. Para medidas de correlação positivas, os valores variam para mais e para menos juntos; para correlações negativas, quando um valor cresce o outro decresce; por fim, para correlações nulas, não há correspondência entre os valores de X e Y.
 
 A próxima etapa consiste na extração dos autovetores e autovalores a partir da matriz de correlação. Os autovetores representam as direções em que estão contidas as maiores variações para esse conjunto de dados. Então, selecionamos os autovetores que possuem os maiores autovalores correspondentes, já que estes são a representação da própria variância. Chamamos estes vetores de componentes principais.
 
 Considere novamente o conjunto de dados $A$. O número de autovetores é igual a quantidade de dimensões dos dados originais. A [@fig:exemplo_04_pca] traça os autovetores sobre o conjunto $A$ normalizado. Observamos claramente que o sentido _vermelho_ possui os maiores autovalores associados, ou seja, é a direção que possui a maior variância acumulada, tornando-a o eixo unidimensional no qual serão projetados os dados.
 
-![Autovetores extraídos da matriz de correlação](images/machine_learning/example_04_pca.png){#fig:exemplo_04_pca}
+![Autovetores extraídos da matriz de correlação](images/machine_learning/example_04_pca.png){#fig:exemplo_04_pca width=300px height=220px}
 
-Os componentes principais são representações do conjunto de dados original projetados em um espaço dimensional reduzido. A [@fig:exemplo_04_pca] evidencia como a projeção desses dados em eixos que maximizam a variância ocasiona a perda de informações. Contudo, ainda é possível se bter um grau de confiança elevado nos dados obtidos para sua utilização em algoritmos de agrupamento [@tall17], nosso objetivo no Empurrando Juntos.
+Os componentes principais são representações do conjunto de dados original projetados em um espaço dimensional reduzido. A [@fig:exemplo_04_pca] evidencia como a projeção desses dados em eixos que maximizam a variância ocasiona a perda de informações. Contudo, ainda é possível se obter um grau de confiança elevado nos dados obtidos para sua utilização em algoritmos de agrupamento [@tall17], nosso objetivo no Empurrando Juntos.
 
 ### _t_-SNE
 
@@ -289,13 +289,13 @@ $$
  q_{ij}= \frac{f(|y_{i}-y_{j}|)}{\sum_{k\neq i} f(|y_{i}-y_{k}|)}.
 $$
 
-O algoritmo é baseados em itarações que buscam aproximar as matrizes de similaridade. Para isso é necessário minimizar a divergência de Kullback-Leibler $KL(P||Q)$ entre duas distribuições distintas $p_{ij}$ e $q_{ij}$. Essa divergência é uma medida de como duas distribuições de probabilidade divergem uma da outra. No caso simples, $KL(P||Q)=0$ indica que podemos esperar um comportamento muito próximo, se não for igual, de duas distribuições distintas, enquanto $KL(P||Q)=1$ indica que as duas distribuições se comportam de maneiras extremamente diferentes. A divergência de Kullback-Leibler é definida como
+O algoritmo é baseado em iterações que buscam aproximar as matrizes de similaridade. Para isso é necessário minimizar a divergência de Kullback-Leibler $KL(P||Q)$ entre duas distribuições distintas $p_{ij}$ e $q_{ij}$. Essa divergência é uma medida de como duas distribuições de probabilidade divergem uma da outra. No caso simples, $KL(P||Q)=0$ indica que podemos esperar um comportamento muito próximo, se não for igual, de duas distribuições distintas, enquanto $KL(P||Q)=1$ indica que as duas distribuições se comportam de maneiras extremamente diferentes. A divergência de Kullback-Leibler é definida como
 
 $$
   C = KL(P||Q) = \sum_{i,j}p_{ij}\log\frac{p_{ij}}{q_{ij}}.
 $$
 
-Para minimizar o valor de $C$ realizamos o calculo do gradiente descendente $\frac{\delta C}{\delta y_{i}}$, que indica a direção para onde os valores mínimos locais se propagam. O gradiente pode ser computado analiticamente por
+Para minimizar o valor de $C$ realizamos o cálculo do gradiente descendente $\frac{\delta C}{\delta y_{i}}$, que indica a direção para onde os valores mínimos locais se propagam. O gradiente pode ser computado analiticamente por
 
 $$
   g(z)=\frac{z}{1+z^2},
@@ -311,7 +311,7 @@ $$
  Y_{t} = Y_{t-1}+\eta \frac{\delta C}{\delta Y}+\alpha (t) (Y_{t-1} - Y_{t-2}),
 $$
 
-em que $Y_{t}$ representa a o espaço bidimensional $\mathbb{R}^{2}$ na iteração $t$, $\eta$ indica a taxa de aprendizado e $\alpha(t)$ representa o _momentum_ na iteração $t$. A taxa de aprendizado $\eta$ é uma variável adaptativa que gradualmente aumenta nas direções em que o gradiente é mais estável [@geof08].
+em que $Y_{t}$ representa o espaço bidimensional $\mathbb{R}^{2}$ na iteração $t$, $\eta$ indica a taxa de aprendizado e $\alpha(t)$ representa o _momentum_ na iteração $t$. A taxa de aprendizado $\eta$ é uma variável adaptativa que gradualmente aumenta nas direções em que o gradiente é mais estável [@geof08].
 
 ### _t_-SNE x PCA 
 
@@ -337,7 +337,7 @@ Muito embora o exemplo dos sistemas de recomendação seja um dos mais conhecido
 
 A clusterização consiste no agrupamento de objetos baseado apenas na informação contida no conjunto de dados que descreve esses objetos e seus relacionamentos. O objetivo é unir dentro de um mesmo grupo, ou _cluster_, objetos que apresentam similaridade entre si e em outros grupos objetos não estão relacionados com este grupo. Quanto maior for a similaridade entre os objetos de um grupo e a diferença entre dois grupos, melhor é a clusterização [@ptan05].
 
-O agrupamento de objetos está relacionado com outras técnicas de classificação utilizadas para dividir objetos em grupos. Contudo, essa semelhança se limita ao fato do próprio algoritmo de clusterização derivar os rótulos de para grupo a partir do conjunto de dados. Não há um modelo extraído de dados de treinamento previamente rotulados. Consequentemente, a clusterização se enquadra na categoria de classificação não supervisionada.
+O agrupamento de objetos está relacionado com outras técnicas de classificação utilizadas para dividir objetos em grupos. Contudo, essa semelhança se limita ao fato do próprio algoritmo de clusterização derivar os rótulos de cada grupo a partir do conjunto de dados. Não há um modelo extraído de dados de treinamento previamente rotulados. Consequentemente, a clusterização se enquadra na categoria de classificação não supervisionada.
 
 ### Tipos de clusterização
 
@@ -353,7 +353,7 @@ A formação de um conjunto de grupos é frequentemente tratado apenas como clus
 
 ### Tipos de _clusters_
 
-Os grupos formados pelos diferentes tipos de clusterização também possuem suas próprias características de agrupamento, estas característica são definidas princiapalmente pelo algoritmo utilizado e são determinantes na decisão sobre qual deles escolher de acordo com o objetivo da análise dos _clusters_. Esses grupos podem aparecer em diversas configurações, como mostra a [@fig:tipoclusters].
+Os grupos formados pelos diferentes tipos de clusterização também possuem suas próprias características de agrupamento, estas característica são definidas principalmente pelo algoritmo utilizado e são determinantes na decisão sobre qual deles escolher de acordo com o objetivo da análise dos _clusters_. Esses grupos podem aparecer em diversas configurações, como mostra a [@fig:tipoclusters].
 
 * **_Clusters_ bem separados**: Cada objeto está necessariamente próximo a todos os objetos do seu _cluster_ e relativamente distante de outros objetos. Essa é normalmente a configuração mais simples de realizar tarefas de clusterização.
 
@@ -387,7 +387,7 @@ Até que os centroides não mudem
 : Algoritmo básico do k-means {#lst:kmeans}
 
 
-A primeira etapa do algoritmo consiste na definição de _k_ pontos aleatórios como centroides iniciais. Os dados, então, são distribuidos também de maneira aleatória entre os _clusters_ definidos por esses centroides. Assim, inicia-se a etapa iterativa do algoritmo, que associa, a cada _cluster_, os dados que possuem a menor distância de seus centros. Os centroides são recalculados ao fim de cada iteração. Essa etapa é repetida até que se atinja rótulos estáveis e qualquer mudança não tenha mais significado prático nas estruturas construídas, ou também, até que se atinja um número limite de iterações, que pode ser definido pelo usuário.
+A primeira etapa do algoritmo consiste na definição de _k_ pontos aleatórios como centroides iniciais. Os dados, então, são distribuídos também de maneira aleatória entre os _clusters_ definidos por esses centroides. Assim, inicia-se a etapa iterativa do algoritmo, que associa, a cada _cluster_, os dados que possuem a menor distância de seus centros. Os centroides são recalculados ao fim de cada iteração. Essa etapa é repetida até que se atinja rótulos estáveis e qualquer mudança não tenha mais significado prático nas estruturas construídas, ou também, até que se atinja um número limite de iterações, que pode ser definido pelo usuário.
 
 A complexidade do algoritmo, $O(knf)$, pode ser expressa para cada iteração como o produto do número de _clusters_ $k$, da quantidade de pontos $n$ presentes no conjunto de dados, e do número de _features_ $f$. Sua solução converge para ótimos locais e possui natureza NP-difícil. Na prática, isso inviabiliza a execução de todos os arranjos possíveis para que, só então, se escolha a melhor distribuição. Assim, é extremamente importante uma escolha adequada dos parâmetros iniciais, como a quantidade máxima de iterações que serão realizadas e os $k$ centróides selecionados. Normalmente, são feitas várias inicializações do algoritmo e se escolhe a melhor delas.
 
@@ -443,6 +443,6 @@ Vimos nas Seções anteriores o embasamento teórico necessário para compreende
 
 Com base no que mostramos, podemos encontrar diversos aspectos críticos no esboço da arquitetura proposta pelo Pol.is, cujo núcleo se concentra no processamento dos dados em duas etapas sequenciais. A primeira é o pré-processamento com a aplicação do PCA para redução da dimensionalidade dos dados em uma conversa, e a segunda, a sua clusterização realizada através do método _k-means_. Em princípio, destacamos o grande problema da perda de informações sensíveis nas transformações lineares durante a primeira etapa. Essas informações, que nesse caso podem ser tratadas como distâncias entre pontos, são essenciais para uma clusterização eficiente dos dados. Dependendo do contexto, essa perda pode degenerar os _clusters_, sacrificando qualquer tentativa posterior de se inferir informações úteis sobre os grupos formados. Esse fato vai de encontro com os pilares da proposta do Empurrando Juntos, que veremos no Capítulo [-@sec:ej].
 
-Na pática, a priorização do Pol.is por uma visualização bidimensional dos dados clusterizados acarretou uma série de problemas conceituais sobre os grupos gerados. Na prática, uma simples inversão das etapas: primeiro a clusterização e depois a redução da dimensionalidade, resolveria grande parte desses problemas. Entretanto, a projeção dos pontos em um espaço dimensional reduzido, que possibilitasse a visualização humana, poderia ocasionar uma sobreposição dos _clusters_, o que possui uma coerência com a realidade da informação, mas prejudica a distinção de grupos bem formados.
+Na pática, a priorização do Pol.is por uma visualização bidimensional dos dados clusterizados acarretou uma série de problemas conceituais sobre os grupos gerados. Uma simples inversão das etapas: primeiro a clusterização e depois a redução da dimensionalidade, resolveria grande parte desses problemas. Entretanto, a projeção dos pontos em um espaço dimensional reduzido, que possibilitasse a visualização humana, poderia ocasionar uma sobreposição dos _clusters_, o que possui uma coerência com a realidade da informação, mas prejudica a distinção de grupos bem formados.
 
 Este e outros fatos alteraram consideravelmente o planejamento inicial de construção da plataforma, na qual o Empurrando Juntos meramente extenderia as funcionalidades do Pol.is. Essas alterações, como explicaremos no Capítulo [-@sec:ej], reduziram o Pol.is a uma dependência arquitetural momentânea, que influenciou diversos aspectos das primeiras versões do Empurrando Juntos, incluindo a utilização do mesmo fluxo de processamento de dados. Entretanto, conscientes das fragilidades dos métodos e fluxos aplicados no Pol.is, projetamos uma arquitetura de _software_ para o módulo matemático do Empurrando Juntos que fosse completamente desacoplada do conjunto da solução. Essa arquitetura possibilita tanto pequenas alterações pontuais nos algoritmos, quanto sua completa substituição, demandando poucos esforços técnicos. Destrincharemos, na [@sec:arquitetura], a concepção desse modelo arquitetural que possibilita a evolução gradativa dos métodos de clusterização aplicados.

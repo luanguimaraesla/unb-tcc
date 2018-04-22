@@ -23,7 +23,7 @@ toc-depth: 2
 
 #TCC information
 coverlocation:  'templates/tcc/figuras/capa.eps'
-title:			'Empurrando Juntos: plataforma de participação social para identificação de grupos de opinião atravez de modelos de clusterização'
+title:			'Empurrando Juntos: plataforma de participação social para identificação de grupos de opinião através de modelos de clusterização'
 date:			'2018'
 author:			'Luan Guimarães Lacerda'
 place:			'Brasília, DF'
