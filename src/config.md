@@ -41,7 +41,7 @@ cover:			'true'
 cdu:            '02:141:005.6'
 approvaldate:   '25 de Março de 2018'
 guestmember1:   'Profa. Dra. Carla Silva Rocha Aguiar'
-guestmember2:   'Prof. [TODO] Thiago Paulo'
+guestmember2:   'Profa. Bruna Nayara Moreira Lima'
 advisor:        'Prof. Dr. Fábio Macedo Mendes'
 
 #crossref configurations
