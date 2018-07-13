@@ -68,7 +68,7 @@ A técnica não foi aplicada por todas as pessoas do time no desenvolvimento dos
 
 ### Integração Contínua {#sec:integracaocontinua}
 
-Os testes automatizados foram escritos com o auxílio da biblioteca de testes _pytest_ através do pacote _pytest-django_. Este _framework_ facilita a escrita de pequenas unidades de teste, diminuindo o esforço para compreender e desenvolver robustas suítes unitárias e funcionais. Cada conjunto deve ser extendido e aprimorado com o tempo de projeto, de acordo com os trabalhos de implementação e manutenção de funcionalidades.
+Os testes automatizados foram escritos com o auxílio da biblioteca de testes _pytest_ através do pacote _pytest-django_. Este _framework_ facilita a escrita de pequenas unidades de teste, diminuindo o esforço para compreender e desenvolver robustas suítes unitárias e funcionais. Cada conjunto deve ser estendido e aprimorado com o tempo de projeto, de acordo com os trabalhos de implementação e manutenção de funcionalidades.
 
 A elaboração sistemática de testes automatizados possibilita que a integração de diferentes alterações no código sejam realizadas com menor custo operacional. Essa é uma das principais características de metodologias de desenvolvimento ágeis, que se sustentam na utilização de várias tecnologias de apoio ao desenvolvimento de código. Nesse aspecto, as ferramentas empregadas permitiram entregas rápidas, com pequenas e frequentes modificações no _software_. Assim, o trabalho em paralelo dos membros da equipe de desenvolvimento tornou-se não só possível, como incentivado.
 
