@@ -14,7 +14,7 @@ Para compilar o documento, é necessário a instalação da ferramenta [Pandocke
 Apenas clone esse repositório e execute:
 
 ```
-sudo docker run --rm -v `pwd`:/code luanguimaraesla/pandocker:0.2.0 "-f pandocker.yml"
+sudo docker run --rm -v `pwd`:/code luanguimaraesla/pandocker:0.3.1 "compile"
 ```
 
 ## Empurrando Juntos
