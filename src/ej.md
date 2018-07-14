@@ -90,7 +90,7 @@ Sobre essa concepção inicial da plataforma, várias modificações estruturais
 
 As decisões arquiteturais abordadas neste trabalho contemplam o desenvolvimento do _backend_ do Empurrando Juntos. Esta estrutura é o conjunto de ferramentas e algortimos que integraram três sistemas distintos: o banco de dados da aplicação, que define todo o modelo de dados que armazenaremos; a biblioteca de clusterização, que fornece os algoritmos necessários para a criação dos grupos de opinião; e o núcleo do _backend_ que integra essas partes, define as regras de negócio e fornece uma API para o consumo das informações por outros _softwares_, como o próprio _frontend_ da plataforma.
 
-Esta Seção apresenta as decisões e reflexões que, sustentadas pelo embasamento teórico fornecido nos capítulos anteriores, foram importantes para a composição das estratégias de desenvolvimento do _backend_ do Empurrando Juntos. Plataforma que busca suprimir a necessidade de um ambiente planejado para lidar com a complexidade da evolução da democracia através de uma rede social que utiliza algoritmos de aprendizado de máquina e técnicas de engajamento social para potencializar os níveis de participação.
+Esta Seção apresenta as decisões e reflexões que, sustentadas pelo embasamento teórico fornecido nos capítulos anteriores, foram importantes para a composição das estratégias de desenvolvimento do _backend_ do Empurrando Juntos no contexto do projeto "Brasil Que o Povo Quer" da Fundação Perseu Abramo. O objetivo dessa iniciativa é suprimir a necessidade de um ambiente planejado para lidar com a complexidade da evolução da democracia através de uma rede social que utiliza algoritmos de aprendizado de máquina e técnicas de engajamento social para potencializar os níveis de participação.
 
 As características da solução devem condizer com as seguintes condições:
 
@@ -106,7 +106,7 @@ As características da solução devem condizer com as seguintes condições:
 
 As próximas Seções deste Capítulo descrevem a forma como estruturamos e implementamos esse conjunto de características, assim como o conjunto das principais tecnologias utilizadas.
 
-### Dependência do Pol.is
+### Dependência inicial do Pol.is
 
 As ferramentas desenvolvidas no contexto do Empurrando Juntos foram prefixadas com o identificador "ej". A biblioteca de clusterização foi nomeada como _ej-math_. Como esclarecemos na discussão aprensentada na [@sec:polisdiscussao], decidimos inicialmente replicar o método matemático utilizado pelo Pol.is. Não só decidimos pelo método, mas também optamos, em um primeiro momento, por realizar um grande esforço na configuração do Pol.is como mecanismo de clusterização e visualização dos _clusters_. Essa decisão se deu por condições dos marcos de entrega viculados ao financiamento do projeto. Estimamos que levaria mais tempo para produzir o _ej-math_ do que para implantar o Pol.is, mesmo com todas as dificuldades aparentes.
 
@@ -275,7 +275,7 @@ Para a implantação dos recursos matemáticos fornecidos pelo _ej-math_, constr
 
 #### Celery
 
-O Celery^[http://docs.celeryproject.org/en/latest/index.html] é uma ferramenta _Open Source_, licenciada sob os termos da licença BSD. É especializada no tratamento de filas de tarefas assíncronas baseadas na passagem de mensagens a operadores distribuídos chamados _workers_. Foi construída para execução de tarefas em tempo real, entretanto oferece suporte a agendamento. No contexto do Empurrando Juntos, é importe para garantir a fluidez e o desempenho da aplicação monolítica central, o projeto _Django_ _ej-server_. Esse fator ganha importância quando observamos que o processamento dos _clusters_ em determinadas ocasiões pode se tornar um procedimento custoso que demanda tempo de espera em uma abordagem síncrona, ou seja, quando o servidor bloqueia o fluxo de excução de alguma solicitação a fim de esperar a conclusão de algum cálculo, como a clusterização.
+O Celery^[http://docs.celeryproject.org/en/latest/index.html] é uma ferramenta _Open Source_, licenciada sob os termos da licença BSD. É especializada no tratamento de filas de tarefas assíncronas baseadas na passagem de mensagens a operadores distribuídos chamados _workers_. Foi construída para execução de tarefas em tempo real, entretanto oferece suporte a agendamento. No contexto do Empurrando Juntos, é importe para garantir a fluidez e o desempenho da aplicação monolítica central, o projeto _Django_ _ej-server_. Esse fator ganha importância quando observamos que o processamento dos _clusters_ em determinadas ocasiões pode se tornar um procedimento custoso que demanda tempo de espera em uma abordagem síncrona, ou seja, quando o servidor bloqueia o fluxo de execução de alguma solicitação a fim de esperar a conclusão de algum cálculo, como a clusterização.
 
 A comunicação do cliente com os _workers_ é realizada através dos _brokers_. Dada a alocação de uma solicitação de trabalho em uma fila, o _broker_ responsável tem a função de despachar essas solicitações para algum _worker_ disponível. Assim, o sistema pode conter vários _brokers_ e _workers_, possiblitando uma alta disponibilidade e escalabilidade horizontal.
 

@@ -42,7 +42,7 @@ cdu:            '02:141:005.6'
 approvaldate:   '25 de Março de 2018'
 guestmember1:   'Profa. Dra. Carla Silva Rocha Aguiar'
 guestmember2:   'Profa. Bruna Nayara Moreira Lima'
-advisor:        'Prof. Dr. Fábio Macedo Mendes'
+advisor:        'Prof Dr. Fábio Macedo Mendes'
 
 #crossref configurations
 linkReferences: true
@@ -61,10 +61,17 @@ tblPrefix:
   - "Tabelas"
 
 lstPrefix:
-  - "Lista"
-  - "Listas"
+  - "Bloco de Código"
+  - "Blocos de Código"
 
 secPrefix:
   - "Seção"
   - "Seções"
+
+figureTitle: "Figura"
+tableTitle: "Tabela"
+listingTitle: "Bloco de Código"
+
+lofTitle: "Lista de Figuras"
+lotTitle: "Lista de Tabelas"
 ...

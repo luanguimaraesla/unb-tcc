@@ -174,7 +174,7 @@ Tornar o Empurrando Juntos um projeto genérico também acarretou a modificaçã
 
 Apesar de não abordado neste trabalho, torna-se importante neste momento destacar a integração do repositório _ej-front_, o _frontend_ da aplicação, ao repositório do _ej-server_, o _backend_. Essa decisão foi tomada por diferentes motivos. Alguns deles são rastreabilidade dos itens em comum e a simplificação dos procedimentos de _build_.
 
-Além disso, destaca-se no Empurrando Juntos genérico um modelo de temas dinâmicos ainda não mensionado. Esse modelo permite o _build_ de diferentes temas para a aplicação, ou seja, o Empurrando Juntos possui um _frontend_ adaptável para diferentes contextos. Essa característica torna a centralização desses repositórios algo desejável, visto que as rotinas de _build_, necessárias para construir diferentes ambientes, podem ser integradas.
+Além disso, destaca-se no Empurrando Juntos genérico um modelo de temas dinâmicos ainda não mencionado. Esse modelo permite o _build_ de diferentes temas para a aplicação, ou seja, o Empurrando Juntos possui um _frontend_ adaptável para diferentes contextos. Essa característica torna a centralização desses repositórios algo desejável, visto que as rotinas de _build_, necessárias para construir diferentes ambientes, podem ser integradas.
 
 Todos esses novos aspectos foram considerados na elaboração de um novo _pipeline_ de alterações em código do Empurrando Juntos, apresentado na [@fig:newpipeline].
 
